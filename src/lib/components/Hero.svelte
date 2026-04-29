@@ -32,15 +32,19 @@
 		<CodeBlock html={installHtml} lang="bash" />
 	</div>
 
+	<!-- min-w-0 on grid children is the canonical fix for grid items inheriting
+	     intrinsic min-content width and leaking past the viewport. Without it, a
+	     long un-breakable Shiki JSON line forces the grid item wider than the
+	     container even when the figure has overflow-x-auto. (TIN-802.) -->
 	<div class="mt-10 grid gap-6 lg:grid-cols-3">
-		<div>
+		<div class="min-w-0">
 			<h3 class="h4 mb-1">live.available</h3>
 			<p class="text-sm text-surface-600-400">
 				Codex max account, capability codex-mini — probe returns 200, decision <code class="font-mono">use_this</code>.
 			</p>
 			<CodeBlock html={liveAvailHtml} lang="json" />
 		</div>
-		<div>
+		<div class="min-w-0">
 			<h3 class="h4 mb-1">live.quota_exhausted</h3>
 			<p class="text-sm text-surface-600-400">
 				Same account at codex-max — quota exhausted with a known reset window; decision
@@ -48,7 +52,7 @@
 			</p>
 			<CodeBlock html={liveQuotaHtml} lang="json" />
 		</div>
-		<div>
+		<div class="min-w-0">
 			<h3 class="h4 mb-1">dead.auth_permanently_failed</h3>
 			<p class="text-sm text-surface-600-400">
 				Schema-faithful illustration — no live <code class="font-mono">dead</code> artifact captured.
