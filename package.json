@@ -44,7 +44,7 @@
 		"@tummycrypt/vite-plugin-skeleton-colors": "0.2.2",
 		"@types/node": "^22.0.0",
 		"@vitest/coverage-v8": "^4.1.4",
-		"eslint": "^9.39.2",
+		"eslint": "^10.2.1",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "^3.17.0",
 		"globals": "^17.0.0",
