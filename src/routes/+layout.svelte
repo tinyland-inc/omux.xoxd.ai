@@ -9,15 +9,19 @@
 
 	let mobileOpen = $state(false);
 
+	// Absolute paths so the section nav resolves from any route (`/agent-snippet`,
+	// `/style-guide` etc.) without SvelteKit emitting missing-id warnings during
+	// prerender. From a non-home route the link navigates back to `/` and scrolls
+	// to the section. (TIN-802.)
 	const navLinks: { href: string; label: string }[] = [
-		{ href: '#problem', label: 'Problem' },
-		{ href: '#fallback', label: 'Fallback' },
-		{ href: '#install', label: 'Install' },
-		{ href: '#first-run', label: 'First-run' },
-		{ href: '#security', label: 'Security' },
-		{ href: '#providers', label: 'Providers' },
-		{ href: '#contribute', label: 'Contribute' },
-		{ href: '#contact', label: 'Contact' },
+		{ href: '/#problem', label: 'Problem' },
+		{ href: '/#fallback', label: 'Fallback' },
+		{ href: '/#install', label: 'Install' },
+		{ href: '/#first-run', label: 'First-run' },
+		{ href: '/#security', label: 'Security' },
+		{ href: '/#providers', label: 'Providers' },
+		{ href: '/#contribute', label: 'Contribute' },
+		{ href: '/#contact', label: 'Contact' },
 	];
 
 	const REPO_URL = 'https://github.com/Jesssullivan/oauth-mux';
@@ -95,7 +99,7 @@
 
 <div class="bg-surface-50-950 flex min-h-screen flex-col">
 	<a
-		href="#hero"
+		href="/#hero"
 		class="focus:bg-primary-500 sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
 		>Skip to content</a
 	>
