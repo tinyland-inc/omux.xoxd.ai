@@ -24,35 +24,15 @@ Site:   https://omux.xoxd.ai
 	let copyError = $state(false);
 
 	async function copySnippet() {
-		copied = false;
 		copyError = false;
 		try {
-			if (navigator.clipboard?.writeText) {
-				await navigator.clipboard.writeText(snippet);
-				copied = true;
-			} else {
-				// Fallback for older browsers / non-secure contexts.
-				const textarea = document.createElement('textarea');
-				textarea.value = snippet;
-				textarea.style.position = 'fixed';
-				textarea.style.left = '-9999px';
-				document.body.appendChild(textarea);
-				textarea.select();
-				const ok = document.execCommand('copy');
-				document.body.removeChild(textarea);
-				if (ok) {
-					copied = true;
-				} else {
-					copyError = true;
-				}
-			}
-		} catch {
-			copyError = true;
-		}
-		if (copied) {
+			await navigator.clipboard.writeText(snippet);
+			copied = true;
 			setTimeout(() => {
 				copied = false;
 			}, 2000);
+		} catch {
+			copyError = true;
 		}
 	}
 </script>
