@@ -55,7 +55,7 @@ Site:   https://omux.xoxd.ai
 
 <main>
 	<section class="container mx-auto px-6 py-12 lg:py-16">
-		<div class="max-w-4xl space-y-8">
+		<div class="mx-auto max-w-4xl space-y-8">
 			<header>
 				<h1 class="h1 mb-4">Agent snippet</h1>
 				<p class="text-lg text-surface-700-300">

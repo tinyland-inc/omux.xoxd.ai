@@ -4,7 +4,7 @@
 </script>
 
 <section id="problem" class="container mx-auto px-6 py-16 lg:py-20">
-	<div class="max-w-3xl">
+	<div class="mx-auto max-w-3xl">
 		<h2 class="h2 mb-6">Problem</h2>
 		<ul class="space-y-4 text-lg leading-relaxed text-surface-700-300">
 			<li>Developers increasingly carry multiple personal, work, team, subscription, and on-prem AI identities.</li>

@@ -26,7 +26,7 @@
 </script>
 
 <section id="providers" class="container mx-auto px-6 py-16 lg:py-20">
-	<div class="max-w-5xl">
+	<div class="mx-auto max-w-5xl">
 		<h2 class="h2 mb-4">Provider matrix</h2>
 		<p class="mb-6 text-lg text-surface-700-300">
 			Provider support is separated into three tiers. Only Codex is currently live-proven; everything else is modeled

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
+	import { Menu, X } from '@lucide/svelte';
 	import { AppBar, Dialog, Navigation } from '@skeletonlabs/skeleton-svelte';
 	import { TinyVectors } from '@tummycrypt/tinyvectors';
 	import '../app.css';
@@ -152,15 +153,7 @@
 					preventScroll
 				>
 					<Dialog.Trigger class="hover:bg-surface-200-800 rounded p-2 lg:hidden" aria-label="Open navigation">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							class="h-5 w-5"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-						>
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-						</svg>
+						<Menu class="h-5 w-5" />
 					</Dialog.Trigger>
 					<Dialog.Backdrop class="fixed inset-0 z-40 bg-black/40" />
 					<Dialog.Positioner class="fixed inset-y-0 right-0 z-50 flex w-72 max-w-[85vw]">
@@ -168,15 +161,7 @@
 							<div class="border-surface-200-800 flex items-center justify-between border-b px-4 py-3">
 								<span class="font-mono text-sm font-semibold">oauth-mux</span>
 								<Dialog.CloseTrigger class="hover:bg-surface-200-800 rounded p-2" aria-label="Close navigation">
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										class="h-5 w-5"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-									>
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-									</svg>
+									<X class="h-5 w-5" />
 								</Dialog.CloseTrigger>
 							</div>
 							<Navigation layout="sidebar">

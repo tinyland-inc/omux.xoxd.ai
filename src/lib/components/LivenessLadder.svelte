@@ -68,6 +68,7 @@
 	}
 
 	import { Tooltip, Portal } from '@skeletonlabs/skeleton-svelte';
+	import { ArrowRight } from '@lucide/svelte';
 
 	function decisionExplain(v: Verdict): string {
 		switch (v) {
@@ -110,7 +111,8 @@
 						class="font-mono text-sm {decisionTone(r.verdict)} sm:justify-self-end cursor-help"
 						aria-label={`Decision ${r.decision}`}
 					>
-						→ {r.decision}
+						<ArrowRight class="inline h-3.5 w-3.5 align-[-1px]" />
+						{r.decision}
 					</Tooltip.Trigger>
 					<Portal>
 						<Tooltip.Positioner>
