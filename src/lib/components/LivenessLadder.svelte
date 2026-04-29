@@ -66,6 +66,19 @@
 				return 'text-error-700-300';
 		}
 	}
+
+	import { Tooltip, Portal } from '@skeletonlabs/skeleton-svelte';
+
+	function decisionExplain(v: Verdict): string {
+		switch (v) {
+			case 'available':
+				return 'Probe succeeded. The mux routes traffic to this account+capability and stops walking the ladder.';
+			case 'quota':
+				return 'Account hit a known quota wall but is otherwise healthy. The mux walks to the next row and may retry after the reset window.';
+			case 'dead':
+				return 'Account is permanently unusable for this capability (auth or shape mismatch). The mux skips it for the rest of this run.';
+		}
+	}
 </script>
 
 <figure class="code-frame my-2 overflow-hidden">
@@ -92,7 +105,23 @@
 
 				<span class="chip {pillClass(r.verdict)} font-mono text-xs sm:justify-self-end">{r.http}</span>
 
-				<span class="font-mono text-sm {decisionTone(r.verdict)} sm:justify-self-end">→ {r.decision}</span>
+				<Tooltip openDelay={150} positioning={{ placement: 'top' }}>
+					<Tooltip.Trigger
+						class="font-mono text-sm {decisionTone(r.verdict)} sm:justify-self-end cursor-help"
+						aria-label={`Decision ${r.decision}`}
+					>
+						→ {r.decision}
+					</Tooltip.Trigger>
+					<Portal>
+						<Tooltip.Positioner>
+							<Tooltip.Content
+								class="bg-surface-950 text-surface-50 max-w-xs rounded-md px-3 py-2 text-xs leading-snug shadow-lg"
+							>
+								{decisionExplain(r.verdict)}
+							</Tooltip.Content>
+						</Tooltip.Positioner>
+					</Portal>
+				</Tooltip>
 			</li>
 		{/each}
 	</ol>

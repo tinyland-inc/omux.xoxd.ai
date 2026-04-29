@@ -1,12 +1,17 @@
 <script lang="ts">
-	// M3.3 Security & Privacy posture.
+	// M3.3 + TIN-801 phase 5 Security & Privacy posture.
+	// Backends list moves into a Skeleton 4 Accordion so the page stays
+	// scannable; readers expand the backend they care about. Other content
+	// (four guarantees, redaction posture, daemon boundary callout) is
+	// unchanged.
+	//
 	// Sources (verbatim where stated):
 	// - four claims: oauth-mux/docs/spec/product-adoption-sprint-2026-04-28.md:127-131
 	// - secret backends list: oauth-mux/docs/spec/provider-authoring-checklist-2026-04-26.md:82-90
 	// - redaction posture paragraph: oauth-mux/docs/onboarding.md:139-141
 	// - daemon boundary "Not Allowed Yet": oauth-mux/docs/daemon-boundary.md:1-23
+	import { Accordion } from '@skeletonlabs/skeleton-svelte';
 
-	// Verbatim from oauth-mux/docs/spec/product-adoption-sprint-2026-04-28.md:128-131
 	const claims: string[] = [
 		'no `.env` token dumping;',
 		'no committed credential stores;',
@@ -14,8 +19,6 @@
 		'explicit live probes only when they may spend calls.',
 	];
 
-	// Backend list verbatim from oauth-mux/docs/spec/provider-authoring-checklist-2026-04-26.md:82-90.
-	// One-line descriptions paraphrase the surrounding prose for site readers.
 	const backends: { name: string; blurb: string }[] = [
 		{ name: 'env', blurb: 'read raw secret material from a process environment variable.' },
 		{ name: 'file', blurb: 'read raw secret material from a file path on disk.' },
@@ -26,13 +29,15 @@
 		{ name: 'stdin', blurb: 'read raw secret material from stdin at the moment of use.' },
 	];
 
-	// Verbatim "Not Allowed Yet" list from oauth-mux/docs/daemon-boundary.md:17-23.
 	const daemonNotAllowed: string[] = [
 		'Background polling of live provider probes.',
 		'Automatic subscription-spending checks.',
 		'Silent token refresh for providers whose refresh semantics are owned by an upstream CLI.',
 		'Any release gate that depends on a long-running daemon.',
 	];
+
+	// Default to all collapsed so the section reads as a compact summary.
+	let openBackends = $state<string[]>([]);
 </script>
 
 <section id="security" class="container mx-auto px-6 py-16 lg:py-20">
@@ -62,17 +67,32 @@
 		<div>
 			<h3 class="h4 mb-3">Allowed secret backends</h3>
 			<p class="mb-4 text-surface-700-300">
-				The backend stores or returns raw secret material. It does not define provider logic. Any of the following seven
-				backends is allowed; everything else is rejected at config validation time.
+				The backend stores or returns raw secret material. It does not define provider logic. Any of the seven backends
+				below is allowed; everything else is rejected at config validation time. Click a backend to expand its
+				semantics.
 			</p>
-			<ul class="space-y-2">
+			<Accordion
+				value={openBackends}
+				onValueChange={(d) => {
+					openBackends = d.value;
+				}}
+				multiple
+				class="divide-y divide-surface-200-800 border-y border-surface-200-800"
+			>
 				{#each backends as b (b.name)}
-					<li class="flex flex-col gap-1 sm:flex-row sm:gap-3">
-						<code class="font-mono text-sm font-semibold sm:w-24 sm:shrink-0">{b.name}</code>
-						<span class="text-sm text-surface-700-300">{b.blurb}</span>
-					</li>
+					<Accordion.Item value={b.name}>
+						<Accordion.ItemTrigger
+							class="hover:bg-surface-100-900 flex w-full items-center justify-between px-2 py-3 text-left transition-colors"
+						>
+							<code class="font-mono text-sm font-semibold">{b.name}</code>
+							<Accordion.ItemIndicator class="text-surface-500 text-sm">▾</Accordion.ItemIndicator>
+						</Accordion.ItemTrigger>
+						<Accordion.ItemContent class="px-2 pb-3 text-sm text-surface-700-300">
+							{b.blurb}
+						</Accordion.ItemContent>
+					</Accordion.Item>
 				{/each}
-			</ul>
+			</Accordion>
 			<p class="mt-3 text-xs text-surface-600-400">
 				Source:
 				<code class="font-mono">oauth-mux/docs/spec/provider-authoring-checklist-2026-04-26.md:82-90</code>
