@@ -193,20 +193,29 @@ exists to:
 2. Allow future hermetic library targets (e.g., if omux grows shared TS libs
    that other sites should consume).
 3. Add a `bazel mod graph` smoke step to CI as the registry-resolution proof.
-4. Prove at least one low-risk catalog module if the version/package mapping is
-   confirmed before M0 closes.
+4. Prove three low-risk catalog modules selected by
+   `docs/spec/bazel-catalog-audit-2026-04-29.md`.
 
-**`tummycrypt_*` modules to evaluate for M0**: leaf-tier only (no auth/db/
-backend modules — omux is pure-static). Candidates:
-- `tummycrypt_tinyland_color_utils` (zero-Svelte zero-Skeleton pure utility,
-  safe everywhere) — pin once published version and npm import path are
-  confirmed.
-- Defer: `tinyland_composables`, `tinyland_stores`, `tinyland_a11y_engine`,
-  `tinyland_a11y_logger`. Per round 2 explorer 5: `composables` is editor/
-  content-site oriented; `stores` over-fits backend state. omux can adopt
-  narrowly later if a use case appears.
-- Defer: `vite_plugin_a11y` (Tinyland CI/build plugin) — adopt only if we want
-  build-time WCAG contrast checks blocking CI; useful but adds startup cost.
+**M0 `tummycrypt_*` module picks**: leaf-tier only (no auth/db/backend modules
+— omux is pure-static). The M-1.5 audit locks the first consumer set:
+
+```python
+bazel_dep(name = "tummycrypt_tinyland_color_utils",        version = "0.2.3")
+bazel_dep(name = "tummycrypt_vite_plugin_a11y",            version = "0.2.2")
+bazel_dep(name = "tummycrypt_vite_plugin_skeleton_colors", version = "0.2.2")
+```
+
+- `tummycrypt_tinyland_color_utils@0.2.3`: pure OKLCH/WCAG utility surface,
+  zero runtime deps, consumed from `src/` as a real runtime proof.
+- `tummycrypt_vite_plugin_a11y@0.2.2`: build-time Svelte accessibility scan,
+  Vite 8 and Svelte 5 peer-compatible.
+- `tummycrypt_vite_plugin_skeleton_colors@0.2.2`: Skeleton-v4 color-pair
+  utility generation, directly aligned with the Skeleton `4.15.2` baseline.
+
+Defer `tinyland_composables`, `tinyland_stores`, `tinyland_a11y_engine`,
+`tinyland_a11y_logger`, and `tinyland_schemas` until a concrete M5/dynamic
+surface needs them. `_schemas` is specifically blocked for public Bazel
+consumers while its upstream repo remains private.
 
 **Cross-listing**: every `bazel_dep` MUST also appear in `package.json`
 `dependencies` so pnpm/Vite can resolve via npm tarballs. Imports in `src/`
