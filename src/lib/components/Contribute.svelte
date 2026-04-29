@@ -41,7 +41,7 @@
 			</p>
 		</header>
 
-		<aside class="rounded-lg border border-surface-300-700 bg-surface-100-900 p-5">
+		<aside class="border-l-2 border-primary-500/60 pl-6">
 			<h3 class="h4 mb-3">Acceptance gate</h3>
 			<p class="mb-3 text-surface-700-300">A new schema-only provider is acceptable when:</p>
 			<ul class="list-disc space-y-2 pl-6">

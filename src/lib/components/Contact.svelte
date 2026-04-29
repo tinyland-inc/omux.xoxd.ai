@@ -20,20 +20,20 @@
 			</p>
 		</header>
 
-		<ul class="space-y-3">
-			<li class="rounded-lg border border-surface-300-700 bg-surface-100-900 p-4">
+		<ul class="space-y-5 border-l-2 border-primary-500/40 pl-6">
+			<li>
 				<div class="font-medium">GitHub issues for bugs</div>
 				<a class="anchor text-sm" href={issuesUrl} rel="noreferrer noopener" target="_blank">
 					{issuesUrl}
 				</a>
 			</li>
-			<li class="rounded-lg border border-surface-300-700 bg-surface-100-900 p-4">
+			<li>
 				<div class="font-medium">GitHub discussions or issue templates for provider requests</div>
 				<a class="anchor text-sm" href={discussionsUrl} rel="noreferrer noopener" target="_blank">
 					{discussionsUrl}
 				</a>
 			</li>
-			<li class="rounded-lg border border-surface-300-700 bg-surface-100-900 p-4">
+			<li>
 				<div class="font-medium">security contact once public security policy exists</div>
 				<p class="mt-1 text-sm text-surface-700-300">
 					No public security@ address is published yet. For sensitive reports today, use a

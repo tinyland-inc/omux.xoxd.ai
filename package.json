@@ -32,7 +32,8 @@
 		"@fontsource/inter": "^5.2.8",
 		"@fontsource/jetbrains-mono": "^5.2.8",
 		"@tummycrypt/tinyland-color-utils": "0.2.3",
-		"effect": "^3.21.2"
+		"effect": "^3.21.2",
+		"@tummycrypt/tinyvectors": "0.2.3"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.59.1",
