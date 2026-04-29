@@ -33,23 +33,23 @@
 			against the admission matrix and awaits operator-scoped live QA.
 		</p>
 
-		<div class="mb-8 grid gap-4 sm:grid-cols-3">
-			<div class="rounded-lg border border-surface-300-700 bg-surface-100-900 p-4">
-				<div class="text-sm text-surface-600-400">live-proven</div>
-				<div class="mt-1 text-3xl font-bold">{liveProven.length}</div>
-				<div class="mt-1 text-xs text-surface-600-400">{liveProven.map((p) => p.name).join(', ') || '—'}</div>
+		<dl class="mb-8 grid gap-y-6 sm:grid-cols-3 sm:gap-x-8">
+			<div class="border-l-2 border-success-500/60 pl-4">
+				<dt class="font-mono text-xs uppercase tracking-wide text-success-700-300">live-proven</dt>
+				<dd class="mt-1 text-3xl font-bold tracking-tight">{liveProven.length}</dd>
+				<dd class="mt-1 text-xs text-surface-600-400">{liveProven.map((p) => p.name).join(', ') || '—'}</dd>
 			</div>
-			<div class="rounded-lg border border-surface-300-700 bg-surface-100-900 p-4">
-				<div class="text-sm text-surface-600-400">schema-modeled</div>
-				<div class="mt-1 text-3xl font-bold">{schemaModeled.length}</div>
-				<div class="mt-1 text-xs text-surface-600-400">awaiting operator-scoped live QA</div>
+			<div class="border-l-2 border-warning-500/60 pl-4">
+				<dt class="font-mono text-xs uppercase tracking-wide text-warning-700-300">schema-modeled</dt>
+				<dd class="mt-1 text-3xl font-bold tracking-tight">{schemaModeled.length}</dd>
+				<dd class="mt-1 text-xs text-surface-600-400">awaiting operator-scoped live QA</dd>
 			</div>
-			<div class="rounded-lg border border-surface-300-700 bg-surface-100-900 p-4">
-				<div class="text-sm text-surface-600-400">planned</div>
-				<div class="mt-1 text-3xl font-bold">{planned.length}</div>
-				<div class="mt-1 text-xs text-surface-600-400">declared in admission matrix only</div>
+			<div class="border-l-2 border-surface-400/60 pl-4">
+				<dt class="font-mono text-xs uppercase tracking-wide text-surface-600-400">planned</dt>
+				<dd class="mt-1 text-3xl font-bold tracking-tight">{planned.length}</dd>
+				<dd class="mt-1 text-xs text-surface-600-400">declared in admission matrix only</dd>
 			</div>
-		</div>
+		</dl>
 
 		<p class="mb-3 text-sm text-surface-600-400">
 			Source: <code class="font-mono">oauth-mux/docs/spec/provider-probe-admission-matrix-2026-04-26.md:26-39</code>

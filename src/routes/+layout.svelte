@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
 	import { AppBar, Dialog, Navigation } from '@skeletonlabs/skeleton-svelte';
+	import { TinyVectors } from '@tummycrypt/tinyvectors';
 	import '../app.css';
 	import { theme } from '$lib/theme.svelte';
 	import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
@@ -97,7 +99,22 @@
 	{@html `<script type="application/ld+json">${JSON.stringify(jsonLd)}</` + `script>`}
 </svelte:head>
 
-<div class="bg-surface-50-950 flex min-h-screen flex-col">
+<div class="relative flex min-h-screen flex-col bg-transparent">
+	<!-- TinyVectors warm-omux background. Browser-only — the component uses
+	     window/navigator APIs and Svelte effects that crash under SSR. Fixed
+	     full-viewport, behind everything, low opacity. (TIN-801 phase 3.) -->
+	{#if browser}
+		<div class="pointer-events-none fixed inset-0 -z-10" aria-hidden="true" data-testid="omux-vectors-bg">
+			<TinyVectors
+				theme="custom"
+				colors={['#cb6738', '#d99d6a', '#a14a52', '#6b4f3a', '#3d6b8c']}
+				opacity={0.18}
+				blobCount={5}
+				enableScrollPhysics={true}
+				enableDeviceMotion={false}
+			/>
+		</div>
+	{/if}
 	<a
 		href="/#hero"
 		class="focus:bg-primary-500 sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
@@ -194,7 +211,7 @@
 		{@render children?.()}
 	</div>
 
-	<footer class="border-surface-200-800 bg-surface-100-900 mt-16 border-t">
+	<footer class="border-surface-200-800 bg-surface-100-900/80 mt-16 border-t backdrop-blur-sm">
 		<div class="container mx-auto flex flex-col gap-4 px-6 py-8 text-sm md:flex-row md:items-center md:justify-between">
 			<p class="text-surface-700-300">A Jess Sullivan FOSS project built with Tinyland release infrastructure.</p>
 			<nav class="flex flex-wrap gap-4" aria-label="Footer">

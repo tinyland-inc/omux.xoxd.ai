@@ -17,6 +17,9 @@ importers:
       '@tummycrypt/tinyland-color-utils':
         specifier: 0.2.3
         version: 0.2.3
+      '@tummycrypt/tinyvectors':
+        specifier: 0.2.3
+        version: 0.2.3(svelte@5.55.5(@typescript-eslint/types@8.59.1))
       effect:
         specifier: ^3.21.2
         version: 3.21.2
@@ -668,6 +671,12 @@ packages:
   '@tummycrypt/tinyland-color-utils@0.2.3':
     resolution: {integrity: sha512-0BBLLmwdRqlcEp2XCHlK8SoXrXGxhO8oLfYPUyqg9xkQ1HZMD04xf+X6uNQFtA6h+dcGJunFRiPHOJmBHbh5Hg==}
     engines: {node: '>=22.0.0'}
+
+  '@tummycrypt/tinyvectors@0.2.3':
+    resolution: {integrity: sha512-iMfNes8LpZ7Gub7CYwvwxcXA62d8kOrvsBWrWgVUaE0+0DQ6MRxWv1KX+GKFYQ8tAaTXZ7OzHvXwHv+CqL/Uig==}
+    engines: {node: '>=22.0.0'}
+    peerDependencies:
+      svelte: ^5.0.0
 
   '@tummycrypt/vite-plugin-a11y@0.2.2':
     resolution: {integrity: sha512-EQXQPvMclutoB/6ALoIMWezdUsNWo8CR6svNR9ghNjzfu8tdP19xCYnkQtiYIAAVl+LxwwbCgEgSeNYX9tVtfg==}
@@ -2648,6 +2657,10 @@ snapshots:
       vite: 8.0.10(@types/node@22.19.17)(esbuild@0.27.7)(jiti@2.6.1)(tsx@4.21.0)
 
   '@tummycrypt/tinyland-color-utils@0.2.3': {}
+
+  '@tummycrypt/tinyvectors@0.2.3(svelte@5.55.5(@typescript-eslint/types@8.59.1))':
+    dependencies:
+      svelte: 5.55.5(@typescript-eslint/types@8.59.1)
 
   '@tummycrypt/vite-plugin-a11y@0.2.2(svelte@5.55.5(@typescript-eslint/types@8.59.1))(vite@8.0.10(@types/node@22.19.17)(esbuild@0.27.7)(jiti@2.6.1)(tsx@4.21.0))':
     dependencies:
