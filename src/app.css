@@ -3,9 +3,8 @@
 @import '@skeletonlabs/skeleton';
 @import '@skeletonlabs/skeleton-svelte';
 
-/* Use Skeleton's pine theme as a placeholder until M2 introduces the
-   custom omux Warm/Pragmatic theme at src/lib/styles/themes/omux.css. */
-@import '@skeletonlabs/skeleton/themes/pine';
+/* omux Warm/Pragmatic house theme (Skeleton 4 house format, OKLCH). */
+@import './lib/styles/themes/omux.css';
 
 /* Dark-mode strategy: data-mode attribute on <html> (set synchronously
    by the FOUC-prevention script in src/app.html). */
