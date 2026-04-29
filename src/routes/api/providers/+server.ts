@@ -2,8 +2,8 @@
 // Prerendered at build time by adapter-static so the JSON lives at
 // build/api/providers (served as /api/providers).
 import { Schema } from 'effect';
-import providers from '../../../lib/content/providers.json';
-import { ProviderMatrix } from '../../../lib/content/providers.schema';
+import providers from '$lib/content/providers.json';
+import { ProviderMatrix } from '$lib/content/providers.schema';
 import type { RequestHandler } from './$types';
 
 // Fail-fast at build time on malformed provider data.
