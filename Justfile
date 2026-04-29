@@ -142,10 +142,10 @@ install-hooks:
 info:
     @echo "Site:    omux.xoxd.ai"
     @echo "Repo:    tinyland-inc/omux.xoxd.ai"
-    @echo "Node:    $$(node --version)"
-    @echo "pnpm:    $$(pnpm --version 2>/dev/null || echo 'not available')"
-    @echo "Just:    $$(just --version)"
-    @echo "Bazel:   $$(bazelisk --version 2>&1 | head -n1 || echo 'not available')"
+    @echo "Node:    $(node --version)"
+    @echo "pnpm:    $(pnpm --version 2>/dev/null || echo 'not available')"
+    @echo "Just:    $(just --version)"
+    @echo "Bazel:   $(bazelisk --version 2>&1 | head -n1 || echo 'not available')"
     @echo "Root:    {{ root }}"
 
 # View the GitHub repo (opens in browser)
