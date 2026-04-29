@@ -19,6 +19,21 @@ export const Provider = Schema.Struct({
 	scopes: Schema.optional(Schema.Array(Schema.String)),
 	docsUrl: Schema.optional(Schema.String),
 	notes: Schema.optional(Schema.String),
+	/**
+	 * Admission classification per
+	 * `oauth-mux/docs/spec/provider-probe-admission-matrix-2026-04-26.md:14-22`
+	 * (`admitted_http`, `admitted_command`, `mcp_profile`, `unadmitted`).
+	 */
+	admission: Schema.optional(Schema.String),
+	/**
+	 * Concrete probe shape (CLI or HTTP) suitable for rendering in the
+	 * provider matrix table. Lifted verbatim from the admission matrix.
+	 */
+	probeShape: Schema.optional(Schema.String),
+	/**
+	 * Citation for fact-checkability — typically `oauth-mux/<path>:<line>`.
+	 */
+	citation: Schema.optional(Schema.String),
 });
 
 export const ProviderMatrix = Schema.Struct({

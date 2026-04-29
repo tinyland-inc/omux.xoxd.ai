@@ -1,0 +1,78 @@
+<script lang="ts">
+	// M3.2 Install surface.
+	// Sources (verbatim where stated):
+	// - install channel list: oauth-mux/docs/adoption.md:9-15 (verbatim)
+	// - public availability per channel: oauth-mux/docs/spec/product-adoption-sprint-2026-04-28.md:111-114
+	// - npm v0.1.2 baseline: oauth-mux/docs/spec/product-adoption-sprint-2026-04-28.md:14
+	// - REPO override note: oauth-mux/docs/adoption.md:100-102 (canonical source repo)
+	import CodeBlock from './CodeBlock.svelte';
+	import { INSTALL_CHANNELS, type InstallChannelRow } from '$lib/content/cli-examples';
+
+	let {
+		npmHtml,
+		tarballsHtml,
+		brewHtml,
+		debRpmHtml,
+		curlHtml,
+		curlOverrideHtml,
+	}: {
+		npmHtml: string;
+		tarballsHtml: string;
+		brewHtml: string;
+		debRpmHtml: string;
+		curlHtml: string;
+		curlOverrideHtml: string;
+	} = $props();
+
+	const channelHtml: Record<InstallChannelRow['channel'], string> = $derived({
+		npm: npmHtml,
+		'GitHub Release tarballs': tarballsHtml,
+		Homebrew: brewHtml,
+		'deb / rpm': debRpmHtml,
+		'curl installer': curlHtml,
+	});
+
+	function chipClass(status: InstallChannelRow['status']): string {
+		switch (status) {
+			case 'live':
+				return 'chip preset-filled-success-500';
+			case 'staged':
+				return 'chip preset-filled-warning-500';
+			case 'pending':
+				return 'chip preset-tonal-surface';
+		}
+	}
+</script>
+
+<section id="install" class="container mx-auto px-6 py-16 lg:py-20">
+	<div class="max-w-4xl">
+		<h2 class="h2 mb-4">Install</h2>
+		<p class="mb-8 text-lg text-surface-700-300">
+			Each release artifact is derived from the same CI release tree. npm publishes are CI-only; workstation
+			<code class="font-mono">npm publish</code>
+			is not supported.
+		</p>
+
+		<div class="space-y-10">
+			{#each INSTALL_CHANNELS as row (row.channel)}
+				<div>
+					<header class="mb-2 flex flex-wrap items-center gap-3">
+						<h3 class="h3">{row.channel}</h3>
+						<span class={chipClass(row.status)}>{row.statusLabel}</span>
+					</header>
+					<p class="mb-2 text-surface-700-300">{row.description}</p>
+					<CodeBlock html={channelHtml[row.channel]} lang="bash" caption={row.citation} />
+				</div>
+			{/each}
+
+			<div>
+				<h4 class="h4 mb-2">curl installer — repo override</h4>
+				<p class="mb-2 text-sm text-surface-600-400">
+					The canonical public source repo is <code class="font-mono">Jesssullivan/oauth-mux</code> per
+					<code class="font-mono">oauth-mux/docs/adoption.md:100-102</code>.
+				</p>
+				<CodeBlock html={curlOverrideHtml} lang="bash" />
+			</div>
+		</div>
+	</div>
+</section>
