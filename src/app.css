@@ -82,6 +82,35 @@ h4,
 	font-weight: 600;
 }
 
+/* Unified code/table frame.
+   Every <figure> Shiki block, every <table> wrapper, and the Hero
+   <details> raw-JSON disclosure share this envelope so the page reads
+   as one design language instead of three subtly different cards. */
+.code-frame {
+	border: 1px solid var(--color-surface-300);
+	border-radius: 0.5rem;
+	background: color-mix(in oklch, var(--color-surface-100) 80%, transparent);
+	overflow-x: auto;
+}
+[data-mode='dark'] .code-frame {
+	border-color: var(--color-surface-700);
+	background: color-mix(in oklch, var(--color-surface-900) 70%, transparent);
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+	.code-frame {
+		backdrop-filter: blur(8px) saturate(110%);
+		-webkit-backdrop-filter: blur(8px) saturate(110%);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.code-frame {
+		backdrop-filter: none !important;
+		-webkit-backdrop-filter: none !important;
+	}
+}
+
 /* Section background washes. Subtle theme-pair tint that reveals the
    TinyVectors layer behind without painting opaque cards everywhere. */
 .section-tint {

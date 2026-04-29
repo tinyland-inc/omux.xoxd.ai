@@ -65,7 +65,7 @@
 
 	<!-- Raw probe JSON moves into a disclosure: still inspectable, but no
 	     longer dominating the first viewport. (TIN-801.) -->
-	<details class="mt-10 max-w-4xl rounded-lg border border-surface-300-700 bg-surface-100-900">
+	<details class="code-frame mt-10 max-w-4xl">
 		<summary class="cursor-pointer px-4 py-3 text-sm font-medium text-surface-700-300 hover:text-primary-500">
 			View raw probe JSON (3 examples)
 		</summary>

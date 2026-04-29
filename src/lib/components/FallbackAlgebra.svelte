@@ -30,7 +30,7 @@
 			Source: <code class="font-mono">oauth-mux/src/types.zig:245-261</code> —
 			<code class="font-mono">MuxDecision.fromHttpStatus</code> defines the canonical mapping.
 		</p>
-		<div class="overflow-x-auto rounded-lg border border-surface-300-700">
+		<div class="code-frame">
 			<table class="table w-full text-left">
 				<thead class="bg-surface-100-900">
 					<tr>

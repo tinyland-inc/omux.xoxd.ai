@@ -60,7 +60,7 @@
 		     never widens past the viewport. (TIN-802.) -->
 		<ul class="space-y-3 md:hidden">
 			{#each matrix.providers as p (p.slug)}
-				<li class="rounded-lg border border-surface-300-700 bg-surface-100-900 p-4">
+				<li class="code-frame p-4">
 					<div class="mb-2 flex items-start justify-between gap-3">
 						<div class="min-w-0 flex-1">
 							<div class="font-medium">{p.name}</div>
@@ -92,7 +92,7 @@
 		<!-- Tablet/desktop: full table. min-w-0 on the wrapper's parent prevents
 		     intrinsic min-content from leaking into the document layout. -->
 		<div class="hidden min-w-0 md:block">
-			<div class="overflow-x-auto rounded-lg border border-surface-300-700">
+			<div class="code-frame">
 				<table class="table w-full text-left text-sm">
 					<thead class="bg-surface-100-900">
 						<tr>
