@@ -12,7 +12,7 @@
 </script>
 
 <section id="fallback" class="container mx-auto px-6 py-16 lg:py-20">
-	<div class="max-w-4xl">
+	<div class="mx-auto max-w-4xl">
 		<h2 class="h2 mb-4">Fallback algebra</h2>
 		<p class="mb-6 text-lg text-surface-700-300">
 			oauth-mux models credential health as a typed three-layer union — authentication, operability, and availability —

@@ -27,7 +27,7 @@
 </script>
 
 <section id="hero" class="container mx-auto px-6 py-16 lg:py-24">
-	<header class="max-w-3xl">
+	<header class="mx-auto max-w-3xl">
 		<p class="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-primary-500">typed OAuth fallback</p>
 		<h1 class="h1 text-5xl font-bold tracking-tight lg:text-7xl">oauth-mux</h1>
 		<p class="mt-4 text-xl text-surface-700-300 lg:text-2xl">
@@ -52,20 +52,20 @@
 	</header>
 
 	<!-- Single high-signal liveness viz replaces the previous 3-up JSON dump. -->
-	<div class="mt-12 max-w-4xl">
+	<div class="mx-auto mt-12 max-w-4xl">
 		<LivenessLadder />
 	</div>
 
 	<!-- Inline install snippet right under the viz so the eye lands on the
 	     copyable command before scrolling. -->
-	<div class="mt-10 max-w-3xl">
+	<div class="mx-auto mt-10 max-w-3xl">
 		<h2 class="h3 mb-2">Install and probe</h2>
 		<CodeBlock html={installHtml} lang="bash" />
 	</div>
 
 	<!-- Raw probe JSON moves into a disclosure: still inspectable, but no
 	     longer dominating the first viewport. (TIN-801.) -->
-	<details class="code-frame mt-10 max-w-4xl">
+	<details class="mx-auto code-frame mt-10 max-w-4xl">
 		<summary class="cursor-pointer px-4 py-3 text-sm font-medium text-surface-700-300 hover:text-primary-500">
 			View raw probe JSON (3 examples)
 		</summary>

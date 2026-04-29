@@ -4,10 +4,12 @@
 
 	let isOpen = $state(false);
 
-	const MODES: { id: ColorMode; label: string; icon: string }[] = [
-		{ id: 'light', label: 'Light', icon: '☀' },
-		{ id: 'dark', label: 'Dark', icon: '🌙' },
-		{ id: 'system', label: 'System', icon: '🖥' },
+	import { Sun, Moon, Monitor, type Icon as LucideIcon } from '@lucide/svelte';
+
+	const MODES: { id: ColorMode; label: string; icon: typeof LucideIcon }[] = [
+		{ id: 'light', label: 'Light', icon: Sun },
+		{ id: 'dark', label: 'Dark', icon: Moon },
+		{ id: 'system', label: 'System', icon: Monitor },
 	];
 
 	function handleOpenChange(details: { open: boolean }) {
@@ -19,7 +21,7 @@
 		isOpen = false;
 	}
 
-	const triggerIcon = $derived(MODES.find((m) => m.id === theme.mode)?.icon ?? '🖥');
+	const TriggerIcon = $derived(MODES.find((m) => m.id === theme.mode)?.icon ?? Monitor);
 </script>
 
 <Popover
@@ -33,13 +35,14 @@
 		class="bg-surface-100-900 text-primary-500 border-surface-300-700 hover:bg-surface-200-800 rounded border p-2 text-base leading-none transition-colors"
 		aria-label="Theme mode"
 	>
-		<span aria-hidden="true">{triggerIcon}</span>
+		<span aria-hidden="true"><TriggerIcon class="h-4 w-4" /></span>
 	</Popover.Trigger>
 	<Portal>
 		<Popover.Positioner class="z-50">
 			<Popover.Content class="bg-surface-50-950 border-surface-300-700 min-w-[180px] rounded-lg border py-2 shadow-lg">
 				<p class="text-surface-500 px-3 py-1 text-xs font-semibold uppercase">Mode</p>
 				{#each MODES as mode (mode.id)}
+					{@const Icon = mode.icon}
 					{@const active = theme.mode === mode.id}
 					<button
 						type="button"
@@ -51,7 +54,7 @@
 							: ''}"
 					>
 						<span class="flex items-center gap-2">
-							<span aria-hidden="true">{mode.icon}</span>
+							<Icon class="h-4 w-4" aria-hidden="true" />
 							{mode.label}
 						</span>
 						{#if active}
