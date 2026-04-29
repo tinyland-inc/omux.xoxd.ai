@@ -1,0 +1,23 @@
+{
+	"_illustration": "schema-faithful illustration — no live `dead` artifact captured",
+	"provider": "codex",
+	"account": "max-1",
+	"capability": "codex-max",
+	"probe_executed": true,
+	"probe_status": 401,
+	"decision": "try_next_account",
+	"health_key": "codex:max-1#codex-max",
+	"liveness": {
+		"summary": "dead:auth_permanently_failed",
+		"state": "dead",
+		"reason": "auth_permanently_failed",
+		"since": 1777300000
+	},
+	"last_probe": {
+		"source": "capability_probe",
+		"observed_at": 1777300000,
+		"retry_after_s": null,
+		"hint_class": "auth_permanently_failed",
+		"decision": "try_next_account"
+	}
+}

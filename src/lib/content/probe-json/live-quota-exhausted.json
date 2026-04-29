@@ -1,0 +1,22 @@
+{
+	"provider": "codex",
+	"account": "max-1",
+	"capability": "codex-max",
+	"probe_executed": true,
+	"probe_status": 400,
+	"decision": "try_next_account",
+	"health_key": "codex:max-1#codex-max",
+	"liveness": {
+		"summary": "quota_exhausted:reset@1777385940",
+		"state": "live",
+		"availability": "quota_exhausted",
+		"window_resets_at": 1777385940
+	},
+	"last_probe": {
+		"source": "capability_probe",
+		"observed_at": 1777323698,
+		"retry_after_s": 62242,
+		"hint_class": "quota_exhausted",
+		"decision": "try_next_account"
+	}
+}
