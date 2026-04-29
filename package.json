@@ -42,7 +42,7 @@
 		"@tailwindcss/vite": "^4.2.4",
 		"@tummycrypt/vite-plugin-a11y": "0.2.2",
 		"@tummycrypt/vite-plugin-skeleton-colors": "0.2.2",
-		"@types/node": "^22.0.0",
+		"@types/node": "^25.6.0",
 		"@vitest/coverage-v8": "^4.1.4",
 		"eslint": "^9.39.2",
 		"eslint-config-prettier": "^10.1.8",
