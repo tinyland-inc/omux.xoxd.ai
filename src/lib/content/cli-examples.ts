@@ -1,9 +1,15 @@
-// M3.1 — verbatim content lifted from oauth-mux source.
+// M3.1 + M3.2 — verbatim content lifted from oauth-mux source.
 // Citations:
 // - INSTALL_AND_PROBE: oauth-mux/docs/spec/product-adoption-sprint-2026-04-28.md:89-93
 // - ZIG_LIVENESS_BLOCK: oauth-mux/src/types.zig:152-215
 // - ZIG_DEAD_DEGRADED: oauth-mux/src/types.zig:224-240
 // - ZIG_MUX_DECISION: oauth-mux/src/types.zig:245-261
+// - INSTALL_NPM, INSTALL_TARBALLS, INSTALL_BREW, INSTALL_DEB_RPM,
+//   INSTALL_CURL, INSTALL_CURL_OVERRIDE: oauth-mux/docs/adoption.md:9-15 +
+//   product-adoption-sprint-2026-04-28.md:111-114
+// - CODEX_HAPPY_PATH: oauth-mux/docs/onboarding.md:43-50
+// - GENERIC_AUTHOR_VALIDATE: oauth-mux/docs/onboarding.md:158-163
+// - AGENT_DISCOVERY: oauth-mux/docs/onboarding.md:107-114
 
 export const INSTALL_AND_PROBE = `npm install -g oauth-mux
 oauth-mux codex onboard
@@ -91,6 +97,131 @@ pub const DeadReason = enum {
     account_deleted,
     auth_permanently_failed,
 };`;
+
+// ─── M3.2 install channel snippets ──────────────────────────────────────────
+
+export const INSTALL_NPM = `npm install -g oauth-mux`;
+
+export const INSTALL_TARBALLS = `# six platform tarballs per release
+oauth-mux-x86_64-linux.tar.gz
+oauth-mux-aarch64-linux.tar.gz
+oauth-mux-x86_64-macos.tar.gz
+oauth-mux-aarch64-macos.tar.gz
+oauth-mux-x86_64-windows.tar.gz
+oauth-mux-aarch64-windows.tar.gz`;
+
+export const INSTALL_BREW = `brew install tinyland-inc/tools/oauth-mux`;
+
+export const INSTALL_DEB_RPM = `# deb/rpm packages for Linux hosts
+# release-staged via CI; no public apt/yum repository yet`;
+
+export const INSTALL_CURL = `curl -fsSL https://omux.xoxd.ai/install.sh | sh`;
+
+export const INSTALL_CURL_OVERRIDE = `# override the source repository (defaults to Jesssullivan/oauth-mux)
+REPO=Jesssullivan/oauth-mux curl -fsSL https://omux.xoxd.ai/install.sh | sh`;
+
+// ─── M3.2 Codex three-account happy path ────────────────────────────────────
+// Verbatim: oauth-mux/docs/onboarding.md:45-50
+
+export const CODEX_HAPPY_PATH = `oauth-mux init --codex-max
+oauth-mux doctor
+oauth-mux setup codex
+oauth-mux codex canary`;
+
+// ─── M3.2 Generic provider author path ──────────────────────────────────────
+// Verbatim: oauth-mux/docs/onboarding.md:155-163
+
+export const GENERIC_AUTHOR_VALIDATE = `oauth-mux config validate
+oauth-mux doctor --json
+oauth-mux report --redacted --json
+oauth-mux discover --json`;
+
+// ─── M3.2 Agent discovery path ─────────────────────────────────────────────
+// Verbatim: oauth-mux/docs/onboarding.md:107-114
+
+export const AGENT_DISCOVERY = `oauth-mux doctor --json
+oauth-mux report --redacted --json
+oauth-mux providers list --json
+oauth-mux discover --json
+oauth-mux status --json
+oauth-mux health --json`;
+
+/**
+ * Verbatim from oauth-mux/dist/live-qa/20260427T204722Z/discover.json:1
+ * (`agent_safe_commands` array).
+ */
+export const AGENT_SAFE_COMMANDS: readonly string[] = [
+	'oauth-mux config validate',
+	'oauth-mux status --json',
+	'oauth-mux health --json',
+	'oauth-mux probe --profile <profile> --capability <capability> --json',
+	'oauth-mux env --profile <profile> --capability <capability> --shell <shell>',
+	'oauth-mux exec --profile <profile> --capability <capability> -- <command>',
+];
+
+/**
+ * Verbatim from oauth-mux/docs/onboarding.md:132-137 — agent must-not list.
+ */
+export const AGENT_MUST_NOT: readonly string[] = [
+	'read files referenced by `secret.path`;',
+	'print token-shaped values;',
+	'copy OAuth stores between accounts;',
+	'run live probes unless the user explicitly authorized spend.',
+];
+
+/**
+ * Install channel rows for the InstallSurface component.
+ * Status reflects current oauth-mux state per
+ * `oauth-mux/docs/spec/product-adoption-sprint-2026-04-28.md:111-114` and
+ * `oauth-mux/docs/adoption.md:9-15`.
+ */
+export interface InstallChannelRow {
+	channel: string;
+	status: 'live' | 'staged' | 'pending';
+	statusLabel: string;
+	description: string;
+	citation: string;
+}
+
+export const INSTALL_CHANNELS: InstallChannelRow[] = [
+	{
+		channel: 'npm',
+		status: 'live',
+		statusLabel: 'live (v0.1.2)',
+		description: 'Published from CI release tarballs with npm provenance.',
+		citation: 'oauth-mux/docs/spec/product-adoption-sprint-2026-04-28.md:14-19',
+	},
+	{
+		channel: 'GitHub Release tarballs',
+		status: 'live',
+		statusLabel: 'live',
+		description: 'Six platform tarballs per release; suitable for air-gapped or policy-managed systems.',
+		citation: 'oauth-mux/docs/adoption.md:14-15',
+	},
+	{
+		channel: 'Homebrew',
+		status: 'staged',
+		statusLabel: 'release-staged',
+		description:
+			'Formula audit has been exercised through release proof / registry dry-run; public publication pending.',
+		citation: 'oauth-mux/docs/spec/product-adoption-sprint-2026-04-28.md:111-114',
+	},
+	{
+		channel: 'deb / rpm',
+		status: 'staged',
+		statusLabel: 'release-staged',
+		description: 'deb/rpm metadata exercised in dry-run; no public apt/yum repository yet.',
+		citation: 'oauth-mux/docs/spec/product-adoption-sprint-2026-04-28.md:111-114',
+	},
+	{
+		channel: 'curl installer',
+		status: 'staged',
+		statusLabel: 'release-staged',
+		description:
+			'Installer smoke is run from CI; override the source repo with `REPO=Jesssullivan/oauth-mux`. Public hosting pending.',
+		citation: 'oauth-mux/docs/adoption.md:13 + product-adoption-sprint-2026-04-28.md:111-114',
+	},
+];
 
 export interface MuxDecisionRow {
 	decision: string;
