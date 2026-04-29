@@ -6,8 +6,18 @@
 /* omux Warm/Pragmatic house theme (Skeleton 4 house format, OKLCH). */
 @import './lib/styles/themes/omux.css';
 
-/* Dark-mode strategy: data-mode attribute on <html> (set synchronously
-   by the FOUC-prevention script in src/app.html). */
+/* Self-hosted fonts. omux theme declares Inter for base + heading; JetBrains
+   Mono for code blocks (Fira Code-style ligatures without the visual heaviness). */
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/latin-600.css';
+@import '@fontsource/inter/latin-700.css';
+@import '@fontsource/jetbrains-mono/latin-400.css';
+@import '@fontsource/jetbrains-mono/latin-700.css';
+
+/* Dark-mode strategy: data-mode attribute on <html>, set synchronously by the
+   FOUC-prevention script in src/app.html. Color pairs (bg-surface-100-900) use
+   the native light-dark() function which switches via document color-scheme. */
 @custom-variant dark (&:where([data-mode='dark'], [data-mode='dark'] *));
 
 [data-mode='light'] {
@@ -17,7 +27,182 @@
 	color-scheme: dark;
 }
 
+/* ===== Body + global typography baseline =====
+   Skeleton 4 themes declare --typo-base/heading--font-family, but app code
+   has to anchor body to that variable so prose actually picks up Inter. */
+html {
+	overflow-x: hidden;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+}
+
 body {
-	background-color: var(--body-background-color);
-	color: var(--body-color);
+	font-family: var(--typo-base--font-family);
+	font-feature-settings:
+		'cv02' 1,
+		'cv03' 1,
+		'cv04' 1,
+		'cv11' 1;
+	overscroll-behavior-y: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--typo-heading--font-family);
+}
+
+code,
+kbd,
+pre,
+samp,
+.font-mono {
+	font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+	font-feature-settings:
+		'liga' 1,
+		'calt' 1;
+}
+
+/* Shiki-rendered code blocks preserve their background + theme tokens but
+   inherit our mono stack and ligatures. */
+pre.shiki,
+pre.shiki code,
+pre.shiki span {
+	font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+	font-feature-settings:
+		'liga' 1,
+		'calt' 1 !important;
+}
+
+/* ===== Prose styling for marketing copy =====
+   Lifted from jesssullivan.github.io-vite8 baseline, trimmed for single-page
+   devtool surface (no blog-prose, no embed images). */
+.prose {
+	line-height: 1.7;
+}
+
+.prose p {
+	margin-bottom: 1.25em;
+}
+
+.prose a {
+	color: var(--color-primary-500);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.prose a:hover {
+	color: var(--color-primary-600);
+}
+
+.prose ul,
+.prose ol {
+	margin-bottom: 1.25em;
+	padding-left: 1.5em;
+}
+
+.prose ul {
+	list-style: disc;
+}
+.prose ol {
+	list-style: decimal;
+}
+
+.prose li {
+	margin-bottom: 0.4em;
+}
+
+.prose blockquote {
+	border-left: 3px solid var(--color-primary-500);
+	padding-left: 1em;
+	margin: 1.5em 0;
+	font-style: italic;
+	color: var(--color-surface-700-300);
+}
+
+.prose code:not(pre code) {
+	font-size: 0.875em;
+	padding: 0.15em 0.35em;
+	border-radius: 0.25rem;
+	background: var(--color-surface-100-900);
+	color: var(--color-surface-900-100);
+}
+
+/* ===== AppBar frosted-glass =====
+   Replaces the flat `bg-surface-50-950/90 backdrop-blur` look with a real
+   frosted-glass effect that reads correctly over scrolled content. */
+.glass-nav {
+	background: color-mix(in srgb, var(--color-surface-50) 70%, transparent);
+	border-bottom: 1px solid color-mix(in srgb, var(--color-surface-200) 50%, transparent);
+}
+
+[data-mode='dark'] .glass-nav {
+	background: color-mix(in srgb, var(--color-surface-950) 70%, transparent);
+	border-bottom: 1px solid color-mix(in srgb, var(--color-surface-800) 50%, transparent);
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+	.glass-nav {
+		background: color-mix(in srgb, var(--color-surface-50) 30%, transparent);
+		backdrop-filter: blur(16px) saturate(150%);
+		-webkit-backdrop-filter: blur(16px) saturate(150%);
+	}
+
+	[data-mode='dark'] .glass-nav {
+		background: color-mix(in srgb, var(--color-surface-950) 35%, transparent);
+		backdrop-filter: blur(16px) saturate(120%);
+		-webkit-backdrop-filter: blur(16px) saturate(120%);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.glass-nav {
+		backdrop-filter: none !important;
+		-webkit-backdrop-filter: none !important;
+	}
+}
+
+/* ===== Focus visibility =====
+   Required for WCAG AA per the founding-prompt accessibility line. */
+:focus-visible {
+	outline: 2px solid var(--color-primary-500);
+	outline-offset: 2px;
+	border-radius: 2px;
+}
+
+/* ===== Scrollbar polish (sidebar + drawer)
+   Subtle, picks up theme surface tokens. */
+.sidebar-scroll {
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-surface-400) transparent;
+}
+
+.sidebar-scroll::-webkit-scrollbar {
+	width: 4px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+	background: var(--color-surface-400);
+	border-radius: 2px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb:hover {
+	background: var(--color-surface-500);
+}
+
+/* ===== Reduced motion =====
+   Disable animations + transitions for users who request it. */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
 }

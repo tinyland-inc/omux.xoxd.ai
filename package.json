@@ -29,6 +29,8 @@
 		"test:e2e": "playwright test"
 	},
 	"dependencies": {
+		"@fontsource/inter": "^5.2.8",
+		"@fontsource/jetbrains-mono": "^5.2.8",
 		"@tummycrypt/tinyland-color-utils": "0.2.3",
 		"effect": "^3.21.2"
 	},
