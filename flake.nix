@@ -17,9 +17,9 @@
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             nodejs_22
-            nodePackages.pnpm
-            nodePackages.typescript
-            nodePackages.typescript-language-server
+            pnpm
+            typescript
+            typescript-language-server
             just
             git
             gh
