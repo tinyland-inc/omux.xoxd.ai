@@ -1,7 +1,10 @@
 <script lang="ts">
-	// M5.1 (TIN-787) — agent-snippet page.
-	// Renders the "drop this into your AI assistant" snippet from the
-	// product adoption sprint plan as copy-friendly markdown.
+	// M5.1 (TIN-787) + TIN-801 phase 4 — agent-snippet page.
+	// Renders the "drop this into your AI assistant" snippet as copy-friendly
+	// markdown. Copy feedback now goes through Skeleton 4 Toast (Zag.js
+	// underneath) instead of inline button-text mutation, so the affordance
+	// is consistent with the rest of the design system.
+	import { createToaster, Toast, Portal } from '@skeletonlabs/skeleton-svelte';
 
 	const snippet = `oauth-mux is a typed OAuth multiplexer that gives multi-account AI harnesses
 deterministic account fallback and redacted account discovery.
@@ -20,19 +23,24 @@ Source: https://github.com/Jesssullivan/oauth-mux
 Site:   https://omux.xoxd.ai
 `;
 
-	let copied = $state(false);
-	let copyError = $state(false);
+	const toaster = createToaster({ placement: 'bottom-end', overlap: true });
 
 	async function copySnippet() {
-		copyError = false;
 		try {
 			await navigator.clipboard.writeText(snippet);
-			copied = true;
-			setTimeout(() => {
-				copied = false;
-			}, 2000);
+			toaster.create({
+				title: 'Copied to clipboard',
+				description: 'Snippet ready to paste into your AI coding assistant.',
+				type: 'success',
+				duration: 3000,
+			});
 		} catch {
-			copyError = true;
+			toaster.create({
+				title: 'Copy failed',
+				description: 'Browser blocked clipboard access — select the text manually.',
+				type: 'error',
+				duration: 5000,
+			});
 		}
 	}
 </script>
@@ -45,7 +53,7 @@ Site:   https://omux.xoxd.ai
 	/>
 </svelte:head>
 
-<main class="bg-surface-50-950">
+<main>
 	<section class="container mx-auto px-6 py-12 lg:py-16">
 		<div class="max-w-4xl space-y-8">
 			<header>
@@ -57,24 +65,17 @@ Site:   https://omux.xoxd.ai
 			</header>
 
 			<div class="space-y-3">
-				<div class="flex flex-wrap items-center gap-3">
-					<button type="button" class="btn preset-filled-primary-500" onclick={copySnippet} aria-live="polite">
-						{#if copied}
-							Copied!
-						{:else if copyError}
-							Copy failed — select and copy manually
-						{:else}
-							Copy to clipboard
-						{/if}
-					</button>
-				</div>
-				<pre
-					class="overflow-x-auto rounded-lg border border-surface-300-700 bg-surface-100-900 p-4 text-sm leading-relaxed"><code
-						class="font-mono">{snippet}</code
-					></pre>
+				<button
+					type="button"
+					class="btn preset-filled-primary-500 px-5 py-2.5 text-sm font-semibold tracking-tight"
+					onclick={copySnippet}
+				>
+					Copy to clipboard
+				</button>
+				<pre class="code-frame p-4 text-sm leading-relaxed"><code class="font-mono">{snippet}</code></pre>
 			</div>
 
-			<aside class="rounded-lg border border-surface-300-700 bg-surface-100-900 p-5">
+			<aside class="border-l-2 border-primary-500/40 pl-6">
 				<p class="text-sm text-surface-700-300">
 					The provider matrix is also available at
 					<a class="anchor font-mono" href="/api/providers">https://omux.xoxd.ai/api/providers</a>
@@ -84,3 +85,7 @@ Site:   https://omux.xoxd.ai
 		</div>
 	</section>
 </main>
+
+<Portal>
+	<Toast.Group {toaster} />
+</Portal>

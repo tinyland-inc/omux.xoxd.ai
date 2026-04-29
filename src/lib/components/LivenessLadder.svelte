@@ -68,7 +68,7 @@
 	}
 </script>
 
-<figure class="my-2 overflow-hidden rounded-xl border border-surface-300-700 bg-surface-50-950">
+<figure class="code-frame my-2 overflow-hidden">
 	<figcaption
 		class="border-b border-surface-300-700 bg-surface-100-900 px-4 py-2 text-xs uppercase tracking-wide text-surface-600-400"
 	>
