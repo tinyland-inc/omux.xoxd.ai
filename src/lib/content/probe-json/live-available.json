@@ -1,0 +1,21 @@
+{
+	"provider": "codex",
+	"account": "max-1",
+	"capability": "codex-mini",
+	"probe_executed": true,
+	"probe_status": 200,
+	"decision": "use_this",
+	"health_key": "codex:max-1#codex-mini",
+	"liveness": {
+		"summary": "available",
+		"state": "live",
+		"availability": "available"
+	},
+	"last_probe": {
+		"source": "capability_probe",
+		"observed_at": 1777322850,
+		"retry_after_s": null,
+		"hint_class": "none",
+		"decision": "use_this"
+	}
+}
