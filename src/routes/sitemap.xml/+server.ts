@@ -3,7 +3,7 @@
 import type { RequestHandler } from './$types';
 
 const SITE = 'https://omux.xoxd.ai';
-const PAGES: string[] = ['/'];
+const PAGES: string[] = ['/', '/agent-snippet', '/api/providers'];
 
 export const prerender = true;
 
