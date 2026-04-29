@@ -76,7 +76,7 @@ Site:   https://omux.xoxd.ai
 
 			<aside class="rounded-lg border border-surface-300-700 bg-surface-100-900 p-5">
 				<p class="text-sm text-surface-700-300">
-					This snippet is also available at
+					The provider matrix is also available at
 					<a class="anchor font-mono" href="/api/providers">https://omux.xoxd.ai/api/providers</a>
 					as machine-readable JSON.
 				</p>
