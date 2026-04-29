@@ -1,13 +1,16 @@
 <script lang="ts">
-	// M3.1 + M3.2 page composition.
-	// Hero + Problem + FallbackAlgebra (M3.1) + Install + FirstRun + ProviderMatrix (M3.2).
-	// M3.3 will add security/contribute/contact + sitemap + SEO.
+	// M3.1 + M3.2 + M3.3 page composition.
+	// Hero + Problem + FallbackAlgebra (M3.1) + Install + FirstRun + ProviderMatrix (M3.2)
+	// + SecurityPosture + Contribute + Contact (M3.3).
 	import Hero from '$lib/components/Hero.svelte';
 	import ProblemStatement from '$lib/components/ProblemStatement.svelte';
 	import FallbackAlgebra from '$lib/components/FallbackAlgebra.svelte';
 	import InstallSurface from '$lib/components/InstallSurface.svelte';
 	import FirstRunFlows from '$lib/components/FirstRunFlows.svelte';
 	import ProviderMatrix from '$lib/components/ProviderMatrix.svelte';
+	import SecurityPosture from '$lib/components/SecurityPosture.svelte';
+	import Contribute from '$lib/components/Contribute.svelte';
+	import Contact from '$lib/components/Contact.svelte';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
@@ -41,4 +44,7 @@
 		agentDiscoveryHtml={data.agentDiscoveryHtml}
 	/>
 	<ProviderMatrix matrix={data.providerMatrix} />
+	<SecurityPosture />
+	<Contribute />
+	<Contact />
 </main>
