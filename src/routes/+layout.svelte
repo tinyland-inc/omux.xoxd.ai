@@ -1,19 +1,144 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { AppBar, Dialog, Navigation } from '@skeletonlabs/skeleton-svelte';
 	import '../app.css';
 	import { theme } from '$lib/theme.svelte';
 	import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
 
 	let { children } = $props();
 
+	let mobileOpen = $state(false);
+
+	const navLinks: { href: string; label: string }[] = [
+		{ href: '#problem', label: 'Problem' },
+		{ href: '#fallback', label: 'Fallback' },
+		{ href: '#install', label: 'Install' },
+		{ href: '#first-run', label: 'First-run' },
+		{ href: '#security', label: 'Security' },
+		{ href: '#providers', label: 'Providers' },
+		{ href: '#contribute', label: 'Contribute' },
+		{ href: '#contact', label: 'Contact' },
+	];
+
+	const REPO_URL = 'https://github.com/Jesssullivan/oauth-mux';
+	const NPM_URL = 'https://www.npmjs.com/package/oauth-mux';
+	const SECURITY_URL = 'https://github.com/Jesssullivan/oauth-mux/issues';
+	const LICENSE_URL = `${REPO_URL}/blob/main/LICENSE`;
+
 	onMount(() => {
 		theme.init();
 	});
 </script>
 
-<div class="bg-surface-50-950 min-h-screen">
-	<header class="absolute top-4 right-4 z-50">
-		<ThemeSwitcher />
-	</header>
-	{@render children?.()}
+<div class="bg-surface-50-950 flex min-h-screen flex-col">
+	<a
+		href="#hero"
+		class="focus:bg-primary-500 sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+		>Skip to content</a
+	>
+
+	<AppBar class="border-surface-200-800 bg-surface-50-950/90 sticky top-0 z-40 border-b shadow-sm backdrop-blur">
+		<AppBar.Toolbar class="grid-cols-[auto_1fr_auto] px-4 py-2">
+			<AppBar.Lead>
+				<a
+					href="/"
+					class="hover:text-primary-500 font-mono text-lg font-bold tracking-tight whitespace-nowrap transition-colors"
+					aria-label="oauth-mux home"
+				>
+					oauth-mux
+				</a>
+			</AppBar.Lead>
+			<AppBar.Headline></AppBar.Headline>
+			<AppBar.Trail>
+				<nav class="hidden items-center gap-4 text-sm md:flex" aria-label="Section navigation">
+					{#each navLinks as { href, label } (href)}
+						<a {href} class="hover:text-primary-500 transition-colors">{label}</a>
+					{/each}
+					<ThemeSwitcher />
+				</nav>
+
+				<!-- Mobile drawer -->
+				<Dialog
+					open={mobileOpen}
+					onOpenChange={(d) => {
+						mobileOpen = d.open;
+					}}
+					closeOnInteractOutside
+					closeOnEscape
+					preventScroll
+				>
+					<Dialog.Trigger class="hover:bg-surface-200-800 rounded p-2 md:hidden" aria-label="Open navigation">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							class="h-5 w-5"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+						>
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+						</svg>
+					</Dialog.Trigger>
+					<Dialog.Backdrop class="fixed inset-0 z-40 bg-black/40" />
+					<Dialog.Positioner class="fixed inset-y-0 right-0 z-50 flex w-72 max-w-[85vw]">
+						<Dialog.Content class="bg-surface-50-950 flex w-full flex-col">
+							<div class="border-surface-200-800 flex items-center justify-between border-b px-4 py-3">
+								<span class="font-mono text-sm font-semibold">oauth-mux</span>
+								<Dialog.CloseTrigger class="hover:bg-surface-200-800 rounded p-2" aria-label="Close navigation">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="h-5 w-5"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+									</svg>
+								</Dialog.CloseTrigger>
+							</div>
+							<Navigation layout="sidebar">
+								<Navigation.Content>
+									<Navigation.Menu>
+										{#each navLinks as { href, label } (href)}
+											<Navigation.TriggerAnchor
+												{href}
+												onclick={() => {
+													mobileOpen = false;
+												}}
+											>
+												<Navigation.TriggerText>{label}</Navigation.TriggerText>
+											</Navigation.TriggerAnchor>
+										{/each}
+									</Navigation.Menu>
+								</Navigation.Content>
+								<Navigation.Footer>
+									<div class="flex w-full justify-center py-2">
+										<ThemeSwitcher />
+									</div>
+								</Navigation.Footer>
+							</Navigation>
+						</Dialog.Content>
+					</Dialog.Positioner>
+				</Dialog>
+			</AppBar.Trail>
+		</AppBar.Toolbar>
+	</AppBar>
+
+	<div class="flex-1">
+		{@render children?.()}
+	</div>
+
+	<footer class="border-surface-200-800 bg-surface-100-900 mt-16 border-t">
+		<div class="container mx-auto flex flex-col gap-4 px-6 py-8 text-sm md:flex-row md:items-center md:justify-between">
+			<p class="text-surface-700-300">A Jess Sullivan FOSS project built with Tinyland release infrastructure.</p>
+			<nav class="flex flex-wrap gap-4" aria-label="Footer">
+				<a href={REPO_URL} target="_blank" rel="noopener" class="hover:text-primary-500 transition-colors">GitHub</a>
+				<a href={NPM_URL} target="_blank" rel="noopener" class="hover:text-primary-500 transition-colors">npm</a>
+				<a href={LICENSE_URL} target="_blank" rel="noopener" class="hover:text-primary-500 transition-colors">License</a
+				>
+				<a href={SECURITY_URL} target="_blank" rel="noopener" class="hover:text-primary-500 transition-colors"
+					>Security</a
+				>
+			</nav>
+		</div>
+	</footer>
 </div>
