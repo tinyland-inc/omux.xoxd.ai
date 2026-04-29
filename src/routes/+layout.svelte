@@ -104,7 +104,7 @@
 		>Skip to content</a
 	>
 
-	<AppBar class="border-surface-200-800 bg-surface-50-950/90 sticky top-0 z-40 border-b shadow-sm backdrop-blur">
+	<AppBar class="glass-nav sticky top-0 z-40 shadow-sm">
 		<AppBar.Toolbar class="grid-cols-[auto_1fr_auto] px-4 py-2">
 			<AppBar.Lead>
 				<a
@@ -117,7 +117,7 @@
 			</AppBar.Lead>
 			<AppBar.Headline></AppBar.Headline>
 			<AppBar.Trail>
-				<nav class="hidden items-center gap-4 text-sm md:flex" aria-label="Section navigation">
+				<nav class="hidden items-center gap-4 text-sm lg:flex" aria-label="Section navigation">
 					{#each navLinks as { href, label } (href)}
 						<a {href} class="hover:text-primary-500 transition-colors">{label}</a>
 					{/each}
@@ -134,7 +134,7 @@
 					closeOnEscape
 					preventScroll
 				>
-					<Dialog.Trigger class="hover:bg-surface-200-800 rounded p-2 md:hidden" aria-label="Open navigation">
+					<Dialog.Trigger class="hover:bg-surface-200-800 rounded p-2 lg:hidden" aria-label="Open navigation">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							class="h-5 w-5"

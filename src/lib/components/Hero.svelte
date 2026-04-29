@@ -1,12 +1,17 @@
 <script lang="ts">
-	// M3.1 Hero. Content lifted from:
-	// - oauth-mux/docs/spec/product-adoption-sprint-2026-04-28.md:84-96
-	//   (headline, subhead, install snippet, JSON excerpt requirement)
-	// JSON excerpts:
+	// M3.1 + TIN-801 Hero. Composition follows the launch-bar acceptance:
+	// name, literal value prop, install command, ONE high-signal liveness viz
+	// (LivenessLadder), and TWO clear CTAs. Raw probe JSON moves into a
+	// disclosure so it stays accessible without dominating the first viewport.
+	//
+	// Sources retained for the disclosed JSON:
 	// - live.available: oauth-mux/dist/live-qa/20260427T204722Z/codex_max-1_codex-mini.json:2
 	// - live.quota_exhausted: oauth-mux/dist/live-qa/20260427T210131Z/codex_max-1_codex-max.json:2
 	// - dead.auth_permanently_failed: schema-faithful illustration (no live artifact)
 	import CodeBlock from './CodeBlock.svelte';
+	import LivenessLadder from './LivenessLadder.svelte';
+
+	const REPO_URL = 'https://github.com/Jesssullivan/oauth-mux';
 
 	let {
 		installHtml,
@@ -22,51 +27,65 @@
 </script>
 
 <section id="hero" class="container mx-auto px-6 py-16 lg:py-24">
-	<header class="mb-10 max-w-3xl">
+	<header class="max-w-3xl">
+		<p class="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-primary-500">typed OAuth fallback</p>
 		<h1 class="h1 text-5xl font-bold tracking-tight lg:text-7xl">oauth-mux</h1>
-		<p class="mt-4 text-xl text-surface-700-300 lg:text-2xl">Typed OAuth fallback for AI harness accounts.</p>
+		<p class="mt-4 text-xl text-surface-700-300 lg:text-2xl">
+			Deterministic account routing for AI coding harnesses. Redacted discovery, schema-modeled providers, one
+			live-proven path today.
+		</p>
+
+		<!-- Two CTAs: primary scrolls to install, secondary opens upstream repo. -->
+		<div class="mt-8 flex flex-wrap gap-3">
+			<a href="#install" class="btn preset-filled-primary-500 px-5 py-2.5 text-sm font-semibold tracking-tight">
+				Install &nbsp;→
+			</a>
+			<a
+				href={REPO_URL}
+				rel="noreferrer noopener"
+				target="_blank"
+				class="btn preset-tonal-surface px-5 py-2.5 text-sm font-semibold tracking-tight"
+			>
+				View on GitHub
+			</a>
+		</div>
 	</header>
 
-	<div class="max-w-3xl">
+	<!-- Single high-signal liveness viz replaces the previous 3-up JSON dump. -->
+	<div class="mt-12 max-w-4xl">
+		<LivenessLadder />
+	</div>
+
+	<!-- Inline install snippet right under the viz so the eye lands on the
+	     copyable command before scrolling. -->
+	<div class="mt-10 max-w-3xl">
 		<h2 class="h3 mb-2">Install and probe</h2>
 		<CodeBlock html={installHtml} lang="bash" />
 	</div>
 
-	<!-- min-w-0 on grid children is the canonical fix for grid items inheriting
-	     intrinsic min-content width and leaking past the viewport. Without it, a
-	     long un-breakable Shiki JSON line forces the grid item wider than the
-	     container even when the figure has overflow-x-auto. (TIN-802.) -->
-	<div class="mt-10 grid gap-6 lg:grid-cols-3">
-		<div class="min-w-0">
-			<h3 class="h4 mb-1">live.available</h3>
-			<p class="text-sm text-surface-600-400">
-				Codex max account, capability codex-mini — probe returns 200, decision <code class="font-mono">use_this</code>.
-			</p>
-			<CodeBlock html={liveAvailHtml} lang="json" />
+	<!-- Raw probe JSON moves into a disclosure: still inspectable, but no
+	     longer dominating the first viewport. (TIN-801.) -->
+	<details class="mt-10 max-w-4xl rounded-lg border border-surface-300-700 bg-surface-100-900">
+		<summary class="cursor-pointer px-4 py-3 text-sm font-medium text-surface-700-300 hover:text-primary-500">
+			View raw probe JSON (3 examples)
+		</summary>
+		<div class="grid gap-6 px-4 pb-4 lg:grid-cols-3">
+			<div class="min-w-0">
+				<h3 class="mb-1 font-mono text-xs uppercase tracking-wide text-success-700-300">live.available</h3>
+				<CodeBlock html={liveAvailHtml} lang="json" />
+			</div>
+			<div class="min-w-0">
+				<h3 class="mb-1 font-mono text-xs uppercase tracking-wide text-warning-700-300">live.quota_exhausted</h3>
+				<CodeBlock html={liveQuotaHtml} lang="json" />
+			</div>
+			<div class="min-w-0">
+				<h3 class="mb-1 font-mono text-xs uppercase tracking-wide text-error-700-300">dead.auth_permanently_failed</h3>
+				<CodeBlock
+					html={deadIllusHtml}
+					lang="json"
+					caption="schema-faithful illustration — no live `dead` artifact captured"
+				/>
+			</div>
 		</div>
-		<div class="min-w-0">
-			<h3 class="h4 mb-1">live.quota_exhausted</h3>
-			<p class="text-sm text-surface-600-400">
-				Same account at codex-max — quota exhausted with a known reset window; decision
-				<code class="font-mono">try_next_account</code>.
-			</p>
-			<CodeBlock html={liveQuotaHtml} lang="json" />
-		</div>
-		<div class="min-w-0">
-			<h3 class="h4 mb-1">dead.auth_permanently_failed</h3>
-			<p class="text-sm text-surface-600-400">
-				Schema-faithful illustration — no live <code class="font-mono">dead</code> artifact captured.
-			</p>
-			<CodeBlock
-				html={deadIllusHtml}
-				lang="json"
-				caption="schema-faithful illustration — no live `dead` artifact captured"
-			/>
-		</div>
-	</div>
-
-	<footer class="mt-12 text-sm text-surface-600-400">
-		A Jess Sullivan FOSS project built with Tinyland release infrastructure.
-		<a class="anchor" href="https://github.com/Jesssullivan/oauth-mux">github.com/Jesssullivan/oauth-mux</a>
-	</footer>
+	</details>
 </section>

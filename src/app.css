@@ -47,6 +47,22 @@ body {
 	overscroll-behavior-y: none;
 }
 
+/* Section anchor offset so #hash jumps land below the sticky AppBar.
+   AppBar is ~56px tall at our spacing; 64px gives a small breathing gap. */
+:where([id]) {
+	scroll-margin-top: 64px;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}
+
 h1,
 h2,
 h3,
