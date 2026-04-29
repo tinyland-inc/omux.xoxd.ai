@@ -28,7 +28,70 @@
 	onMount(() => {
 		theme.init();
 	});
+
+	// M3.3 SEO surface. Static values only — no per-page reactivity.
+	// JSON-LD describes both the WebSite and the SoftwareApplication (the oauth-mux CLI)
+	// so structured-data tooling can resolve "what is this site about" without parsing copy.
+	const SITE_URL = 'https://omux.xoxd.ai';
+	const SITE_TITLE = 'oauth-mux — Typed OAuth fallback for AI harness accounts';
+	const SITE_DESCRIPTION =
+		'oauth-mux is a typed OAuth multiplexer that gives AI coding harnesses (Codex, Claude, MCP servers) deterministic account fallback, redacted discovery, and explicit live probes. Schema-modeled providers, one live-proven provider (Codex) today.';
+	const OG_IMAGE = `${SITE_URL}/og-image.png`;
+
+	const jsonLd = {
+		'@context': 'https://schema.org',
+		'@graph': [
+			{
+				'@type': 'WebSite',
+				'@id': `${SITE_URL}/#website`,
+				url: SITE_URL,
+				name: 'oauth-mux',
+				description: SITE_DESCRIPTION,
+				inLanguage: 'en',
+			},
+			{
+				'@type': 'SoftwareApplication',
+				'@id': `${SITE_URL}/#software`,
+				name: 'oauth-mux',
+				description: SITE_DESCRIPTION,
+				applicationCategory: 'DeveloperApplication',
+				operatingSystem: 'macOS, Linux',
+				url: SITE_URL,
+				codeRepository: 'https://github.com/Jesssullivan/oauth-mux',
+				license: 'https://opensource.org/licenses/MIT',
+				author: {
+					'@type': 'Person',
+					name: 'Jess Sullivan',
+				},
+				offers: {
+					'@type': 'Offer',
+					price: '0',
+					priceCurrency: 'USD',
+				},
+			},
+		],
+	};
 </script>
+
+<svelte:head>
+	<link rel="canonical" href={SITE_URL} />
+	<meta name="description" content={SITE_DESCRIPTION} />
+
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content={SITE_URL} />
+	<meta property="og:title" content={SITE_TITLE} />
+	<meta property="og:description" content={SITE_DESCRIPTION} />
+	<meta property="og:image" content={OG_IMAGE} />
+	<meta property="og:site_name" content="oauth-mux" />
+
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={SITE_TITLE} />
+	<meta name="twitter:description" content={SITE_DESCRIPTION} />
+	<meta name="twitter:image" content={OG_IMAGE} />
+
+	<!-- eslint-disable-next-line svelte/no-at-html-tags -- static JSON-LD; JSON.stringify on a literal object is safe and the </script> sentinel is split to avoid early termination -->
+	{@html `<script type="application/ld+json">${JSON.stringify(jsonLd)}</` + `script>`}
+</svelte:head>
 
 <div class="bg-surface-50-950 flex min-h-screen flex-col">
 	<a
