@@ -7,13 +7,17 @@ the canonical site build is `pnpm run build`; Bazel registers the
 consumer chain for graph integrity proofs and is exercised via
 `bazel mod graph` smoke in CI.
 
-Module picks per docs/spec/bazel-catalog-audit-2026-04-29.md (TIN-763):
+Module picks per docs/spec/bazel-catalog-audit-2026-04-29.md (TIN-763,
+TIN-790 closure):
 
 - tummycrypt_tinyland_color_utils@0.2.3 — runtime leaf (zero deps,
   zero peers, pure TS); imported in src/ as the real runtime proof.
 - tummycrypt_vite_plugin_a11y@0.2.2 — build-time WCAG scan plugin.
 - tummycrypt_vite_plugin_skeleton_colors@0.2.2 — Skeleton-4 color-pair
   utility generator.
+- tummycrypt_tinyvectors@0.2.5 — animated vector blob backgrounds for
+  Svelte 5; imported in src/routes/+layout.svelte as the warm OKLCH
+  brand backdrop with optional accelerometer easter egg.
 """
 
 module(
@@ -39,6 +43,7 @@ bazel_dep(name = "aspect_rules_swc", version = "2.6.1")
 bazel_dep(name = "tummycrypt_tinyland_color_utils", version = "0.2.3")
 bazel_dep(name = "tummycrypt_vite_plugin_a11y", version = "0.2.2")
 bazel_dep(name = "tummycrypt_vite_plugin_skeleton_colors", version = "0.2.2")
+bazel_dep(name = "tummycrypt_tinyvectors", version = "0.2.5")
 
 # Node 22.13.1
 node = use_extension("@rules_nodejs//nodejs:extensions.bzl", "node")
