@@ -7,7 +7,15 @@
 	// - Routing semantics: oauth-mux/docs/spec/provider-authoring-checklist-2026-04-26.md:223-231
 	import CodeBlock from './CodeBlock.svelte';
 
-	let { livenessHtml, deadDegradedHtml }: { livenessHtml: string; deadDegradedHtml: string } = $props();
+	let {
+		livenessHtml,
+		deadDegradedHtml,
+		muxDecisionHtml,
+	}: {
+		livenessHtml: string;
+		deadDegradedHtml: string;
+		muxDecisionHtml: string;
+	} = $props();
 </script>
 
 <section id="fallback" class="container mx-auto px-6 py-16 lg:py-20">
@@ -24,24 +32,11 @@
 		<h3 class="h3 mt-10">DegradedReason &amp; DeadReason</h3>
 		<CodeBlock html={deadDegradedHtml} lang="zig" caption="oauth-mux/src/types.zig:224-240" />
 
-		<h3 class="h3 mt-10">Routing semantics</h3>
-		<ul class="space-y-2 text-surface-700-300">
-			<li>
-				<code class="font-mono">dead</code>: user action required; do not automatically retry.
-			</li>
-			<li>
-				<code class="font-mono">degraded</code>: try the next account for this route; retry only after a long window or
-				explicit step-up.
-			</li>
-			<li>
-				<code class="font-mono">rate_limited</code>: skip briefly or wait and retry after the short window.
-			</li>
-			<li>
-				<code class="font-mono">quota_exhausted</code>: skip until the quota window resets.
-			</li>
-			<li>
-				<code class="font-mono">provider_degraded</code>: try the next provider, not only the next account.
-			</li>
-		</ul>
+		<h3 class="h3 mt-10">MuxDecision</h3>
+		<p class="mb-4 text-surface-700-300">
+			The <code>fromHttpStatus</code> switch is the canonical routing-semantics table — HTTP status maps to a single decision,
+			no extra prose required.
+		</p>
+		<CodeBlock html={muxDecisionHtml} lang="zig" caption="oauth-mux/src/types.zig:245-261" />
 	</div>
 </section>

@@ -23,7 +23,11 @@
 <main>
 	<Hero installHtml={data.installHtml} />
 	<ProblemStatement />
-	<FallbackAlgebra livenessHtml={data.livenessHtml} deadDegradedHtml={data.deadDegradedHtml} />
+	<FallbackAlgebra
+		livenessHtml={data.livenessHtml}
+		deadDegradedHtml={data.deadDegradedHtml}
+		muxDecisionHtml={data.muxDecisionHtml}
+	/>
 	<InstallSurface
 		npmHtml={data.npmHtml}
 		tarballsHtml={data.tarballsHtml}
