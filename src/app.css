@@ -149,6 +149,25 @@ pre.shiki {
 	line-height: 1.55;
 	font-size: 0.8125rem;
 }
+
+/* Shiki dual-theme cascade.
+   With `themes: { light, dark }` + `defaultColor: false`, Shiki emits
+   inline `style="--shiki-light:#xxx; --shiki-dark:#yyy"` per token but
+   does NOT apply the colors itself — the consuming CSS below walks the
+   variables to actual `color` / `background-color`.
+   Light is the default; data-mode='dark' switches to the dark palette. */
+pre.shiki,
+pre.shiki code,
+pre.shiki span {
+	color: var(--shiki-light);
+	background-color: var(--shiki-light-bg);
+}
+[data-mode='dark'] pre.shiki,
+[data-mode='dark'] pre.shiki code,
+[data-mode='dark'] pre.shiki span {
+	color: var(--shiki-dark);
+	background-color: var(--shiki-dark-bg);
+}
 pre.shiki,
 pre.shiki code,
 pre.shiki span {
@@ -231,25 +250,25 @@ pre.shiki span {
    Both are subtle — the brand voice, not a focal element. */
 .saturn-nav {
 	position: relative;
-	background: color-mix(in oklch, var(--color-surface-50) 78%, transparent);
-	border-bottom: 1.5px solid color-mix(in oklch, var(--color-primary-500) 28%, transparent);
+	background: color-mix(in oklch, var(--color-surface-50) 88%, transparent);
+	border-bottom: 2px solid color-mix(in oklch, var(--color-primary-500) 50%, transparent);
 }
 
 [data-mode='dark'] .saturn-nav {
-	background: color-mix(in oklch, var(--color-surface-950) 75%, transparent);
-	border-bottom-color: color-mix(in oklch, var(--color-primary-500) 38%, transparent);
+	background: color-mix(in oklch, var(--color-surface-950) 85%, transparent);
+	border-bottom-color: color-mix(in oklch, var(--color-primary-500) 60%, transparent);
 }
 
 @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
 	.saturn-nav {
-		background: color-mix(in oklch, var(--color-surface-50) 40%, transparent);
-		backdrop-filter: blur(18px) saturate(140%);
+		background: color-mix(in oklch, var(--color-surface-50) 55%, transparent);
+		backdrop-filter: blur(20px) saturate(160%);
 		-webkit-backdrop-filter: blur(18px) saturate(140%);
 	}
 
 	[data-mode='dark'] .saturn-nav {
-		background: color-mix(in oklch, var(--color-surface-950) 45%, transparent);
-		backdrop-filter: blur(18px) saturate(120%);
+		background: color-mix(in oklch, var(--color-surface-950) 60%, transparent);
+		backdrop-filter: blur(20px) saturate(140%);
 		-webkit-backdrop-filter: blur(18px) saturate(120%);
 	}
 }
@@ -265,7 +284,7 @@ pre.shiki span {
 	height: 100%;
 	background: radial-gradient(
 		ellipse at 80% 20%,
-		color-mix(in oklch, var(--color-primary-500) 8%, transparent),
+		color-mix(in oklch, var(--color-primary-500) 16%, transparent),
 		transparent 70%
 	);
 	pointer-events: none;
