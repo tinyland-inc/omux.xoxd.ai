@@ -102,6 +102,8 @@ is the durable reference for stack, milestones, and SLAs.
 - npm: [npmjs.com/package/oauth-mux](https://www.npmjs.com/package/oauth-mux)
 - Bazel registry: [github.com/tinyland-inc/bazel-registry](https://github.com/tinyland-inc/bazel-registry)
 - License: MIT — see [LICENSE](LICENSE)
+- Third-party attributions: [NOTICE](NOTICE)
+- Security policy: [SECURITY.md](SECURITY.md)
 
 ---
 
