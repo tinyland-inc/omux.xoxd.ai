@@ -30,7 +30,6 @@
 	},
 	"dependencies": {
 		"@fontsource/inter": "^5.2.8",
-		"@fontsource/jetbrains-mono": "^5.2.8",
 		"@lucide/svelte": "^1.14.0",
 		"@tummycrypt/tinyland-color-utils": "0.2.3",
 		"@tummycrypt/tinyvectors": "0.2.5",
