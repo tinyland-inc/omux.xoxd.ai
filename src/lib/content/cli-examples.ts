@@ -98,6 +98,35 @@ pub const DeadReason = enum {
     auth_permanently_failed,
 };`;
 
+// Verbatim from upstream Jesssullivan/oauth-mux src/types.zig (the
+// MuxDecision enum + its fromHttpStatus switch + isRecoverable helper).
+// The switch IS the routing-semantics table — no separate HTML table needed.
+export const ZIG_MUX_DECISION = `// ── Mux Decision ──
+// What the pipeline should do after probing a credential.
+
+pub const MuxDecision = enum {
+    use_this,
+    try_next_account,
+    try_next_provider,
+    wait_and_retry,
+    give_up,
+
+    pub fn fromHttpStatus(status: u16) MuxDecision {
+        return switch (status) {
+            200...299 => .use_this,
+            401 => .try_next_account,
+            403 => .try_next_account,
+            429 => .wait_and_retry,
+            500...599 => .try_next_provider,
+            else => .try_next_account,
+        };
+    }
+
+    pub fn isRecoverable(self: MuxDecision) bool {
+        return self != .give_up;
+    }
+};`;
+
 // ─── M3.2 install channel snippets ──────────────────────────────────────────
 
 export const INSTALL_NPM = `npm install -g oauth-mux`;
