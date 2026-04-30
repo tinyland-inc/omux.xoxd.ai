@@ -5,7 +5,7 @@
 	let { html, lang, caption }: { html: string; lang?: string; caption?: string } = $props();
 </script>
 
-<figure class="code-frame my-4 p-4 text-sm">
+<figure class="my-4 text-sm">
 	{#if lang}
 		<div class="mb-2 text-xs uppercase tracking-wide text-surface-500">{lang}</div>
 	{/if}

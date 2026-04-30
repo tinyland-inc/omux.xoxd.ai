@@ -17,27 +17,17 @@ import {
 	GENERIC_AUTHOR_VALIDATE,
 	AGENT_DISCOVERY,
 } from '$lib/content/cli-examples';
-import liveAvailable from '$lib/content/probe-json/live-available.json';
-import liveQuota from '$lib/content/probe-json/live-quota-exhausted.json';
-import deadIllustration from '$lib/content/probe-json/dead-illustration.json';
-import providersJson from '$lib/content/providers.json';
-import { ProviderMatrix } from '$lib/content/providers.schema';
-import { decodeOrThrow } from '$lib/effect/schema';
 
 export const prerender = true;
 
-// Validate the provider matrix at build time. Schema failure halts the build,
-// matching the M0.6 contract: malformed providers.json must not reach prerender.
-const providerMatrix = decodeOrThrow(ProviderMatrix)(providersJson);
+// ProviderMatrix removed from the home page in 7C — see /api/providers for the
+// canonical machine-readable matrix (still validated at that route).
 
 export const load: PageServerLoad = async () => {
 	const [
 		installHtml,
 		livenessHtml,
 		deadDegradedHtml,
-		liveAvailHtml,
-		liveQuotaHtml,
-		deadIllusHtml,
 		npmHtml,
 		tarballsHtml,
 		brewHtml,
@@ -51,9 +41,6 @@ export const load: PageServerLoad = async () => {
 		highlight(INSTALL_AND_PROBE, 'bash'),
 		highlight(ZIG_LIVENESS_BLOCK, 'zig'),
 		highlight(ZIG_DEAD_DEGRADED, 'zig'),
-		highlight(JSON.stringify(liveAvailable, null, 2), 'json'),
-		highlight(JSON.stringify(liveQuota, null, 2), 'json'),
-		highlight(JSON.stringify(deadIllustration, null, 2), 'json'),
 		highlight(INSTALL_NPM, 'bash'),
 		highlight(INSTALL_TARBALLS, 'bash'),
 		highlight(INSTALL_BREW, 'bash'),
@@ -68,9 +55,6 @@ export const load: PageServerLoad = async () => {
 		installHtml,
 		livenessHtml,
 		deadDegradedHtml,
-		liveAvailHtml,
-		liveQuotaHtml,
-		deadIllusHtml,
 		npmHtml,
 		tarballsHtml,
 		brewHtml,
@@ -80,6 +64,5 @@ export const load: PageServerLoad = async () => {
 		codexHappyHtml,
 		genericValidateHtml,
 		agentDiscoveryHtml,
-		providerMatrix,
 	};
 };

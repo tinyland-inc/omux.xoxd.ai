@@ -30,7 +30,7 @@
 </script>
 
 <section id="first-run" class="container mx-auto px-6 py-16 lg:py-20">
-	<div class="mx-auto max-w-4xl space-y-14">
+	<div class="max-w-4xl space-y-14">
 		<header>
 			<h2 class="h2 mb-4">First-run flows</h2>
 			<p class="text-lg text-surface-700-300">
@@ -84,10 +84,6 @@
 			<CodeBlock html={agentDiscoveryHtml} lang="bash" caption="oauth-mux/docs/onboarding.md:107-114" />
 
 			<h4 class="h4 mt-6 mb-2">Agent-safe command surface</h4>
-			<p class="mb-2 text-sm text-surface-600-400">
-				Verbatim from <code class="font-mono">oauth-mux/dist/live-qa/20260427T204722Z/discover.json:1</code>
-				(<code class="font-mono">agent_safe_commands</code>).
-			</p>
 			<ul class="space-y-1 font-mono text-sm text-surface-700-300">
 				{#each AGENT_SAFE_COMMANDS as cmd (cmd)}
 					<li>{cmd}</li>
@@ -95,9 +91,6 @@
 			</ul>
 
 			<h4 class="h4 mt-6 mb-2">Agents must not</h4>
-			<p class="mb-2 text-sm text-surface-600-400">
-				Verbatim from <code class="font-mono">oauth-mux/docs/onboarding.md:132-137</code>.
-			</p>
 			<ul class="list-disc space-y-1 pl-6 text-surface-700-300">
 				{#each AGENT_MUST_NOT as item (item)}
 					<li>{item}</li>

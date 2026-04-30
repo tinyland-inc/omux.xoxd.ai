@@ -49,7 +49,7 @@
    Skeleton 4 themes declare --typo-base/heading--font-family, but app code
    has to anchor body to that variable so prose actually picks up Inter. */
 html {
-	overflow-x: hidden;
+	overflow-x: clip;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-rendering: optimizeLegibility;
@@ -100,58 +100,6 @@ h4,
 	font-weight: 600;
 }
 
-/* Unified code/table frame.
-   Every <figure> Shiki block, every <table> wrapper, and the Hero
-   <details> raw-JSON disclosure share this envelope so the page reads
-   as one design language instead of three subtly different cards. */
-.code-frame {
-	border: 1px solid var(--color-surface-300);
-	border-radius: 0.5rem;
-	background: color-mix(in oklch, var(--color-surface-100) 80%, transparent);
-	overflow-x: auto;
-}
-[data-mode='dark'] .code-frame {
-	border-color: var(--color-surface-700);
-	background: color-mix(in oklch, var(--color-surface-900) 70%, transparent);
-}
-
-@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
-	.code-frame {
-		backdrop-filter: blur(8px) saturate(110%);
-		-webkit-backdrop-filter: blur(8px) saturate(110%);
-	}
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.code-frame {
-		backdrop-filter: none !important;
-		-webkit-backdrop-filter: none !important;
-	}
-}
-
-/* Section background washes. Subtle theme-pair tint that reveals the
-   TinyVectors layer behind without painting opaque cards everywhere. */
-.section-tint {
-	background: color-mix(in oklch, var(--color-surface-100) 50%, transparent);
-}
-[data-mode='dark'] .section-tint {
-	background: color-mix(in oklch, var(--color-surface-900) 60%, transparent);
-}
-
-@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
-	.section-tint {
-		backdrop-filter: blur(8px) saturate(120%);
-		-webkit-backdrop-filter: blur(8px) saturate(120%);
-	}
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.section-tint {
-		backdrop-filter: none !important;
-		-webkit-backdrop-filter: none !important;
-	}
-}
-
 /* Section anchor offset so #hash jumps land below the sticky AppBar.
    AppBar is ~56px tall at our spacing; 64px gives a small breathing gap. */
 :where([id]) {
@@ -188,8 +136,19 @@ samp,
 		'calt' 1;
 }
 
-/* Shiki-rendered code blocks preserve their background + theme tokens but
-   inherit our mono stack and ligatures. */
+/* Shiki-rendered code blocks: inherit our FiraCode Nerd Font Mono stack
+   AND wrap rather than scroll. User constraint: no scrollbars inside any
+   element, at any breakpoint. Long lines wrap on word boundaries; URLs
+   and other unbreakable tokens use overflow-wrap: anywhere. */
+pre.shiki {
+	padding: 0.875rem 1rem;
+	border-radius: 0.5rem;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+	word-break: normal;
+	line-height: 1.55;
+	font-size: 0.8125rem;
+}
 pre.shiki,
 pre.shiki code,
 pre.shiki span {
@@ -197,6 +156,17 @@ pre.shiki span {
 	font-feature-settings:
 		'liga' 1,
 		'calt' 1 !important;
+}
+
+/* Inline code in prose stays compact; no card chrome. */
+:not(pre) > code {
+	font-size: 0.875em;
+	padding: 0.1em 0.3em;
+	border-radius: 0.25rem;
+	background: color-mix(in oklch, var(--color-surface-200) 40%, transparent);
+}
+[data-mode='dark'] :not(pre) > code {
+	background: color-mix(in oklch, var(--color-surface-800) 50%, transparent);
 }
 
 /* ===== Prose styling for marketing copy =====
