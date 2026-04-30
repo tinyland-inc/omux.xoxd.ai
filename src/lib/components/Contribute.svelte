@@ -26,7 +26,7 @@
 </script>
 
 <section id="contribute" class="container mx-auto px-6 py-16 lg:py-20">
-	<div class="mx-auto max-w-4xl space-y-10">
+	<div class="max-w-4xl space-y-10">
 		<header>
 			<h2 class="h2 mb-4">Contribute a provider</h2>
 			<p class="text-lg text-surface-700-300">
@@ -41,7 +41,7 @@
 			</p>
 		</header>
 
-		<aside class="border-l-2 border-primary-500/60 pl-6">
+		<aside class="mt-8">
 			<h3 class="h4 mb-3">Acceptance gate</h3>
 			<p class="mb-3 text-surface-700-300">A new schema-only provider is acceptable when:</p>
 			<ul class="list-disc space-y-2 pl-6">
@@ -49,11 +49,6 @@
 					<li>{line}</li>
 				{/each}
 			</ul>
-			<p class="mt-3 text-xs text-surface-600-400">
-				Source:
-				<code class="font-mono">oauth-mux/docs/spec/provider-authoring-checklist-2026-04-26.md:278-289</code>
-				(verbatim).
-			</p>
 		</aside>
 
 		<div>
@@ -63,11 +58,6 @@
 					<li>{line}</li>
 				{/each}
 			</ul>
-			<p class="mt-3 text-xs text-surface-600-400">
-				Source:
-				<code class="font-mono">oauth-mux/docs/spec/product-adoption-sprint-2026-04-28.md:140-144</code>
-				(verbatim).
-			</p>
 		</div>
 
 		<div>

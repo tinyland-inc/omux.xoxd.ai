@@ -22,7 +22,6 @@
 		{ href: '/#install', label: 'Install' },
 		{ href: '/#first-run', label: 'First-run' },
 		{ href: '/#security', label: 'Security' },
-		{ href: '/#providers', label: 'Providers' },
 		{ href: '/#contribute', label: 'Contribute' },
 		{ href: '/#contact', label: 'Contact' },
 	];
@@ -105,11 +104,16 @@
 	     window/navigator APIs and Svelte effects that crash under SSR. Fixed
 	     full-viewport, behind everything, low opacity. (TIN-801 phase 3.) -->
 	{#if browser}
-		<div class="pointer-events-none fixed inset-0 -z-10" aria-hidden="true" data-testid="omux-vectors-bg">
+		<div
+			class="pointer-events-none fixed inset-0 -z-10"
+			style="overflow:hidden"
+			aria-hidden="true"
+			data-testid="omux-vectors-bg"
+		>
 			<TinyVectors
 				theme="custom"
 				colors={['#cb6738', '#d99d6a', '#a14a52', '#6b4f3a', '#3d6b8c']}
-				opacity={0.18}
+				opacity={0.1}
 				blobCount={5}
 				enableScrollPhysics={true}
 				enableDeviceMotion={false}

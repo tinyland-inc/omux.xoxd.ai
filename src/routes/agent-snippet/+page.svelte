@@ -55,7 +55,7 @@ Site:   https://omux.xoxd.ai
 
 <main>
 	<section class="container mx-auto px-6 py-12 lg:py-16">
-		<div class="mx-auto max-w-4xl space-y-8">
+		<div class="max-w-4xl space-y-8">
 			<header>
 				<h1 class="h1 mb-4">Agent snippet</h1>
 				<p class="text-lg text-surface-700-300">
@@ -72,7 +72,7 @@ Site:   https://omux.xoxd.ai
 				>
 					Copy to clipboard
 				</button>
-				<pre class="code-frame p-4 text-sm leading-relaxed"><code class="font-mono">{snippet}</code></pre>
+				<pre class="p-4 text-sm leading-relaxed"><code class="font-mono">{snippet}</code></pre>
 			</div>
 
 			<aside class="border-l-2 border-primary-500/40 pl-6">

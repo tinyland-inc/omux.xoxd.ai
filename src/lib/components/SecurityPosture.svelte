@@ -41,7 +41,7 @@
 </script>
 
 <section id="security" class="container mx-auto px-6 py-16 lg:py-20">
-	<div class="mx-auto max-w-4xl space-y-12">
+	<div class="max-w-4xl space-y-12">
 		<header>
 			<h2 class="h2 mb-4">Security &amp; Privacy</h2>
 			<p class="text-lg text-surface-700-300">
@@ -57,11 +57,6 @@
 					<li>{claim}</li>
 				{/each}
 			</ul>
-			<p class="mt-3 text-xs text-surface-600-400">
-				Source:
-				<code class="font-mono">oauth-mux/docs/spec/product-adoption-sprint-2026-04-28.md:127-131</code>
-				(verbatim).
-			</p>
 		</div>
 
 		<div>
@@ -93,11 +88,6 @@
 					</Accordion.Item>
 				{/each}
 			</Accordion>
-			<p class="mt-3 text-xs text-surface-600-400">
-				Source:
-				<code class="font-mono">oauth-mux/docs/spec/provider-authoring-checklist-2026-04-26.md:82-90</code>
-				(list verbatim).
-			</p>
 		</div>
 
 		<div>
@@ -105,9 +95,6 @@
 			<p class="text-surface-700-300">
 				<code class="font-mono">discover --json</code> is intentionally redacted. It reports config path, state path, providers,
 				account names, secret backend names, tags, profiles, and safe command templates. It does not include token material.
-			</p>
-			<p class="mt-3 text-xs text-surface-600-400">
-				Source: <code class="font-mono">oauth-mux/docs/onboarding.md:139-141</code> (verbatim).
 			</p>
 		</div>
 
@@ -123,10 +110,6 @@
 					<li>{item}</li>
 				{/each}
 			</ul>
-			<p class="mt-3 text-xs text-surface-600-400">
-				Source: <code class="font-mono">oauth-mux/docs/daemon-boundary.md:1-23</code>
-				("The daemon exists, but it is not a production dependency yet." — verbatim).
-			</p>
 		</aside>
 	</div>
 </section>

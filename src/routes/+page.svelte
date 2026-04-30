@@ -1,13 +1,12 @@
 <script lang="ts">
-	// M3.1 + M3.2 + M3.3 page composition.
-	// Hero + Problem + FallbackAlgebra (M3.1) + Install + FirstRun + ProviderMatrix (M3.2)
-	// + SecurityPosture + Contribute + Contact (M3.3).
+	// Page composition. Provider matrix removed in 7C — it was a constraining
+	// snapshot that fights against a growing surface; canonical machine-readable
+	// list lives at /api/providers, agent-friendly summary at /agent-snippet.
 	import Hero from '$lib/components/Hero.svelte';
 	import ProblemStatement from '$lib/components/ProblemStatement.svelte';
 	import FallbackAlgebra from '$lib/components/FallbackAlgebra.svelte';
 	import InstallSurface from '$lib/components/InstallSurface.svelte';
 	import FirstRunFlows from '$lib/components/FirstRunFlows.svelte';
-	import ProviderMatrix from '$lib/components/ProviderMatrix.svelte';
 	import SecurityPosture from '$lib/components/SecurityPosture.svelte';
 	import Contribute from '$lib/components/Contribute.svelte';
 	import Contact from '$lib/components/Contact.svelte';
@@ -22,12 +21,7 @@
 </svelte:head>
 
 <main>
-	<Hero
-		installHtml={data.installHtml}
-		liveAvailHtml={data.liveAvailHtml}
-		liveQuotaHtml={data.liveQuotaHtml}
-		deadIllusHtml={data.deadIllusHtml}
-	/>
+	<Hero installHtml={data.installHtml} />
 	<ProblemStatement />
 	<FallbackAlgebra livenessHtml={data.livenessHtml} deadDegradedHtml={data.deadDegradedHtml} />
 	<InstallSurface
@@ -43,7 +37,6 @@
 		genericValidateHtml={data.genericValidateHtml}
 		agentDiscoveryHtml={data.agentDiscoveryHtml}
 	/>
-	<ProviderMatrix matrix={data.providerMatrix} />
 	<SecurityPosture />
 	<Contribute />
 	<Contact />

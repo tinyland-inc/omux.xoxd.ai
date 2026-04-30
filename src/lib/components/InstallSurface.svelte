@@ -53,7 +53,7 @@
 </script>
 
 <section id="install" class="container mx-auto px-6 py-16 lg:py-20">
-	<div class="mx-auto max-w-4xl">
+	<div class="max-w-4xl">
 		<h2 class="h2 mb-4">Install</h2>
 		<p class="mb-8 text-lg text-surface-700-300">
 			Each release artifact is derived from the same CI release tree. npm publishes are CI-only; workstation
@@ -93,8 +93,8 @@
 		<div class="mt-12">
 			<h4 class="h4 mb-2">curl installer — repo override</h4>
 			<p class="mb-2 text-sm text-surface-600-400">
-				The canonical public source repo is <code class="font-mono">Jesssullivan/oauth-mux</code> per
-				<code class="font-mono">oauth-mux/docs/adoption.md:100-102</code>.
+				The canonical public source repo is <code class="font-mono">Jesssullivan/oauth-mux</code>; override the upstream
+				by setting <code class="font-mono">REPO=</code> before the curl pipeline.
 			</p>
 			<CodeBlock html={curlOverrideHtml} lang="bash" />
 		</div>
