@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { Menu, X } from '@lucide/svelte';
+	import SaturnMark from '$lib/components/SaturnMark.svelte';
 	import { AppBar, Dialog, Navigation } from '@skeletonlabs/skeleton-svelte';
 	import { TinyVectors } from '@tummycrypt/tinyvectors';
 	import '../app.css';
@@ -126,14 +127,15 @@
 		>Skip to content</a
 	>
 
-	<AppBar class="glass-nav sticky top-0 z-40 shadow-sm">
+	<AppBar class="saturn-nav sticky top-0 z-40">
 		<AppBar.Toolbar class="grid-cols-[auto_1fr_auto] px-4 py-2">
 			<AppBar.Lead>
 				<a
 					href="/"
-					class="hover:text-primary-500 font-mono text-lg font-bold tracking-tight whitespace-nowrap transition-colors"
+					class="hover:text-primary-500 font-mono text-lg font-bold tracking-tight whitespace-nowrap transition-colors inline-flex items-center gap-2"
 					aria-label="oauth-mux home"
 				>
+					<SaturnMark class="text-primary-500 h-[1.05em] w-[1.05em]" />
 					oauth-mux
 				</a>
 			</AppBar.Lead>
