@@ -17,7 +17,7 @@
 </script>
 
 <section id="hero" class="container mx-auto px-6 py-16 lg:py-24">
-	<header class="max-w-3xl">
+	<header class="mx-auto max-w-3xl">
 		<p class="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-primary-500">typed OAuth fallback</p>
 		<h1 class="h1 text-5xl font-bold tracking-tight lg:text-7xl">oauth-mux</h1>
 		<p class="mt-4 text-xl text-surface-700-300 lg:text-2xl">

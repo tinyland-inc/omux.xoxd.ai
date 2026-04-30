@@ -41,7 +41,7 @@
 </script>
 
 <section id="security" class="container mx-auto px-6 py-16 lg:py-20">
-	<div class="max-w-4xl space-y-12">
+	<div class="mx-auto max-w-4xl space-y-12">
 		<header>
 			<h2 class="h2 mb-4">Security &amp; Privacy</h2>
 			<p class="text-lg text-surface-700-300">
