@@ -51,3 +51,5 @@ bazel-omux.xoxd.ai/
 .claude/
 .serena/
 .aider*
+# Local dev artifacts
+.huskycat/
