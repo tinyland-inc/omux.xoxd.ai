@@ -223,35 +223,56 @@ pre.shiki span {
 	color: var(--color-surface-900-100);
 }
 
-/* ===== AppBar frosted-glass =====
-   Replaces the flat `bg-surface-50-950/90 backdrop-blur` look with a real
-   frosted-glass effect that reads correctly over scrolled content. */
-.glass-nav {
-	background: color-mix(in srgb, var(--color-surface-50) 70%, transparent);
-	border-bottom: 1px solid color-mix(in srgb, var(--color-surface-200) 50%, transparent);
+/* ===== Saturn-nav AppBar =====
+   Glass variant evolved from .glass-nav. Two saturn motifs:
+   1. A 1.5px primary-tinted bottom edge (the planet's ring line).
+   2. A faint warm radial halo at the top-right (the planet's atmosphere
+      tinting the chrome from outside the document flow).
+   Both are subtle — the brand voice, not a focal element. */
+.saturn-nav {
+	position: relative;
+	background: color-mix(in oklch, var(--color-surface-50) 78%, transparent);
+	border-bottom: 1.5px solid color-mix(in oklch, var(--color-primary-500) 28%, transparent);
 }
 
-[data-mode='dark'] .glass-nav {
-	background: color-mix(in srgb, var(--color-surface-950) 70%, transparent);
-	border-bottom: 1px solid color-mix(in srgb, var(--color-surface-800) 50%, transparent);
+[data-mode='dark'] .saturn-nav {
+	background: color-mix(in oklch, var(--color-surface-950) 75%, transparent);
+	border-bottom-color: color-mix(in oklch, var(--color-primary-500) 38%, transparent);
 }
 
 @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
-	.glass-nav {
-		background: color-mix(in srgb, var(--color-surface-50) 30%, transparent);
-		backdrop-filter: blur(16px) saturate(150%);
-		-webkit-backdrop-filter: blur(16px) saturate(150%);
+	.saturn-nav {
+		background: color-mix(in oklch, var(--color-surface-50) 40%, transparent);
+		backdrop-filter: blur(18px) saturate(140%);
+		-webkit-backdrop-filter: blur(18px) saturate(140%);
 	}
 
-	[data-mode='dark'] .glass-nav {
-		background: color-mix(in srgb, var(--color-surface-950) 35%, transparent);
-		backdrop-filter: blur(16px) saturate(120%);
-		-webkit-backdrop-filter: blur(16px) saturate(120%);
+	[data-mode='dark'] .saturn-nav {
+		background: color-mix(in oklch, var(--color-surface-950) 45%, transparent);
+		backdrop-filter: blur(18px) saturate(120%);
+		-webkit-backdrop-filter: blur(18px) saturate(120%);
 	}
 }
 
+/* Warm radial halo at top-right corner — only visible at md+ where the
+   AppBar has horizontal real estate. Fades into the chrome. */
+.saturn-nav::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: clamp(120px, 18vw, 240px);
+	height: 100%;
+	background: radial-gradient(
+		ellipse at 80% 20%,
+		color-mix(in oklch, var(--color-primary-500) 8%, transparent),
+		transparent 70%
+	);
+	pointer-events: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
-	.glass-nav {
+	.saturn-nav {
 		backdrop-filter: none !important;
 		-webkit-backdrop-filter: none !important;
 	}
