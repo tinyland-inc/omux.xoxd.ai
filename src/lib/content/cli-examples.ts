@@ -139,7 +139,8 @@ oauth-mux-aarch64-macos.tar.gz
 oauth-mux-x86_64-windows.tar.gz
 oauth-mux-aarch64-windows.tar.gz`;
 
-export const INSTALL_BREW = `brew install tinyland-inc/tools/oauth-mux`;
+export const INSTALL_BREW = `brew tap jesssullivan/omux https://github.com/Jesssullivan/homebrew-omux.git
+brew install jesssullivan/omux/oauth-mux`;
 
 export const INSTALL_DEB_RPM = `# deb/rpm packages for Linux hosts
 # release-staged via CI; no public apt/yum repository yet`;
@@ -200,9 +201,8 @@ export const AGENT_MUST_NOT: readonly string[] = [
 
 /**
  * Install channel rows for the InstallSurface component.
- * Status reflects current oauth-mux state per
- * `oauth-mux/docs/spec/product-adoption-sprint-2026-04-28.md:111-114` and
- * `oauth-mux/docs/adoption.md:9-15`.
+ * Status reflects current oauth-mux state per `oauth-mux/docs/adoption.md`
+ * and `oauth-mux/docs/spec/homebrew-public-lane-decision-2026-05-01.md`.
  */
 export interface InstallChannelRow {
 	channel: string;
@@ -229,11 +229,10 @@ export const INSTALL_CHANNELS: InstallChannelRow[] = [
 	},
 	{
 		channel: 'Homebrew',
-		status: 'staged',
-		statusLabel: 'release-staged',
-		description:
-			'Formula audit has been exercised through release proof / registry dry-run; public publication pending.',
-		citation: 'oauth-mux/docs/spec/product-adoption-sprint-2026-04-28.md:111-114',
+		status: 'live',
+		statusLabel: 'live (v0.1.6)',
+		description: 'Public Jess-owned tap with strict local install QA and hosted registry dry-run proof.',
+		citation: 'oauth-mux/docs/adoption.md:12-20 + docs/spec/homebrew-public-lane-decision-2026-05-01.md:119-123',
 	},
 	{
 		channel: 'deb / rpm',
