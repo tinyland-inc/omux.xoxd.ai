@@ -68,7 +68,7 @@
 			<CodeBlock
 				html={genericValidateHtml}
 				lang="bash"
-				caption="oauth-mux/docs/onboarding.md:155-163 — staged in v0.1.3 (doctor / report / providers list)"
+				caption="oauth-mux/docs/onboarding.md:460-481 — provider onboarding checklist"
 			/>
 		</div>
 
@@ -78,8 +78,8 @@
 				Agents start with redacted JSON discovery and never reach for credential paths. Four of these surfaces (<code
 					class="font-mono">doctor</code
 				>, <code class="font-mono">report --redacted</code>, and
-				<code class="font-mono">providers list</code>) are staged in <code class="font-mono">v0.1.3</code> until the diagnostics
-				PR merges.
+				<code class="font-mono">providers list</code>) are installed CLI commands that keep account names, proof status,
+				runtime readiness, and next actions visible without printing token material.
 			</p>
 			<CodeBlock html={agentDiscoveryHtml} lang="bash" caption="oauth-mux/docs/onboarding.md:107-114" />
 

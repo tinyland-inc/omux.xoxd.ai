@@ -21,15 +21,20 @@
 		<p class="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-primary-500">typed OAuth fallback</p>
 		<h1 class="h1 text-5xl font-bold tracking-tight lg:text-7xl">oauth-mux</h1>
 		<p class="mt-4 text-xl text-surface-700-300 lg:text-2xl">
-			Deterministic account routing for AI coding harnesses. Redacted discovery, schema-modeled providers, one
-			live-proven path today.
+			Keep AI harness sessions afloat across multiple accounts with typed liveness, redacted discovery, and explicit
+			fallback.
+		</p>
+		<p class="mt-4 text-sm leading-relaxed text-surface-600-400">
+			Codex multi-account fallback is live-proven today. Claude, Figma, MCP, Linear OAuth, and more are moving through
+			narrow provider-proof lanes. The background daemon is not a production dependency.
 		</p>
 
-		<!-- Two CTAs: primary scrolls to install, secondary opens upstream repo. -->
+		<!-- Primary CTA scrolls to the proof flow; secondary actions stay local. -->
 		<div class="mt-8 flex flex-wrap gap-3">
-			<a href="#install" class="btn preset-filled-primary-500 px-5 py-2.5 text-sm font-semibold tracking-tight">
-				Install &nbsp;→
+			<a href="#stay-afloat" class="btn preset-filled-primary-500 px-5 py-2.5 text-sm font-semibold tracking-tight">
+				Prove stay-afloat
 			</a>
+			<a href="#install" class="btn preset-tonal-surface px-5 py-2.5 text-sm font-semibold tracking-tight"> Install </a>
 			<a
 				href={REPO_URL}
 				rel="noreferrer noopener"
