@@ -18,8 +18,7 @@
 	// prerender. From a non-home route the link navigates back to `/` and scrolls
 	// to the section. (TIN-802.)
 	const navLinks: { href: string; label: string }[] = [
-		{ href: '/#problem', label: 'Problem' },
-		{ href: '/#fallback', label: 'Fallback' },
+		{ href: '/#stay-afloat', label: 'Stay afloat' },
 		{ href: '/#install', label: 'Install' },
 		{ href: '/#first-run', label: 'First-run' },
 		{ href: '/#security', label: 'Security' },
@@ -42,7 +41,7 @@
 	const SITE_URL = 'https://omux.xoxd.ai';
 	const SITE_TITLE = 'oauth-mux — Typed OAuth fallback for AI harness accounts';
 	const SITE_DESCRIPTION =
-		'oauth-mux is a typed OAuth multiplexer that gives AI coding harnesses (Codex, Claude, MCP servers) deterministic account fallback, redacted discovery, and explicit live probes. Schema-modeled providers, one live-proven provider (Codex) today.';
+		'oauth-mux keeps AI coding harness sessions afloat across multiple accounts with typed liveness, redacted discovery, foreground stay-afloat checks, and explicit provider-proof boundaries.';
 	const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 	const jsonLd = {

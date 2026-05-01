@@ -6,17 +6,27 @@
 	// is consistent with the rest of the design system.
 	import { createToaster, Toast, Portal } from '@skeletonlabs/skeleton-svelte';
 
-	const snippet = `oauth-mux is a typed OAuth multiplexer that gives multi-account AI harnesses
-deterministic account fallback and redacted account discovery.
+	const snippet = `oauth-mux is a typed OAuth multiplexer for multi-account AI harnesses.
+Use it to inspect accounts, route around exhausted credentials, and keep sessions afloat through explicit foreground checks.
 
-Live-proven: Codex (one provider).
-Schema-modeled: GPT5, Anthropic, MCP servers, GitHub, Linear, Vercel, Figma, FlakeHub.
-Planned: Bedrock, Azure.
+Live-proven today: Codex multi-account fallback.
+Capability-proven / in proof lanes: Claude, GitHub, Linear, Vercel, Figma, FlakeHub, MCP.
+Not claimed: production background daemon or universal provider support.
 
 Install: npm install -g oauth-mux
-First run: oauth-mux codex onboard && oauth-mux codex probe-all
-Discover redacted accounts: oauth-mux codex discover --redact
-Status: oauth-mux codex status
+First run:
+  oauth-mux init --codex-max
+  oauth-mux doctor
+  oauth-mux accounts list --provider codex --json
+
+Stay-afloat proof:
+  oauth-mux route explain --profile codex-max --capability codex-max --json
+  oauth-mux stay-afloat --once --profile codex-max --capability codex-max --json
+
+Agent rules:
+  Do not read secret.path files.
+  Do not print token-shaped values.
+  Do not pass --confirm-spend or run live probes unless the user explicitly authorizes spend.
 
 Provider matrix (machine-readable): https://omux.xoxd.ai/api/providers
 Source: https://github.com/Jesssullivan/oauth-mux

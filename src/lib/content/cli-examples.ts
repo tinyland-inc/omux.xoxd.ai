@@ -1,19 +1,46 @@
 // M3.1 + M3.2 — verbatim content lifted from oauth-mux source.
 // Citations:
-// - INSTALL_AND_PROBE: oauth-mux/docs/spec/product-adoption-sprint-2026-04-28.md:89-93
+// - INSTALL_AND_PROBE: oauth-mux/docs/adoption.md:31-49 + docs/onboarding.md:214-270
 // - ZIG_LIVENESS_BLOCK: oauth-mux/src/types.zig:152-215
 // - ZIG_DEAD_DEGRADED: oauth-mux/src/types.zig:224-240
 // - ZIG_MUX_DECISION: oauth-mux/src/types.zig:245-261
 // - INSTALL_NPM, INSTALL_TARBALLS, INSTALL_BREW, INSTALL_DEB_RPM,
 //   INSTALL_CURL, INSTALL_CURL_OVERRIDE: oauth-mux/docs/adoption.md:9-15 +
 //   product-adoption-sprint-2026-04-28.md:111-114
-// - CODEX_HAPPY_PATH: oauth-mux/docs/onboarding.md:43-50
+// - STAY_AFLOAT_PROOF, ENROLLMENT_HANDOFF, REAUTH_HANDOFF, VIDEO_DEMO_SCRIPT:
+//   oauth-mux/docs/onboarding.md:51-69, 214-270, 373-458
+// - CODEX_HAPPY_PATH: oauth-mux/docs/onboarding.md:51-69
 // - GENERIC_AUTHOR_VALIDATE: oauth-mux/docs/onboarding.md:158-163
 // - AGENT_DISCOVERY: oauth-mux/docs/onboarding.md:107-114
 
 export const INSTALL_AND_PROBE = `npm install -g oauth-mux
-oauth-mux codex onboard
-oauth-mux codex probe-all --capability codex-max --json`;
+oauth-mux init --codex-max
+oauth-mux accounts list --provider codex --json
+oauth-mux stay-afloat --once --profile codex-max --capability codex-max --json`;
+
+export const STAY_AFLOAT_PROOF = `oauth-mux doctor runtime --profile codex-max --capability codex-max --json
+oauth-mux route explain --profile codex-max --capability codex-max --json
+oauth-mux route select --profile codex-max --capability codex-max --json
+oauth-mux stay-afloat --once --profile codex-max --capability codex-max --json`;
+
+export const ENROLLMENT_HANDOFF = `oauth-mux accounts list --provider codex --json
+oauth-mux enroll plan codex --account max-4 --json
+oauth-mux enroll codex --account max-4 --confirm-enroll --json
+oauth-mux codex login-device max-4
+oauth-mux stay-afloat refresh --profile codex-max --capability codex-max --json`;
+
+export const REAUTH_HANDOFF = `oauth-mux stay-afloat --once --execute --profile codex-max --capability codex-max --json
+oauth-mux stay-afloat handoffs --json
+# run the redacted upstream login command shown in the handoff
+oauth-mux codex login-device max-1
+oauth-mux stay-afloat refresh --profile codex-max --capability codex-max --json`;
+
+export const VIDEO_DEMO_SCRIPT = `# record this after demo accounts are enrolled
+oauth-mux accounts list --provider codex --json
+oauth-mux route explain --profile codex-max --capability codex-max --json
+oauth-mux stay-afloat --once --profile codex-max --capability codex-max --json
+oauth-mux exec --profile codex-max --capability codex-max -- \\
+  codex exec --json --ephemeral "Reply exactly: OMUX_STAY_AFLOAT"`;
 
 export const ZIG_LIVENESS_BLOCK = `// ── Credential Liveness ──
 //
@@ -216,9 +243,9 @@ export const INSTALL_CHANNELS: InstallChannelRow[] = [
 	{
 		channel: 'npm',
 		status: 'live',
-		statusLabel: 'live (v0.1.2)',
+		statusLabel: 'live (v0.1.6)',
 		description: 'Published from CI release tarballs with npm provenance.',
-		citation: 'oauth-mux/docs/spec/product-adoption-sprint-2026-04-28.md:14-19',
+		citation: 'oauth-mux/build.zig.zon:3 + docs/adoption.md:9-15',
 	},
 	{
 		channel: 'GitHub Release tarballs',

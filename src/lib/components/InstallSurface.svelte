@@ -7,7 +7,7 @@
 	// Sources (verbatim where stated):
 	// - install channel list: oauth-mux/docs/adoption.md:9-15 (verbatim)
 	// - public availability per channel: oauth-mux/docs/spec/product-adoption-sprint-2026-04-28.md:111-114
-	// - npm v0.1.2 baseline: oauth-mux/docs/spec/product-adoption-sprint-2026-04-28.md:14
+	// - npm v0.1.6 baseline: oauth-mux/build.zig.zon:3
 	// - REPO override note: oauth-mux/docs/adoption.md:100-102 (canonical source repo)
 	import { Tabs } from '@skeletonlabs/skeleton-svelte';
 	import CodeBlock from './CodeBlock.svelte';
