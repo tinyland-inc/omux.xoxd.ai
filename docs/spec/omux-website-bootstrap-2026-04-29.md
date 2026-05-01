@@ -320,10 +320,10 @@ page at `/`, with anchor sections:
    Includes `MuxDecision` table from `:245-261` and routing semantics from the
    provider checklist `:223-231`.
 4. **Install** (`/#install`): npm command (current). GitHub Release tarballs
-   (current — six platforms). Homebrew tap (release-staged, public publication
-   pending — flag precisely). deb/rpm (staged, no public repo yet). Curl
-   installer with `REPO=Jesssullivan/oauth-mux` override note until next
-   release regenerates default.
+   (current — six platforms). Homebrew public tap (`jesssullivan/omux`,
+   current as of v0.1.6; do not describe as Homebrew core). deb/rpm (staged,
+   no public repo yet). Curl installer with `REPO=Jesssullivan/oauth-mux`
+   override note until next release regenerates default.
 5. **First-run** (`/#first-run`): three flows — Codex three-account happy
    path, generic provider author path, agent discovery path with
    `agent_safe_commands` list.
