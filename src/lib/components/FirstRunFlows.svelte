@@ -1,7 +1,7 @@
 <script lang="ts">
 	// M3.2 First-run flows.
 	// Sources (verbatim where stated):
-	// - Codex three-account happy path: oauth-mux/docs/onboarding.md:43-50
+	// - Codex paid cohort path: oauth-mux/docs/onboarding.md + docs/live-provider-qa.md
 	// - Generic provider author path steps: oauth-mux/docs/adoption.md:53-66
 	// - Generic provider validation commands: oauth-mux/docs/onboarding.md:155-163
 	// - Agent discovery commands: oauth-mux/docs/onboarding.md:107-114
@@ -34,16 +34,16 @@
 		<header>
 			<h2 class="h2 mb-4">First-run flows</h2>
 			<p class="text-lg text-surface-700-300">
-				Three named paths — Codex three-account happy path, generic provider author path, and agent discovery path —
-				cover the operator surface for the first sitting.
+				Three named paths — Codex paid cohort path, generic provider author path, and agent discovery path — cover the
+				operator surface for the first sitting.
 			</p>
 		</header>
 
 		<div>
-			<h3 class="h3 mb-2">Codex three-account happy path</h3>
+			<h3 class="h3 mb-2">Codex paid cohort path</h3>
 			<p class="mb-3 text-surface-700-300">
-				Four installed CLI commands take a Codex Max user from a fresh checkout to a no-spend canary across the expected
-				account directories.
+				Installed CLI commands take a Codex Max user from a fresh checkout to redacted account inventory, no-spend
+				canary output, and route-aware broker session planning.
 			</p>
 			<CodeBlock html={codexHappyHtml} lang="bash" caption="oauth-mux/docs/onboarding.md:45-50" />
 			<p class="mt-2 text-sm text-surface-600-400">

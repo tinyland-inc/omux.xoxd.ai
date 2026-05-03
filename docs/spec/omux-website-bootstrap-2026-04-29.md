@@ -18,12 +18,12 @@ the launch narrative, content sections, outreach loop, and provider-status
 posture. This spec is the engineering bootstrap layer: stack, repo conventions,
 deploy lane, milestone breakdown, and the M0 file scaffold.
 
-`oauth-mux` itself is in a public, post-publication state (`v0.1.2` on npm,
-hosted live-QA passing for the Codex three-account matrix). A `v0.1.3`
-diagnostics PR is open in `Jesssullivan/oauth-mux` (`PR #21`,
-`codex/v013-doctor-onboarding`) and adds the first-run `doctor`, redacted
-`report`, and `providers list` commands this website wants to feature. The site
-must treat those commands as staged until `v0.1.3` is merged and published. The
+`oauth-mux` itself is in a public, post-publication state. This original
+bootstrap snapshot predated the May 2026 Codex broker-owned session ladder and
+paid cohort truthing. Current site copy must use the latest `oauth-mux` docs:
+the Codex Max cohort is four routes, evidence is capability-scoped, and public
+claims must not imply provider-originated in-session quota fallback,
+unmanaged TUI hot-swap, same-thread quota recovery, or per-request muxing. The
 product gap is adoption: first-run clarity, website narrative, contributor
 surface, and launch-channel choreography. `omux.xoxd.ai` is the first
 deliverable in that gap and the execution vehicle for `TIN-734`.
@@ -324,8 +324,8 @@ page at `/`, with anchor sections:
    current as of v0.1.6; do not describe as Homebrew core). deb/rpm (staged,
    no public repo yet). Curl installer with `REPO=Jesssullivan/oauth-mux`
    override note until next release regenerates default.
-5. **First-run** (`/#first-run`): three flows — Codex three-account happy
-   path, generic provider author path, agent discovery path with
+5. **First-run** (`/#first-run`): three flows — Codex paid cohort path,
+   generic provider author path, agent discovery path with
    `agent_safe_commands` list.
 6. **Privacy & security** (`/#security`): four verbatim claims from planning
    doc lines 127-131. Secret backends list. Redaction posture. Daemon
@@ -352,16 +352,15 @@ Single-source-of-truth per the round 2 content brief:
 - Problem statement → same doc `:98-104`
 - Liveness algebra → `oauth-mux/src/types.zig:152-215, 224-240, 245-261`
 - Provider matrix → `oauth-mux/docs/spec/provider-probe-admission-matrix-2026-04-26.md:26-39`
-- Codex live-proven evidence → `oauth-mux/docs/live-provider-qa.md:90-97`
+- Codex live-proven evidence and four-route cohort truth →
+  `oauth-mux/docs/live-provider-qa.md` plus
+  `oauth-mux/docs/spec/paid-cohort-soak-claim-policy-2026-05-03.md`
 - "What not to claim" guardrails → planning doc `:69-74` (verbatim)
 
-Real `live.available` JSON lifted from
-`oauth-mux/dist/live-qa/20260427T204722Z/codex_max-1_codex-mini.json:2`.
-Real `live.quota_exhausted` JSON from
-`oauth-mux/dist/live-qa/20260427T210131Z/codex_max-1_codex-max.json:2`. The
-`dead.auth_permanently_failed` example MUST be flagged "schema-faithful
-illustration — no live `dead` artifact captured" since no real `dead` artifact
-exists yet.
+The first launch artifacts were superseded by current Codex Max cohort evidence:
+`max-1#codex-max` selected, `max-4#codex-max` spare fallback, and
+`max-2#codex-max` / `max-3#codex-max` quota-exhausted. Do not generalize
+Spark, mini, or dashboard credit availability to `codex-max`.
 
 Build-time content load:
 - `src/lib/content/providers.json` — generated at build time from oauth-mux

@@ -26,8 +26,10 @@ material.
 
 ## Provider scope (read this before filing issues)
 
-- **Live-proven: Codex.** Three accounts × `codex-mini` and `codex-max`
-  routes are exercised against the real subscription.
+- **Live-proven: Codex.** Current `codex-max` cohort evidence is
+  capability-scoped: `max-1` selected, `max-4` spare fallback, and
+  `max-2`/`max-3` quota-exhausted. Spark/mini availability is not
+  generalized to Max.
 - **Schema-modeled: GPT5, Anthropic (Claude Code subscription, Anthropic
   API key), MCP servers (HTTP and stdio), GitHub, Linear, Vercel, Figma,
   FlakeHub.** Probe shapes and admission status are typed; live route

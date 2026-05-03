@@ -77,9 +77,11 @@
 						<h3 class="h4">Reality check</h3>
 					</div>
 					<ul class="list-disc space-y-2 pl-5 text-sm leading-relaxed text-surface-700-300">
-						<li>Codex multi-account fallback is live-proven.</li>
-						<li>Claude, Figma, MCP, Linear OAuth, and more are still being proven by narrower capability lanes.</li>
-						<li>Paid cohort proof is planned before broader public claims.</li>
+						<li>Codex selected-route, broker-owned session, and controlled fallback drills are proven.</li>
+						<li>Provider-originated in-session quota fallback remains tracked by TIN-916 / GitHub #131.</li>
+						<li>
+							The paid cohort claim policy and no-spend soak helper are shipped; the evidence window is in progress.
+						</li>
 					</ul>
 				</aside>
 			</div>

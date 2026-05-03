@@ -4,10 +4,9 @@
 	// (LivenessLadder), and TWO clear CTAs. Raw probe JSON moves into a
 	// disclosure so it stays accessible without dominating the first viewport.
 	//
-	// Sources retained for the disclosed JSON:
-	// - live.available: oauth-mux/dist/live-qa/20260427T204722Z/codex_max-1_codex-mini.json:2
-	// - live.quota_exhausted: oauth-mux/dist/live-qa/20260427T210131Z/codex_max-1_codex-max.json:2
-	// - dead.auth_permanently_failed: schema-faithful illustration (no live artifact)
+	// Sources:
+	// - current four-route Codex truth: oauth-mux/docs/live-provider-qa.md:104-110
+	// - public claim policy: oauth-mux/docs/spec/paid-cohort-soak-claim-policy-2026-05-03.md
 	import CodeBlock from './CodeBlock.svelte';
 	import LivenessLadder from './LivenessLadder.svelte';
 
@@ -25,8 +24,9 @@
 			fallback.
 		</p>
 		<p class="mt-4 text-sm leading-relaxed text-surface-600-400">
-			Codex multi-account fallback is live-proven today. Claude, Figma, MCP, Linear OAuth, and more are moving through
-			narrow provider-proof lanes. The background daemon is not a production dependency.
+			Codex route selection, broker-owned sessions, and controlled fallback drills are proven for the current paid
+			cohort. Provider-originated in-session quota fallback is still an explicit proof lane. The background daemon is
+			not a production dependency.
 		</p>
 
 		<!-- Primary CTA scrolls to the proof flow; secondary actions stay local. -->

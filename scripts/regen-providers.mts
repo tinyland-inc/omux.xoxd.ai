@@ -36,7 +36,8 @@ const CURATED: Record<string, Curated> = {
 		status: 'live-proven',
 		flow: 'oauth2',
 		docsUrl: 'https://developers.openai.com/codex/auth',
-		notes: 'Three accounts × codex-mini and codex-max routes are live-proven.',
+		notes:
+			'Codex is the live-proven provider. Current codex-max cohort: max-1 selected, max-4 spare fallback, max-2/max-3 quota-exhausted; Spark/mini availability is not generalized to Max.',
 	},
 	'Claude Code subscription': {
 		slug: 'claude',

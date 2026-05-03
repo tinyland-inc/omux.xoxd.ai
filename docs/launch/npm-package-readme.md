@@ -44,10 +44,11 @@ returns the typed decision per route. Add `--capability codex-max
 
 ## Provider availability
 
-- **Live-proven: Codex.** Three accounts × `codex-mini` and `codex-max`
-  routes are exercised against the real subscription. Decision rows
-  cover `live.available`, `live.quota_exhausted`, and the dead/degraded
-  shapes.
+- **Live-proven: Codex.** Current `codex-max` cohort evidence is
+  capability-scoped: `max-1` selected, `max-4` spare fallback, and
+  `max-2`/`max-3` quota-exhausted. Spark/mini availability is not
+  generalized to Max. Decision rows cover `live.available`,
+  `live.quota_exhausted`, and the dead/degraded shapes.
 - **Schema-modeled: GPT5, Anthropic (Claude Code subscription,
   Anthropic API key), MCP servers (HTTP and stdio), GitHub, Linear,
   Vercel, Figma (REST + Remote MCP), FlakeHub / Determinate.** Each has
@@ -98,11 +99,12 @@ Anything else is rejected at config validation time.
 
 ## Status
 
-oauth-mux is FOSS (MIT). The Codex matrix is live-proven. Other
-providers are schema-modeled — admitted, typed, and runnable, but not
-yet exercised against live subscriptions on every route. Filing an
-issue with a probe artifact is the fastest way to promote a provider
-out of `schema-modeled`.
+oauth-mux is FOSS (MIT). Codex is the live-proven provider, with
+capability-scoped route evidence and explicit proof boundaries. Other
+providers are schema-modeled — admitted, typed, and runnable, but not yet
+exercised against live subscriptions on every route. Filing an issue with
+a probe artifact is the fastest way to promote a provider out of
+`schema-modeled`.
 
 ## Links
 
