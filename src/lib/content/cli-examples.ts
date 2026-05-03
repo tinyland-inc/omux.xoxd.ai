@@ -9,7 +9,7 @@
 //   product-adoption-sprint-2026-04-28.md:111-114
 // - STAY_AFLOAT_PROOF, ENROLLMENT_HANDOFF, REAUTH_HANDOFF, VIDEO_DEMO_SCRIPT:
 //   oauth-mux/docs/onboarding.md:51-69, 214-270, 373-458
-// - CODEX_HAPPY_PATH: oauth-mux/docs/onboarding.md:51-69
+// - CODEX_HAPPY_PATH: oauth-mux/docs/onboarding.md + docs/live-provider-qa.md
 // - GENERIC_AUTHOR_VALIDATE: oauth-mux/docs/onboarding.md:158-163
 // - AGENT_DISCOVERY: oauth-mux/docs/onboarding.md:107-114
 
@@ -21,6 +21,7 @@ oauth-mux stay-afloat --once --profile codex-max --capability codex-max --json`;
 export const STAY_AFLOAT_PROOF = `oauth-mux doctor runtime --profile codex-max --capability codex-max --json
 oauth-mux route explain --profile codex-max --capability codex-max --json
 oauth-mux route select --profile codex-max --capability codex-max --json
+oauth-mux codex broker-session-plan --profile codex-max --capability codex-max --json
 oauth-mux stay-afloat --once --profile codex-max --capability codex-max --json`;
 
 export const ENROLLMENT_HANDOFF = `oauth-mux accounts list --provider codex --json
@@ -38,9 +39,9 @@ oauth-mux stay-afloat refresh --profile codex-max --capability codex-max --json`
 export const VIDEO_DEMO_SCRIPT = `# record this after demo accounts are enrolled
 oauth-mux accounts list --provider codex --json
 oauth-mux route explain --profile codex-max --capability codex-max --json
-oauth-mux stay-afloat --once --profile codex-max --capability codex-max --json
-oauth-mux exec --profile codex-max --capability codex-max -- \\
-  codex exec --json --ephemeral "Reply exactly: OMUX_STAY_AFLOAT"`;
+oauth-mux codex broker-session-plan --profile codex-max --capability codex-max --json
+oauth-mux codex broker-run --profile codex-max --capability codex-max \\
+  --prompt "Reply exactly: OMUX_STAY_AFLOAT" --confirm-spend --json`;
 
 export const ZIG_LIVENESS_BLOCK = `// ── Credential Liveness ──
 //
@@ -177,13 +178,14 @@ export const INSTALL_CURL = `curl -fsSL https://omux.xoxd.ai/install.sh | sh`;
 export const INSTALL_CURL_OVERRIDE = `# override the source repository (defaults to Jesssullivan/oauth-mux)
 REPO=Jesssullivan/oauth-mux curl -fsSL https://omux.xoxd.ai/install.sh | sh`;
 
-// ─── M3.2 Codex three-account happy path ────────────────────────────────────
-// Verbatim: oauth-mux/docs/onboarding.md:45-50
+// ─── M3.2 Codex paid cohort path ────────────────────────────────────────────
+// Sources: oauth-mux/docs/onboarding.md + docs/live-provider-qa.md
 
 export const CODEX_HAPPY_PATH = `oauth-mux init --codex-max
 oauth-mux doctor
 oauth-mux setup codex
-oauth-mux codex canary`;
+oauth-mux codex canary
+oauth-mux codex broker-session-plan --profile codex-max --capability codex-max --json`;
 
 // ─── M3.2 Generic provider author path ──────────────────────────────────────
 // Verbatim: oauth-mux/docs/onboarding.md:155-163
@@ -211,6 +213,10 @@ export const AGENT_SAFE_COMMANDS: readonly string[] = [
 	'oauth-mux config validate',
 	'oauth-mux status --json',
 	'oauth-mux health --json',
+	'oauth-mux route explain --profile <profile> --capability <capability> --json',
+	'oauth-mux stay-afloat next --profile <profile> --capability <capability> --json',
+	'oauth-mux stay-afloat launch --profile <profile> --capability <capability> -- <command>',
+	'oauth-mux codex broker-session-plan --profile codex-max --capability codex-max --json',
 	'oauth-mux probe --profile <profile> --capability <capability> --json',
 	'oauth-mux env --profile <profile> --capability <capability> --shell <shell>',
 	'oauth-mux exec --profile <profile> --capability <capability> -- <command>',

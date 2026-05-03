@@ -1,5 +1,5 @@
 {
-	"generatedAt": "2026-04-29T14:42:54.867Z",
+	"generatedAt": "2026-05-03T04:11:14.282Z",
 	"providers": [
 		{
 			"slug": "codex",
@@ -7,7 +7,7 @@
 			"status": "live-proven",
 			"flow": "oauth2",
 			"docsUrl": "https://developers.openai.com/codex/auth",
-			"notes": "Three accounts × codex-mini and codex-max routes are live-proven.",
+			"notes": "Codex is the live-proven provider. Current codex-max cohort: max-1 selected, max-4 spare fallback, max-2/max-3 quota-exhausted; Spark/mini availability is not generalized to Max.",
 			"admission": "`admitted_command`; direct HTTP `unadmitted`",
 			"probeShape": "`codex exec --json` under selected `CODEX_HOME`",
 			"citation": "oauth-mux/docs/spec/provider-probe-admission-matrix-2026-04-26.md:26-39"
@@ -74,8 +74,8 @@
 			"flow": "oauth2",
 			"docsUrl": "https://linear.app/developers/oauth-2-0-authentication",
 			"notes": "GraphQL `viewer` identity probe; semantic success requires checking `errors`.",
-			"admission": "`admitted_http`; built-in `identity` probe",
-			"probeShape": "`POST https://api.linear.app/graphql` with `query { viewer { id name email } }` and OAuth bearer token",
+			"admission": "`admitted_http`; built-in `identity` and `identity-api-key` probes",
+			"probeShape": "`POST https://api.linear.app/graphql` with `query { viewer { id name email } }`; OAuth uses bearer auth, personal API keys use raw `Authorization`",
 			"citation": "oauth-mux/docs/spec/provider-probe-admission-matrix-2026-04-26.md:26-39"
 		},
 		{

@@ -29,7 +29,7 @@ Distribution happens after M4.4. These are drafts only.
 > credentials across AI providers
 >
 > Discovery is redacted by default (no token material in JSON output).
-> Eight secret backends; no daemon dependency. Live-proven scope is
+> Seven secret backends; no daemon dependency. Live-proven scope is
 > Codex; everything else is schema-modeled or planned, and the site is
 > explicit about which is which. https://omux.xoxd.ai
 
@@ -82,7 +82,7 @@ Distribution happens after M4.4. These are drafts only.
 **Variant C**
 
 > Released the project site for oauth-mux. Typed fallback algebra,
-> redacted discovery, eight secret backends, no daemon dependency.
+> redacted discovery, seven secret backends, no daemon dependency.
 > Codex live-proven; the rest schema-modeled or planned.
 > https://omux.xoxd.ai
 
@@ -102,7 +102,7 @@ Distribution happens after M4.4. These are drafts only.
 > oauth-mux is a small FOSS CLI for the multi-account AI harness
 > problem. Typed three-layer credential liveness
 > (auth/operability/availability), single decision function for
-> routing, redacted discovery (no token material), eight secret
+> routing, redacted discovery (no token material), seven secret
 > backends, no daemon dependency. Live-proven on Codex; GPT5,
 > Anthropic, and MCP servers are schema-modeled; Bedrock and Azure
 > planned. Site walks through the fallback algebra and provider matrix
@@ -123,7 +123,7 @@ Distribution happens after M4.4. These are drafts only.
 **Variant C**
 
 > oauth-mux: typed OAuth fallback for AI harness accounts. MIT,
-> redacted-by-default discovery, eight secret backends. Live-proven
+> redacted-by-default discovery, seven secret backends. Live-proven
 > scope is Codex; everything else is honest about being typed but not
 > yet live-proven. https://omux.xoxd.ai
 
@@ -148,7 +148,7 @@ Distribution happens after M4.4. These are drafts only.
 **Variant C**
 
 > Project site for oauth-mux is live. Typed fallback algebra,
-> redacted-by-default discovery, eight secret backends, no daemon
+> redacted-by-default discovery, seven secret backends, no daemon
 > dependency. https://omux.xoxd.ai
 
 **Variant D**

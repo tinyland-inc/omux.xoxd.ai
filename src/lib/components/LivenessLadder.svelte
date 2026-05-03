@@ -1,13 +1,11 @@
 <script lang="ts">
-	// TIN-801 phase 2. Replaces the 3-column JSON dominance in the Hero with
-	// a single high-signal liveness/fallback visualization. Each row is one
-	// probe outcome from the canonical live-QA artifacts (or schema-faithful
-	// illustration for the third case where no live `dead` artifact exists).
+	// TIN-801 phase 2, updated after the 2026-05-03 paid cohort truth pass.
+	// This is a compact view of the current Codex Max route state, not a
+	// universal provider claim.
 	//
 	// Sources:
-	// - row 1 live.available: oauth-mux/dist/live-qa/20260427T204722Z/codex_max-1_codex-mini.json:2
-	// - row 2 live.quota_exhausted: oauth-mux/dist/live-qa/20260427T210131Z/codex_max-1_codex-max.json:2
-	// - row 3 dead.auth_permanently_failed: schema-faithful illustration
+	// - oauth-mux/docs/live-provider-qa.md:104-110
+	// - oauth-mux/docs/spec/paid-cohort-soak-claim-policy-2026-05-03.md
 
 	type Verdict = 'available' | 'quota' | 'dead';
 
@@ -18,30 +16,47 @@
 		verdict: Verdict;
 		decision: string;
 		note: string;
+		explain: string;
 	}[] = [
 		{
-			account: 'codex_max-1',
-			capability: 'codex-mini',
+			account: 'max-1',
+			capability: 'codex-max',
 			http: '200',
 			verdict: 'available',
-			decision: 'use_this',
-			note: 'live.available — probe succeeded, route traffic here',
+			decision: 'selected',
+			note: 'live.available — selected route for Codex Max work',
+			explain:
+				'Provider evidence says this account is currently selectable for codex-max, so oauth-mux routes the next mediated action here.',
 		},
 		{
-			account: 'codex_max-1',
+			account: 'max-4',
+			capability: 'codex-max',
+			http: '200',
+			verdict: 'available',
+			decision: 'spare_fallback',
+			note: 'live.available — selectable spare fallback',
+			explain:
+				'This distinct broker-ready route is available if the selected route becomes unavailable for the next mediated action.',
+		},
+		{
+			account: 'max-2',
 			capability: 'codex-max',
 			http: '429',
 			verdict: 'quota',
 			decision: 'try_next_account',
 			note: 'live.quota_exhausted — known reset window',
+			explain:
+				'Provider execution reported quota exhaustion for this capability, so oauth-mux skips it until the recorded reset window.',
 		},
 		{
-			account: 'example-failed',
-			capability: '*',
-			http: '401',
-			verdict: 'dead',
-			decision: 'skip',
-			note: 'dead.auth_permanently_failed — schema-faithful illustration',
+			account: 'max-3',
+			capability: 'codex-max',
+			http: '429',
+			verdict: 'quota',
+			decision: 'try_next_account',
+			note: 'live.quota_exhausted — credits/Spark availability is not Max availability',
+			explain:
+				'This route can still be available for lower-tier/Spark work while provider evidence blocks codex-max specifically.',
 		},
 	];
 
@@ -70,15 +85,8 @@
 	import { Tooltip, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { ArrowRight } from '@lucide/svelte';
 
-	function decisionExplain(v: Verdict): string {
-		switch (v) {
-			case 'available':
-				return 'Probe succeeded. The mux routes traffic to this account+capability and stops walking the ladder.';
-			case 'quota':
-				return 'Account hit a known quota wall but is otherwise healthy. The mux walks to the next row and may retry after the reset window.';
-			case 'dead':
-				return 'Account is permanently unusable for this capability (auth or shape mismatch). The mux skips it for the rest of this run.';
-		}
+	function decisionExplain(row: (typeof rows)[number]): string {
+		return row.explain;
 	}
 </script>
 
@@ -86,7 +94,7 @@
 	<figcaption
 		class="border-b border-surface-300-700 bg-surface-100-900 px-4 py-2 text-xs uppercase tracking-wide text-surface-600-400"
 	>
-		fallback ladder · one provider, three accounts
+		Codex Max cohort · one provider, four routes
 	</figcaption>
 	<ol class="divide-y divide-surface-200-800">
 		{#each rows as r, i (r.account + r.capability + i)}
@@ -119,7 +127,7 @@
 							<Tooltip.Content
 								class="bg-surface-950 text-surface-50 max-w-xs rounded-md px-3 py-2 text-xs leading-snug shadow-lg"
 							>
-								{decisionExplain(r.verdict)}
+								{decisionExplain(r)}
 							</Tooltip.Content>
 						</Tooltip.Positioner>
 					</Portal>
@@ -128,8 +136,8 @@
 		{/each}
 	</ol>
 	<div class="border-t border-surface-300-700 bg-surface-100-900 px-4 py-2 text-xs text-surface-600-400">
-		Decision algebra: <code class="font-mono">use_this</code> stops here;
-		<code class="font-mono">try_next_account</code> walks to the next row;
-		<code class="font-mono">skip</code> treats the row as permanently dead.
+		Cohort truth: <code class="font-mono">max-1</code> is selected, <code class="font-mono">max-4</code>
+		is spare fallback, and <code class="font-mono">max-2</code>/<code class="font-mono">max-3</code>
+		are quota-exhausted for <code class="font-mono">codex-max</code>.
 	</div>
 </figure>

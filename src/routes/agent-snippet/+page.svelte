@@ -9,9 +9,10 @@
 	const snippet = `oauth-mux is a typed OAuth multiplexer for multi-account AI harnesses.
 Use it to inspect accounts, route around exhausted credentials, and keep sessions afloat through explicit foreground checks.
 
-Live-proven today: Codex multi-account fallback.
-Capability-proven / in proof lanes: Claude, GitHub, Linear, Vercel, Figma, FlakeHub, MCP.
-Not claimed: production background daemon or universal provider support.
+Live-proven today: Codex route selection, broker-owned sessions, and controlled fallback drills.
+Current Codex Max cohort: max-1 selected, max-4 spare fallback, max-2/max-3 quota-exhausted for codex-max.
+Capability-modeled / in proof lanes: Claude, GitHub, Linear, Vercel, Figma, FlakeHub, MCP.
+Not claimed: provider-originated in-session quota fallback, unmanaged TUI hot-swap, production daemon, or universal provider support.
 
 Install: npm install -g oauth-mux
 First run:
@@ -21,11 +22,13 @@ First run:
 
 Stay-afloat proof:
   oauth-mux route explain --profile codex-max --capability codex-max --json
+  oauth-mux codex broker-session-plan --profile codex-max --capability codex-max --json
   oauth-mux stay-afloat --once --profile codex-max --capability codex-max --json
 
 Agent rules:
   Do not read secret.path files.
   Do not print token-shaped values.
+  Do not infer codex-max availability from Spark/mini/credit dashboard text.
   Do not pass --confirm-spend or run live probes unless the user explicitly authorizes spend.
 
 Provider matrix (machine-readable): https://omux.xoxd.ai/api/providers

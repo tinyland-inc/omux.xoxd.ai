@@ -33,10 +33,11 @@ liveness state. The full algebra — `CredentialLiveness`,
 Being honest about scope matters here, because the AI tools space is
 saturated with "supports everything" claims that fall apart under load.
 
-- **Live-proven: Codex.** Three accounts × `codex-mini` and `codex-max`
-  routes, exercised against the real subscription. The site embeds the
-  redacted JSON artifacts for `live.available` and
-  `live.quota_exhausted`.
+- **Live-proven: Codex.** Current `codex-max` cohort evidence is
+  capability-scoped: `max-1` selected, `max-4` spare fallback, and
+  `max-2`/`max-3` quota-exhausted. Spark/mini availability is not
+  generalized to Max. The site keeps provider-originated in-session quota
+  fallback as an explicit unproven lane.
 - **Schema-modeled: GPT5, Anthropic, MCP servers, GitHub, Linear,
   Vercel, Figma, FlakeHub.** Typed admission status and probe shapes
   are in the source; live route proofs are pending.
@@ -44,8 +45,8 @@ saturated with "supports everything" claims that fall apart under load.
 
 Discovery is redacted by default. `oauth-mux discover --json` returns
 config path, providers, account names, backend names, tags, and safe
-command templates — no token material. Eight secret backends are
-allowed (env, file, keychain, sops, age, command, stdin, prompt);
+command templates — no token material. Seven secret backends are
+allowed (env, file, keychain, sops, age, command, stdin);
 anything else is rejected at config validation.
 
 ## Where it goes next
