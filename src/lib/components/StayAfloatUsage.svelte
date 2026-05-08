@@ -5,6 +5,7 @@
 	// - foreground stay-afloat contract: oauth-mux/docs/onboarding.md:214-270
 	// - permission broker boundary: oauth-mux/docs/spec/stay-afloat-permission-broker-contract-2026-05-01.md:23-44
 	// - paid proof cohort / claim policy: oauth-mux/docs/spec/paid-multi-account-proof-cohort-2026-05-01.md:186-239
+	// - managed dogfood-9 artifact: oauth-mux/dist/live-qa/managed-resume-dogfood-9/status.ndjson
 	import { Activity, ShieldCheck, UserPlus, Video } from '@lucide/svelte';
 	import CodeBlock from './CodeBlock.svelte';
 
@@ -23,7 +24,7 @@
 	const truths: { label: string; text: string }[] = [
 		{
 			label: 'Works now',
-			text: 'Foreground stay-afloat reads local runtime readiness plus recorded liveness, then reports the selectable route or the exact handoff needed.',
+			text: 'Codex broker-owned resume and same-turn auth fallback have live managed-frame evidence; traffic recovered onto another account without restart.',
 		},
 		{
 			label: 'Safe by default',
@@ -31,7 +32,7 @@
 		},
 		{
 			label: 'Not claimed yet',
-			text: 'The background/socket daemon is not a production dependency. Service wrappers remain optional shells around the foreground contract.',
+			text: 'Provider-originated quota handoff is still unclaimed until a real usage_limit_reached turn retries successfully in the same managed process.',
 		},
 	];
 </script>
@@ -77,10 +78,11 @@
 						<h3 class="h4">Reality check</h3>
 					</div>
 					<ul class="list-disc space-y-2 pl-5 text-sm leading-relaxed text-surface-700-300">
-						<li>Codex selected-route, broker-owned session, and controlled fallback drills are proven.</li>
+						<li>Codex broker-owned resume and live same-turn auth fallback are proven in dogfood-9.</li>
 						<li>Provider-originated in-session quota fallback remains tracked by TIN-916 / GitHub #131.</li>
 						<li>
-							The paid cohort claim policy and no-spend soak helper are shipped; the evidence window is in progress.
+							The current public claim is auth continuity. Quota continuity waits for a 429 usage_limit_reached artifact
+							plus a successful fallback turn.
 						</li>
 					</ul>
 				</aside>
@@ -118,11 +120,9 @@
 					<h3 class="h3">Demo/video target</h3>
 				</div>
 				<p class="mb-3 text-surface-700-300">
-					Once the demo accounts are enrolled, the clean recording is a terminal split: left side shows one account
-					unavailable and another selectable; right side runs the harness through <code class="font-mono"
-						>oauth-mux exec</code
-					>
-					without a manual logout/login dance.
+					The next clean recording is a managed Codex resume with the status summarizer visible: auth continuity is
+					already observed, and quota continuity should only be claimed once the artifact records a provider-originated
+					429 followed by a successful fallback turn.
 				</p>
 				<CodeBlock html={videoDemoHtml} lang="bash" caption="demo storyboard, gated on demo account enrollment" />
 			</div>
