@@ -5,7 +5,7 @@
 	// disclosure so it stays accessible without dominating the first viewport.
 	//
 	// Sources:
-	// - current four-route Codex truth: oauth-mux/docs/live-provider-qa.md:104-110
+	// - managed dogfood-9 artifact: oauth-mux/dist/live-qa/managed-resume-dogfood-9/status.ndjson
 	// - public claim policy: oauth-mux/docs/spec/paid-cohort-soak-claim-policy-2026-05-03.md
 	import CodeBlock from './CodeBlock.svelte';
 	import LivenessLadder from './LivenessLadder.svelte';
@@ -24,9 +24,9 @@
 			fallback.
 		</p>
 		<p class="mt-4 text-sm leading-relaxed text-surface-600-400">
-			Codex route selection, broker-owned sessions, and controlled fallback drills are proven for the current paid
-			cohort. Provider-originated in-session quota fallback is still an explicit proof lane. The background daemon is
-			not a production dependency.
+			Codex broker-owned resume now has live managed-frame evidence: auth failures on the launch-selected route were
+			retried in place across the paid cohort until traffic recovered on another account. Provider-originated in-session
+			quota fallback is still an explicit proof lane. The background daemon is not a production dependency.
 		</p>
 
 		<!-- Primary CTA scrolls to the proof flow; secondary actions stay local. -->

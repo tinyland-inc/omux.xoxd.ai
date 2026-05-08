@@ -1,13 +1,13 @@
 <script lang="ts">
-	// TIN-801 phase 2, updated after the 2026-05-03 paid cohort truth pass.
-	// This is a compact view of the current Codex Max route state, not a
-	// universal provider claim.
+	// TIN-801 phase 2, updated after the 2026-05-07 managed dogfood-9 truth pass.
+	// This is a compact view of the current Codex Max managed-frame state, not
+	// a universal provider claim.
 	//
 	// Sources:
-	// - oauth-mux/docs/live-provider-qa.md:104-110
+	// - oauth-mux/dist/live-qa/managed-resume-dogfood-9/status.ndjson
 	// - oauth-mux/docs/spec/paid-cohort-soak-claim-policy-2026-05-03.md
 
-	type Verdict = 'available' | 'quota' | 'dead';
+	type Verdict = 'available' | 'auth' | 'quota' | 'dead';
 
 	const rows: {
 		account: string;
@@ -21,42 +21,42 @@
 		{
 			account: 'max-1',
 			capability: 'codex-max',
-			http: '200',
-			verdict: 'available',
-			decision: 'selected',
-			note: 'live.available — selected route for Codex Max work',
+			http: '401',
+			verdict: 'auth',
+			decision: 'auth_retry',
+			note: 'dogfood-9 auth_unauthorized — buffered before Codex saw it',
 			explain:
-				'Provider evidence says this account is currently selectable for codex-max, so oauth-mux routes the next mediated action here.',
+				'The managed frame launched here, then oauth-mux observed an upstream auth failure and retried on another route without delivering the 401 to Codex.',
+		},
+		{
+			account: 'max-2',
+			capability: 'codex-max',
+			http: '401',
+			verdict: 'auth',
+			decision: 'auth_retry',
+			note: 'dogfood-9 auth_unauthorized — continued retry chain',
+			explain:
+				'The next account also returned auth_unauthorized, so oauth-mux kept the turn inside the proxy and advanced to the next route.',
+		},
+		{
+			account: 'max-3',
+			capability: 'codex-max',
+			http: '401',
+			verdict: 'auth',
+			decision: 'auth_retry',
+			note: 'dogfood-9 auth_unauthorized — terminal retry source',
+			explain:
+				'This was the last failing auth route in the observed chain before oauth-mux retried the same turn on max-4.',
 		},
 		{
 			account: 'max-4',
 			capability: 'codex-max',
 			http: '200',
 			verdict: 'available',
-			decision: 'spare_fallback',
-			note: 'live.available — selectable spare fallback',
+			decision: 'current_wire_route',
+			note: 'dogfood-9 recovered — continuing responses traffic',
 			explain:
-				'This distinct broker-ready route is available if the selected route becomes unavailable for the next mediated action.',
-		},
-		{
-			account: 'max-2',
-			capability: 'codex-max',
-			http: '429',
-			verdict: 'quota',
-			decision: 'try_next_account',
-			note: 'live.quota_exhausted — known reset window',
-			explain:
-				'Provider execution reported quota exhaustion for this capability, so oauth-mux skips it until the recorded reset window.',
-		},
-		{
-			account: 'max-3',
-			capability: 'codex-max',
-			http: '429',
-			verdict: 'quota',
-			decision: 'try_next_account',
-			note: 'live.quota_exhausted — credits/Spark availability is not Max availability',
-			explain:
-				'This route can still be available for lower-tier/Spark work while provider evidence blocks codex-max specifically.',
+				'The managed session recovered here and has continued serving successful brokered Codex traffic. This proves auth continuity, not quota handoff.',
 		},
 	];
 
@@ -64,6 +64,8 @@
 		switch (v) {
 			case 'available':
 				return 'preset-filled-success-500';
+			case 'auth':
+				return 'preset-filled-warning-500';
 			case 'quota':
 				return 'preset-filled-warning-500';
 			case 'dead':
@@ -75,6 +77,8 @@
 		switch (v) {
 			case 'available':
 				return 'text-success-700-300';
+			case 'auth':
+				return 'text-warning-700-300';
 			case 'quota':
 				return 'text-warning-700-300';
 			case 'dead':
@@ -136,8 +140,8 @@
 		{/each}
 	</ol>
 	<div class="border-t border-surface-300-700 bg-surface-100-900 px-4 py-2 text-xs text-surface-600-400">
-		Cohort truth: <code class="font-mono">max-1</code> is selected, <code class="font-mono">max-4</code>
-		is spare fallback, and <code class="font-mono">max-2</code>/<code class="font-mono">max-3</code>
-		are quota-exhausted for <code class="font-mono">codex-max</code>.
+		Cohort truth: dogfood-9 launched on <code class="font-mono">max-1</code>, recovered through auth fallback to
+		<code class="font-mono">max-4</code>, and has not yet observed provider-originated
+		<code class="font-mono">usage_limit_reached</code> quota handoff.
 	</div>
 </figure>
