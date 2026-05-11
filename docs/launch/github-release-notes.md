@@ -7,17 +7,15 @@
 ## What's new
 
 This release pairs with the launch of the project site at
-**https://omux.xoxd.ai** — the canonical place to read the typed fallback
-algebra, the provider matrix, the security posture, and the first-run
-flows in one continuous page.
+**https://omux.xoxd.ai** — the canonical place to read the agent auth and
+session-resilience story, the managed Codex lifecycle, the provider matrix,
+the security posture, and the first-run flows in one continuous page.
 
-oauth-mux models credential health as a typed three-layer union —
-authentication, operability, and availability — so the harness can pick
-the right next move (`use_this`, `try_next_account`, `try_next_provider`,
-or hand back to the user) instead of guessing at an opaque 401 or 429.
-That algebra is the differentiator, and the site walks through it with
-the real `CredentialLiveness`, `Availability`, and `MuxDecision` types
-copied directly from the source.
+oauth-mux wraps supported harnesses with route-state diagnostics, managed
+auth/config overlays, and labeled fallback decisions. It still models
+credential health as authentication, operability, and availability, but the
+operator-facing goal is simple: keep the harness usable when auth, quota, tier,
+or local runtime state changes, and leave a redacted artifact trail.
 
 Discovery (`oauth-mux discover --json`) is redacted by default: it
 reports config path, providers, account names, secret backend names,
@@ -26,26 +24,31 @@ material.
 
 ## Provider scope (read this before filing issues)
 
-- **Live-proven: Codex.** Current `codex-max` cohort evidence is
-  capability-scoped: `max-1` selected, `max-4` spare fallback, and
-  `max-2`/`max-3` quota-exhausted. Spark/mini availability is not
-  generalized to Max.
+- **Live-proven: Codex.** Current evidence includes installed-runtime managed
+  resume quota handoff: `codex:max-2` served successful traffic, then returned
+  `usage_limit_reached`; oauth-mux retried the same buffered request on
+  `codex:max-3`, and the fallback account returned `200`. Same-thread provider
+  continuity and mid-turn streaming recovery remain separate proof lanes.
 - **Schema-modeled: GPT5, Anthropic (Claude Code subscription, Anthropic
   API key), MCP servers (HTTP and stdio), GitHub, Linear, Vercel, Figma,
   FlakeHub.** Probe shapes and admission status are typed; live route
   proofs are pending.
 - **Planned: Bedrock, Azure.**
 
-Background-daemon refresh is not a production dependency in this
-release. The default path remains explicit selection, explicit probe,
-env injection, and exec handoff.
+Background-daemon refresh is not a production dependency in this release. The
+current Codex path is managed launch/resume plus redacted status evidence.
+
+Public install lanes remain `0.1.6`; source and local dogfood are `0.1.7`
+candidate until the next release is published.
 
 ## Try it
 
 ```sh
 npm install -g oauth-mux
-oauth-mux codex onboard
-oauth-mux codex probe-all --capability codex-max --json
+oauth-mux init --codex-max
+oauth-mux doctor
+oauth-mux route explain --profile codex-max --capability codex-max
+oauth-mux codex resume
 ```
 
 Read the site for the full first-run walkthrough, the provider matrix,

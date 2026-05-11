@@ -5,7 +5,8 @@
 	// disclosure so it stays accessible without dominating the first viewport.
 	//
 	// Sources:
-	// - managed dogfood-9 artifact: oauth-mux/dist/live-qa/managed-resume-dogfood-9/status.ndjson
+	// - current README truth: oauth-mux/README.md
+	// - live handoff evidence: oauth-mux/docs/evidence/codex-engineered-quota-handoff-20260509/
 	// - public claim policy: oauth-mux/docs/spec/paid-cohort-soak-claim-policy-2026-05-03.md
 	import CodeBlock from './CodeBlock.svelte';
 	import LivenessLadder from './LivenessLadder.svelte';
@@ -17,22 +18,22 @@
 
 <section id="hero" class="container mx-auto px-6 py-16 lg:py-24">
 	<header class="mx-auto max-w-3xl">
-		<p class="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-primary-500">typed OAuth fallback</p>
+		<p class="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-primary-500">agent auth and session resilience</p>
 		<h1 class="h1 text-5xl font-bold tracking-tight lg:text-7xl">oauth-mux</h1>
 		<p class="mt-4 text-xl text-surface-700-300 lg:text-2xl">
-			Keep AI harness sessions afloat across multiple accounts with typed liveness, redacted discovery, and explicit
-			fallback.
+			OAuth/account multiplexing for professional AI harnesses and autonomous agents.
 		</p>
 		<p class="mt-4 text-sm leading-relaxed text-surface-600-400">
-			Codex broker-owned resume now has live managed-frame evidence: auth failures on the launch-selected route were
-			retried in place across the paid cohort until traffic recovered on another account. Provider-originated in-session
-			quota fallback is still an explicit proof lane. The background daemon is not a production dependency.
+			Managed Codex resume has live installed-runtime evidence: a provider-originated
+			<code class="font-mono">usage_limit_reached</code> turn on one account was retried on another account before Codex
+			saw the 429. Source and dogfood are <code class="font-mono">0.1.7</code> candidate; public install lanes remain
+			<code class="font-mono">0.1.6</code>.
 		</p>
 
 		<!-- Primary CTA scrolls to the proof flow; secondary actions stay local. -->
 		<div class="mt-8 flex flex-wrap gap-3">
 			<a href="#stay-afloat" class="btn preset-filled-primary-500 px-5 py-2.5 text-sm font-semibold tracking-tight">
-				Prove stay-afloat
+				Inspect the control plane
 			</a>
 			<a href="#install" class="btn preset-tonal-surface px-5 py-2.5 text-sm font-semibold tracking-tight"> Install </a>
 			<a

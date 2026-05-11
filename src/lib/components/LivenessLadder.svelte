@@ -1,13 +1,14 @@
 <script lang="ts">
-	// TIN-801 phase 2, updated after the 2026-05-07 managed dogfood-9 truth pass.
+	// TIN-801 phase 2, updated after the 2026-05-09 engineered managed quota-handoff proof.
 	// This is a compact view of the current Codex Max managed-frame state, not
 	// a universal provider claim.
 	//
 	// Sources:
-	// - oauth-mux/dist/live-qa/managed-resume-dogfood-9/status.ndjson
+	// - oauth-mux/docs/evidence/codex-engineered-quota-handoff-20260509/
+	// - oauth-mux/docs/qa-handoff-matrix.md
 	// - oauth-mux/docs/spec/paid-cohort-soak-claim-policy-2026-05-03.md
 
-	type Verdict = 'available' | 'auth' | 'quota' | 'dead';
+	type Verdict = 'available' | 'auth' | 'quota' | 'blocked';
 
 	const rows: {
 		account: string;
@@ -19,44 +20,44 @@
 		explain: string;
 	}[] = [
 		{
-			account: 'max-1',
+			account: 'max-2',
 			capability: 'codex-max',
-			http: '401',
-			verdict: 'auth',
-			decision: 'auth_retry',
-			note: 'dogfood-9 auth_unauthorized — buffered before Codex saw it',
+			http: '200',
+			verdict: 'available',
+			decision: 'selected_route_ok',
+			note: 'successful traffic before the quota event',
 			explain:
-				'The managed frame launched here, then oauth-mux observed an upstream auth failure and retried on another route without delivering the 401 to Codex.',
+				'The engineered 2026-05-09 artifact includes successful max-2 responses before provider-originated quota exhaustion.',
 		},
 		{
 			account: 'max-2',
 			capability: 'codex-max',
-			http: '401',
-			verdict: 'auth',
-			decision: 'auth_retry',
-			note: 'dogfood-9 auth_unauthorized — continued retry chain',
+			http: '429',
+			verdict: 'quota',
+			decision: 'quota_exhausted',
+			note: 'usage_limit_reached stayed inside the proxy',
 			explain:
-				'The next account also returned auth_unauthorized, so oauth-mux kept the turn inside the proxy and advanced to the next route.',
+				'oauth-mux recorded durable quota evidence, did not deliver the 429 to Codex, and selected an eligible fallback route.',
 		},
 		{
 			account: 'max-3',
 			capability: 'codex-max',
-			http: '401',
-			verdict: 'auth',
-			decision: 'auth_retry',
-			note: 'dogfood-9 auth_unauthorized — terminal retry source',
-			explain:
-				'This was the last failing auth route in the observed chain before oauth-mux retried the same turn on max-4.',
-		},
-		{
-			account: 'max-4',
-			capability: 'codex-max',
 			http: '200',
 			verdict: 'available',
-			decision: 'current_wire_route',
-			note: 'dogfood-9 recovered — continuing responses traffic',
+			decision: 'fallback_200',
+			note: 'same buffered request recovered on fallback',
 			explain:
-				'The managed session recovered here and has continued serving successful brokered Codex traffic. This proves auth continuity, not quota handoff.',
+				'oauth-mux dropped x-codex-turn-state, retried the same responses request with max-3 credentials, and received status 200.',
+		},
+		{
+			account: 'codex-max',
+			capability: 'current cohort',
+			http: 'not_afloat',
+			verdict: 'blocked',
+			decision: 'repair_or_wait',
+			note: 'post-proof no-spend route truth',
+			explain:
+				'After the proof burn, codex-max has no selectable route: several routes are quota-exhausted and the remaining runtime-ready route needs auth repair.',
 		},
 	];
 
@@ -68,7 +69,7 @@
 				return 'preset-filled-warning-500';
 			case 'quota':
 				return 'preset-filled-warning-500';
-			case 'dead':
+			case 'blocked':
 				return 'preset-filled-error-500';
 		}
 	}
@@ -81,7 +82,7 @@
 				return 'text-warning-700-300';
 			case 'quota':
 				return 'text-warning-700-300';
-			case 'dead':
+			case 'blocked':
 				return 'text-error-700-300';
 		}
 	}
@@ -98,7 +99,7 @@
 	<figcaption
 		class="border-b border-surface-300-700 bg-surface-100-900 px-4 py-2 text-xs uppercase tracking-wide text-surface-600-400"
 	>
-		Codex Max cohort · one provider, four routes
+		Codex Max managed proof · one provider, current route truth
 	</figcaption>
 	<ol class="divide-y divide-surface-200-800">
 		{#each rows as r, i (r.account + r.capability + i)}
@@ -140,8 +141,9 @@
 		{/each}
 	</ol>
 	<div class="border-t border-surface-300-700 bg-surface-100-900 px-4 py-2 text-xs text-surface-600-400">
-		Cohort truth: dogfood-9 launched on <code class="font-mono">max-1</code>, recovered through auth fallback to
-		<code class="font-mono">max-4</code>, and has not yet observed provider-originated
-		<code class="font-mono">usage_limit_reached</code> quota handoff.
+		Cohort truth: the 2026-05-09 engineered artifact proves managed quota handoff from
+		<code class="font-mono">max-2</code>
+		to <code class="font-mono">max-3</code>. It does not claim same-thread provider continuity or mid-turn streaming
+		recovery.
 	</div>
 </figure>

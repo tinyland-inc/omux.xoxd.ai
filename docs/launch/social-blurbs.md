@@ -12,16 +12,15 @@ Distribution happens after M4.4. These are drafts only.
 
 **Variant A — Show HN, problem-led**
 
-> Show HN: oauth-mux — typed OAuth fallback for AI harness accounts
+> Show HN: oauth-mux — agent auth and session resilience for AI harnesses
 >
 > If you carry multiple AI identities (personal Codex, work seat,
 > Claude sub, Anthropic API key, MCP servers), switching between them
-> is manual and 401/429 failures are opaque. oauth-mux models
-> credential health as a typed three-layer union (auth, operability,
-> availability) and routes via a single `MuxDecision.fromHttpStatus`
-> function. Codex is live-proven; GPT5, Anthropic, MCP, GitHub, Linear,
-> Vercel, Figma, FlakeHub are schema-modeled. Bedrock and Azure are
-> planned. MIT, Zig core, npm CLI. https://omux.xoxd.ai
+> is manual and 401/429 failures are opaque. oauth-mux wraps supported
+> harnesses with route-state diagnostics, managed auth/config overlays,
+> and labeled fallback decisions. Managed Codex quota handoff is
+> live-proven; the rest is schema-modeled or planned. MIT, Zig core,
+> npm CLI. https://omux.xoxd.ai
 
 **Variant B — Show HN, mechanism-led**
 
@@ -35,8 +34,9 @@ Distribution happens after M4.4. These are drafts only.
 
 **Variant C — minimal**
 
-> oauth-mux: typed OAuth fallback for AI harness accounts. Live-proven
-> on Codex; GPT5, Anthropic, and MCP are schema-modeled.
+> oauth-mux: agent auth and session resilience for AI harnesses.
+> Managed Codex quota handoff is live-proven; GPT5, Anthropic, and MCP
+> are schema-modeled.
 > https://omux.xoxd.ai
 
 ---
@@ -67,10 +67,9 @@ Distribution happens after M4.4. These are drafts only.
 
 **Variant A**
 
-> oauth-mux: typed OAuth fallback for AI harness accounts. Models
-> credential health as a typed union, routes via one decision
-> function. Live-proven on Codex; GPT5/Anthropic/MCP schema-modeled;
-> Bedrock/Azure planned. MIT. https://omux.xoxd.ai
+> oauth-mux: agent auth and session resilience for AI harnesses.
+> Managed Codex quota handoff is live-proven; GPT5/Anthropic/MCP are
+> schema-modeled; Bedrock/Azure planned. MIT. https://omux.xoxd.ai
 
 **Variant B**
 
@@ -122,10 +121,10 @@ Distribution happens after M4.4. These are drafts only.
 
 **Variant C**
 
-> oauth-mux: typed OAuth fallback for AI harness accounts. MIT,
-> redacted-by-default discovery, seven secret backends. Live-proven
-> scope is Codex; everything else is honest about being typed but not
-> yet live-proven. https://omux.xoxd.ai
+> oauth-mux: agent auth and session resilience for AI harnesses. MIT,
+> redacted-by-default discovery, seven secret backends. Managed Codex
+> quota handoff is live-proven; everything else is honest about being
+> schema-modeled or planned. https://omux.xoxd.ai
 
 ---
 
@@ -133,10 +132,9 @@ Distribution happens after M4.4. These are drafts only.
 
 **Variant A**
 
-> oauth-mux: typed OAuth fallback for AI harness accounts. Models
-> credential health as a typed union, routes via one decision
-> function. Live-proven on Codex; GPT5, Anthropic, and MCP are
-> schema-modeled. https://omux.xoxd.ai
+> oauth-mux: agent auth and session resilience for AI harnesses.
+> Managed Codex quota handoff is live-proven; GPT5, Anthropic, and MCP
+> are schema-modeled. https://omux.xoxd.ai
 
 **Variant B**
 
