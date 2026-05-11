@@ -2,7 +2,7 @@
 
 Source for [https://omux.xoxd.ai](https://omux.xoxd.ai), the marketing and
 devtool surface for [`oauth-mux`](https://github.com/Jesssullivan/oauth-mux) —
-the typed OAuth multiplexer for AI harness accounts.
+agent auth and session resilience for professional AI harness accounts.
 
 This repo ships the website only. The product source, CLI, and provider
 runtime live at [`Jesssullivan/oauth-mux`](https://github.com/Jesssullivan/oauth-mux).
@@ -69,14 +69,19 @@ Rule rather than a multi-CNAME Pages config.
 
 Frame the launch state honestly:
 
-- **Live-proven**: Codex (single provider, real probe artifacts in
-  `src/lib/content/probe-json/`).
-- **Schema-modeled**: GPT5, Anthropic, MCP, GitHub, Linear, Vercel, Figma,
-  FlakeHub. Modeled in the provider matrix; not yet fronted by a live probe.
+- **Live-proven**: managed Codex launch/resume, native session authority bridge,
+  root-partitioned config passthrough, and installed-runtime quota handoff.
+- **Strongest proof**:
+  `oauth-mux/docs/evidence/codex-engineered-quota-handoff-20260509/`.
+- **Version truth**: public npm/GitHub/Homebrew/curl lanes remain `0.1.6`;
+  source and local dogfood are `0.1.7` candidate.
+- **Schema-modeled**: Anthropic, MCP, GitHub, Linear, Vercel, Figma, FlakeHub.
+  Modeled in the provider matrix; not yet live-proven for stay-afloat.
 - **Planned**: Bedrock, Azure.
 
 This page does not claim every `oauth-mux` provider is live-proven. It
-matches the shipped site copy. See
+also does not claim same-thread provider continuity, mid-turn streaming
+recovery, or unmanaged bare-Codex daemon hot-swap. See
 [`src/lib/components/SecurityPosture.svelte`](src/lib/components/SecurityPosture.svelte)
 for the verbatim guarantees pulled from `oauth-mux`.
 

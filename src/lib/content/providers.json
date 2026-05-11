@@ -1,5 +1,5 @@
 {
-	"generatedAt": "2026-05-03T04:11:14.282Z",
+	"generatedAt": "2026-05-10T00:00:00.000Z",
 	"providers": [
 		{
 			"slug": "codex",
@@ -7,10 +7,10 @@
 			"status": "live-proven",
 			"flow": "oauth2",
 			"docsUrl": "https://developers.openai.com/codex/auth",
-			"notes": "Codex is the live-proven provider. Current codex-max cohort: max-1 selected, max-4 spare fallback, max-2/max-3 quota-exhausted; Spark/mini availability is not generalized to Max.",
+			"notes": "Codex is the live-proven provider. The 2026-05-09 engineered installed-runtime artifact proves managed resume quota handoff from codex:max-2 to codex:max-3; same-thread provider continuity and mid-turn streaming recovery are not claimed.",
 			"admission": "`admitted_command`; direct HTTP `unadmitted`",
 			"probeShape": "`codex exec --json` under selected `CODEX_HOME`",
-			"citation": "oauth-mux/docs/spec/provider-probe-admission-matrix-2026-04-26.md:26-39"
+			"citation": "oauth-mux/docs/evidence/codex-engineered-quota-handoff-20260509/"
 		},
 		{
 			"slug": "claude",

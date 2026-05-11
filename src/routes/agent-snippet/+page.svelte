@@ -6,30 +6,35 @@
 	// is consistent with the rest of the design system.
 	import { createToaster, Toast, Portal } from '@skeletonlabs/skeleton-svelte';
 
-	const snippet = `oauth-mux is a typed OAuth multiplexer for multi-account AI harnesses.
-Use it to inspect accounts, route around exhausted credentials, and keep sessions afloat through explicit foreground checks.
+	const snippet = `oauth-mux is OAuth/account multiplexing for professional AI harnesses and autonomous agents.
+Use it to inspect accounts, route around exhausted credentials, and keep managed harness sessions usable through explicit foreground checks.
 
-Live-proven today: Codex route selection, broker-owned sessions, and controlled fallback drills.
-Current Codex Max cohort: max-1 selected, max-4 spare fallback, max-2/max-3 quota-exhausted for codex-max.
+Live-proven today: managed Codex launch/resume, native session authority bridge, root-partitioned config passthrough, and installed-runtime quota handoff from codex:max-2 to codex:max-3.
+Strongest proof: oauth-mux/docs/evidence/codex-engineered-quota-handoff-20260509/.
+Version truth: source/local dogfood is 0.1.7 candidate; public npm/GitHub/Homebrew/curl lanes remain 0.1.6.
 Capability-modeled / in proof lanes: Claude, GitHub, Linear, Vercel, Figma, FlakeHub, MCP.
-Not claimed: provider-originated in-session quota fallback, unmanaged TUI hot-swap, production daemon, or universal provider support.
+Not claimed: same-thread provider continuity, mid-turn streaming recovery, unmanaged bare-Codex daemon hot-swap, universal provider support, or non-Codex stay-afloat proof.
 
 Install: npm install -g oauth-mux
 First run:
   oauth-mux init --codex-max
   oauth-mux doctor
-  oauth-mux accounts list --provider codex --json
+  oauth-mux route explain --profile codex-max --capability codex-max
+  oauth-mux codex resume
 
-Stay-afloat proof:
+Agent-safe inspection:
+  oauth-mux doctor runtime --profile codex-max --capability codex-max --json
+  oauth-mux accounts list --provider codex --json
   oauth-mux route explain --profile codex-max --capability codex-max --json
-  oauth-mux codex broker-session-plan --profile codex-max --capability codex-max --json
-  oauth-mux stay-afloat --once --profile codex-max --capability codex-max --json
+  oauth-mux repair-plan --profile codex-max --capability codex-max --json
+  oauth-mux codex status-latest --json
 
 Agent rules:
   Do not read secret.path files.
   Do not print token-shaped values.
+  Do not copy OAuth stores between accounts.
   Do not infer codex-max availability from Spark/mini/credit dashboard text.
-  Do not pass --confirm-spend or run live probes unless the user explicitly authorizes spend.
+  Do not run live probes or revalidation unless the user explicitly authorizes spend.
 
 Provider matrix (machine-readable): https://omux.xoxd.ai/api/providers
 Source: https://github.com/Jesssullivan/oauth-mux

@@ -21,12 +21,14 @@ deploy lane, milestone breakdown, and the M0 file scaffold.
 `oauth-mux` itself is in a public, post-publication state. This original
 bootstrap snapshot predated the May 2026 Codex broker-owned session ladder and
 paid cohort truthing. Current site copy must use the latest `oauth-mux` docs:
-the Codex Max cohort is four routes, evidence is capability-scoped, and public
-claims must not imply provider-originated in-session quota fallback,
-unmanaged TUI hot-swap, same-thread quota recovery, or per-request muxing. The
-product gap is adoption: first-run clarity, website narrative, contributor
-surface, and launch-channel choreography. `omux.xoxd.ai` is the first
-deliverable in that gap and the execution vehicle for `TIN-734`.
+source and local dogfood are `0.1.7` candidate, public install lanes remain
+`0.1.6`, and the strongest managed Codex proof is
+`oauth-mux/docs/evidence/codex-engineered-quota-handoff-20260509/`. Claims must
+not imply same-thread provider continuity, mid-turn streaming recovery,
+unmanaged bare-Codex daemon hot-swap, universal provider support, or non-Codex
+stay-afloat proof. The product gap is adoption: first-run clarity, website
+narrative, contributor surface, and launch-channel choreography. `omux.xoxd.ai`
+is the first deliverable in that gap and the execution vehicle for `TIN-734`.
 
 ## Founding Prompt Alignment
 
@@ -306,24 +308,25 @@ M0 seed files (~30 lines total):
 Per `oauth-mux/docs/spec/product-adoption-sprint-2026-04-28.md:74-148`. Single
 page at `/`, with anchor sections:
 
-1. **Hero** (`/`): headline `oauth-mux`, subhead "Typed OAuth fallback for AI
-   harness accounts", primary install snippet (`npm install -g oauth-mux` +
-   `oauth-mux codex onboard` + `oauth-mux codex probe-all --capability
-   codex-max --json`), redacted JSON excerpt showing `live.available` /
-   `live.quota_exhausted` from real live-QA artifacts. If `v0.1.3` is still
-   unpublished at content freeze, present `doctor`, `report`, and
-   `providers list` as staged next-release diagnostics rather than as
-   installed commands.
+1. **Hero** (`/`): headline `oauth-mux`, subhead "OAuth/account multiplexing
+   for professional AI harnesses and autonomous agents", primary install
+   snippet (`npm install -g oauth-mux`, `oauth-mux init --codex-max`,
+   `oauth-mux doctor`, `oauth-mux route explain --profile codex-max
+   --capability codex-max`, `oauth-mux codex resume`), and a compact managed
+   Codex proof summary. Public package truth is `0.1.6`; source/local dogfood
+   truth is `0.1.7` candidate.
 2. **Problem** (`/#problem`): 3 sentences from the planning doc lines 98-104.
 3. **Fallback algebra** (`/#fallback`): typed `CredentialLiveness` and
    `Availability` enums copied verbatim from `oauth-mux/src/types.zig:152-215`.
    Includes `MuxDecision` table from `:245-261` and routing semantics from the
    provider checklist `:223-231`.
-4. **Install** (`/#install`): npm command (current). GitHub Release tarballs
-   (current — six platforms). Homebrew public tap (`jesssullivan/omux`,
-   current as of v0.1.6; do not describe as Homebrew core). deb/rpm (staged,
-   no public repo yet). Curl installer with `REPO=Jesssullivan/oauth-mux`
-   override note until next release regenerates default.
+4. **Install** (`/#install`): npm command (public `0.1.6`). GitHub Release
+   tarballs (public `0.1.6`, six platforms). Homebrew public tap
+   (`jesssullivan/omux`, public `0.1.6`; do not describe as Homebrew core).
+   deb/rpm release packages attached to GitHub Releases, with no public apt/yum
+   repository claimed. Curl installer resolves the public release lane. Local
+   dogfood for `0.1.7` candidate must use the remove-then-copy lane from
+   `oauth-mux/docs/release-install-lanes.md`.
 5. **First-run** (`/#first-run`): three flows — Codex paid cohort path,
    generic provider author path, agent discovery path with
    `agent_safe_commands` list.
@@ -353,14 +356,16 @@ Single-source-of-truth per the round 2 content brief:
 - Liveness algebra → `oauth-mux/src/types.zig:152-215, 224-240, 245-261`
 - Provider matrix → `oauth-mux/docs/spec/provider-probe-admission-matrix-2026-04-26.md:26-39`
 - Codex live-proven evidence and four-route cohort truth →
-  `oauth-mux/docs/live-provider-qa.md` plus
+  `oauth-mux/docs/evidence/codex-engineered-quota-handoff-20260509/`,
+  `oauth-mux/docs/qa-handoff-matrix.md`, plus
   `oauth-mux/docs/spec/paid-cohort-soak-claim-policy-2026-05-03.md`
 - "What not to claim" guardrails → planning doc `:69-74` (verbatim)
 
-The first launch artifacts were superseded by current Codex Max cohort evidence:
-`max-1#codex-max` selected, `max-4#codex-max` spare fallback, and
-`max-2#codex-max` / `max-3#codex-max` quota-exhausted. Do not generalize
-Spark, mini, or dashboard credit availability to `codex-max`.
+The first launch artifacts were superseded by current Codex Max cohort evidence.
+Dogfood-9 remains historical failed-quota evidence. The current strongest proof
+is the 2026-05-09 engineered installed-runtime managed handoff from
+`codex:max-2` to `codex:max-3`. Do not generalize Spark, mini, API credits, or
+dashboard credit availability to ChatGPT subscription-backed `codex-max`.
 
 Build-time content load:
 - `src/lib/content/providers.json` — generated at build time from oauth-mux

@@ -1,5 +1,5 @@
 <script lang="ts">
-	// M3.2 First-run flows.
+	// M3.2 First-run flows, refreshed from oauth-mux README 2026-05-10.
 	// Sources (verbatim where stated):
 	// - Codex paid cohort path: oauth-mux/docs/onboarding.md + docs/live-provider-qa.md
 	// - Generic provider author path steps: oauth-mux/docs/adoption.md:53-66
@@ -32,24 +32,22 @@
 <section id="first-run" class="container mx-auto px-6 py-16 lg:py-20">
 	<div class="mx-auto max-w-4xl space-y-14">
 		<header>
-			<h2 class="h2 mb-4">First-run flows</h2>
+			<h2 class="h2 mb-4">Usage paths</h2>
 			<p class="text-lg text-surface-700-300">
-				Three named paths — Codex paid cohort path, generic provider author path, and agent discovery path — cover the
-				operator surface for the first sitting.
+				Humans get a native managed Codex path. Agents get redacted JSON inspection. Provider authors get typed
+				validation before any live proof lane.
 			</p>
 		</header>
 
 		<div>
-			<h3 class="h3 mb-2">Codex paid cohort path</h3>
+			<h3 class="h3 mb-2">Human Codex path</h3>
 			<p class="mb-3 text-surface-700-300">
-				Installed CLI commands take a Codex Max user from a fresh checkout to redacted account inventory, no-spend
-				canary output, and route-aware broker session planning.
+				The managed command keeps Codex inside the oauth-mux frame while preserving native chooser/session authority.
 			</p>
-			<CodeBlock html={codexHappyHtml} lang="bash" caption="oauth-mux/docs/onboarding.md:45-50" />
+			<CodeBlock html={codexHappyHtml} lang="bash" caption="oauth-mux/README.md — human first run" />
 			<p class="mt-2 text-sm text-surface-600-400">
-				<code class="font-mono">oauth-mux codex canary</code>
-				validates config, prints redacted discovery, checks <code class="font-mono">codex login status</code> for each expected
-				account, and summarizes whether route health has already been recorded. It does not run live probes by default.
+				If upstream auth is stale, run the labeled command from route explanation, such as
+				<code class="font-mono">oauth-mux codex login-device max-3</code>.
 			</p>
 		</div>
 
@@ -73,15 +71,12 @@
 		</div>
 
 		<div>
-			<h3 class="h3 mb-2">Agent discovery path</h3>
+			<h3 class="h3 mb-2">Agent-safe inspection path</h3>
 			<p class="mb-3 text-surface-700-300">
-				Agents start with redacted JSON discovery and never reach for credential paths. Four of these surfaces (<code
-					class="font-mono">doctor</code
-				>, <code class="font-mono">report --redacted</code>, and
-				<code class="font-mono">providers list</code>) are installed CLI commands that keep account names, proof status,
-				runtime readiness, and next actions visible without printing token material.
+				Agents start with redacted JSON discovery and never reach for credential paths. These commands expose runtime
+				readiness, route state, repair actions, and status evidence without spending provider calls.
 			</p>
-			<CodeBlock html={agentDiscoveryHtml} lang="bash" caption="oauth-mux/docs/onboarding.md:107-114" />
+			<CodeBlock html={agentDiscoveryHtml} lang="bash" caption="oauth-mux/README.md — agent-safe inspection" />
 
 			<h4 class="h4 mt-6 mb-2">Agent-safe command surface</h4>
 			<ul class="space-y-1 font-mono text-sm text-surface-700-300">

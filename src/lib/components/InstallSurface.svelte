@@ -5,9 +5,8 @@
 	// channel list, statuses, descriptions, and citations are unchanged.
 	//
 	// Sources (verbatim where stated):
-	// - install channel list: oauth-mux/docs/adoption.md:9-15 (verbatim)
-	// - public availability per channel: oauth-mux/docs/spec/product-adoption-sprint-2026-04-28.md:111-114
-	// - npm v0.1.6 baseline: oauth-mux/build.zig.zon:3
+	// - install channel list and dogfood lane: oauth-mux/docs/release-install-lanes.md
+	// - public v0.1.6 vs source v0.1.7 truth: oauth-mux/README.md
 	// - REPO override note: oauth-mux/docs/adoption.md:100-102 (canonical source repo)
 	import { Tabs } from '@skeletonlabs/skeleton-svelte';
 	import CodeBlock from './CodeBlock.svelte';
@@ -20,6 +19,7 @@
 		debRpmHtml,
 		curlHtml,
 		curlOverrideHtml,
+		localDogfoodHtml,
 	}: {
 		npmHtml: string;
 		tarballsHtml: string;
@@ -27,6 +27,7 @@
 		debRpmHtml: string;
 		curlHtml: string;
 		curlOverrideHtml: string;
+		localDogfoodHtml: string;
 	} = $props();
 
 	const channelHtml: Record<InstallChannelRow['channel'], string> = $derived({
@@ -56,9 +57,10 @@
 	<div class="mx-auto max-w-4xl">
 		<h2 class="h2 mb-4">Install</h2>
 		<p class="mb-8 text-lg text-surface-700-300">
-			Each release artifact is derived from the same CI release tree. npm publishes are CI-only; workstation
-			<code class="font-mono">npm publish</code>
-			is not supported.
+			Public npm, GitHub Release, Homebrew, curl, and package lanes currently publish
+			<code class="font-mono">0.1.6</code>. Source and local dogfood are
+			<code class="font-mono">0.1.7</code>
+			candidate, which is a separate provenance lane.
 		</p>
 
 		<Tabs
@@ -91,7 +93,16 @@
 		</Tabs>
 
 		<div class="mt-12">
-			<h4 class="h4 mb-2">curl installer — repo override</h4>
+			<h4 class="h4 mb-2">Local 0.1.7 candidate dogfood</h4>
+			<p class="mb-2 text-sm text-surface-600-400">
+				Use remove-then-copy for macOS local dogfood so taskgated does not keep stale signature state on the old Mach-O
+				vnode.
+			</p>
+			<CodeBlock html={localDogfoodHtml} lang="bash" caption="oauth-mux/docs/release-install-lanes.md" />
+		</div>
+
+		<div class="mt-12">
+			<h4 class="h4 mb-2">curl installer repo override</h4>
 			<p class="mb-2 text-sm text-surface-600-400">
 				The canonical public source repo is <code class="font-mono">Jesssullivan/oauth-mux</code>; override the upstream
 				by setting <code class="font-mono">REPO=</code> before the curl pipeline.

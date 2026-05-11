@@ -1,47 +1,47 @@
-// M3.1 + M3.2 — verbatim content lifted from oauth-mux source.
+// M3.1 + M3.2 — content lifted from oauth-mux source and current README/docs.
 // Citations:
-// - INSTALL_AND_PROBE: oauth-mux/docs/adoption.md:31-49 + docs/onboarding.md:214-270
+// - INSTALL_AND_PROBE: oauth-mux/README.md Usage
 // - ZIG_LIVENESS_BLOCK: oauth-mux/src/types.zig:152-215
 // - ZIG_DEAD_DEGRADED: oauth-mux/src/types.zig:224-240
 // - ZIG_MUX_DECISION: oauth-mux/src/types.zig:245-261
 // - INSTALL_NPM, INSTALL_TARBALLS, INSTALL_BREW, INSTALL_DEB_RPM,
-//   INSTALL_CURL, INSTALL_CURL_OVERRIDE: oauth-mux/docs/adoption.md:9-15 +
-//   product-adoption-sprint-2026-04-28.md:111-114
+//   INSTALL_CURL, INSTALL_CURL_OVERRIDE, LOCAL_DOGFOOD:
+//   oauth-mux/docs/release-install-lanes.md
 // - STAY_AFLOAT_PROOF, ENROLLMENT_HANDOFF, REAUTH_HANDOFF, VIDEO_DEMO_SCRIPT:
-//   oauth-mux/docs/onboarding.md:51-69, 214-270, 373-458
+//   oauth-mux/README.md Usage + docs/onboarding.md
 // - CODEX_HAPPY_PATH: oauth-mux/docs/onboarding.md + docs/live-provider-qa.md
 // - GENERIC_AUTHOR_VALIDATE: oauth-mux/docs/onboarding.md:158-163
-// - AGENT_DISCOVERY: oauth-mux/docs/onboarding.md:107-114
+// - AGENT_DISCOVERY: oauth-mux/README.md Agent-safe inspection
 
 export const INSTALL_AND_PROBE = `npm install -g oauth-mux
 oauth-mux init --codex-max
-oauth-mux accounts list --provider codex --json
-oauth-mux stay-afloat --once --profile codex-max --capability codex-max --json`;
+oauth-mux doctor
+oauth-mux route explain --profile codex-max --capability codex-max
+oauth-mux codex resume`;
 
 export const STAY_AFLOAT_PROOF = `oauth-mux doctor runtime --profile codex-max --capability codex-max --json
+oauth-mux accounts list --provider codex --json
 oauth-mux route explain --profile codex-max --capability codex-max --json
-oauth-mux route select --profile codex-max --capability codex-max --json
-oauth-mux codex broker-session-plan --profile codex-max --capability codex-max --json
-oauth-mux stay-afloat --once --profile codex-max --capability codex-max --json`;
+oauth-mux repair-plan --profile codex-max --capability codex-max --json
+oauth-mux codex status-latest --json`;
 
 export const ENROLLMENT_HANDOFF = `oauth-mux accounts list --provider codex --json
 oauth-mux enroll plan codex --account max-4 --json
 oauth-mux enroll codex --account max-4 --confirm-enroll --json
 oauth-mux codex login-device max-4
-oauth-mux stay-afloat refresh --profile codex-max --capability codex-max --json`;
+oauth-mux repair-plan --profile codex-max --capability codex-max --json`;
 
-export const REAUTH_HANDOFF = `oauth-mux stay-afloat --once --execute --profile codex-max --capability codex-max --json
-oauth-mux stay-afloat handoffs --json
-# run the redacted upstream login command shown in the handoff
+export const REAUTH_HANDOFF = `oauth-mux route explain --profile codex-max --capability codex-max --json
+oauth-mux repair-plan --profile codex-max --capability codex-max --json
+# run the labeled login command shown in the handoff
 oauth-mux codex login-device max-1
-oauth-mux stay-afloat refresh --profile codex-max --capability codex-max --json`;
+oauth-mux route explain --profile codex-max --capability codex-max --json`;
 
-export const VIDEO_DEMO_SCRIPT = `# record this after demo accounts are enrolled
+export const VIDEO_DEMO_SCRIPT = `# spend-confirmed paths stay explicit
 oauth-mux accounts list --provider codex --json
 oauth-mux route explain --profile codex-max --capability codex-max --json
-oauth-mux codex broker-session-plan --profile codex-max --capability codex-max --json
-oauth-mux codex broker-run --profile codex-max --capability codex-max \\
-  --prompt "Reply exactly: OMUX_STAY_AFLOAT" --confirm-spend --json`;
+oauth-mux codex resume
+oauth-mux codex status-latest --json`;
 
 export const ZIG_LIVENESS_BLOCK = `// ── Credential Liveness ──
 //
@@ -171,21 +171,28 @@ export const INSTALL_BREW = `brew tap jesssullivan/omux https://github.com/Jesss
 brew install jesssullivan/omux/oauth-mux`;
 
 export const INSTALL_DEB_RPM = `# deb/rpm packages for Linux hosts
-# release-staged via CI; no public apt/yum repository yet`;
+# download from the current GitHub Release`;
 
 export const INSTALL_CURL = `curl -fsSL https://omux.xoxd.ai/install.sh | sh`;
 
 export const INSTALL_CURL_OVERRIDE = `# override the source repository (defaults to Jesssullivan/oauth-mux)
 REPO=Jesssullivan/oauth-mux curl -fsSL https://omux.xoxd.ai/install.sh | sh`;
 
+export const LOCAL_DOGFOOD = `just build
+mkdir -p ~/.local/bin
+rm -f ~/.local/bin/oauth-mux
+cp ./zig-out/bin/oauth-mux ~/.local/bin/oauth-mux
+shasum -a 256 ./zig-out/bin/oauth-mux ~/.local/bin/oauth-mux
+which -a oauth-mux
+oauth-mux version`;
+
 // ─── M3.2 Codex paid cohort path ────────────────────────────────────────────
 // Sources: oauth-mux/docs/onboarding.md + docs/live-provider-qa.md
 
 export const CODEX_HAPPY_PATH = `oauth-mux init --codex-max
 oauth-mux doctor
-oauth-mux setup codex
-oauth-mux codex canary
-oauth-mux codex broker-session-plan --profile codex-max --capability codex-max --json`;
+oauth-mux route explain --profile codex-max --capability codex-max
+oauth-mux codex resume`;
 
 // ─── M3.2 Generic provider author path ──────────────────────────────────────
 // Verbatim: oauth-mux/docs/onboarding.md:155-163
@@ -198,12 +205,11 @@ oauth-mux discover --json`;
 // ─── M3.2 Agent discovery path ─────────────────────────────────────────────
 // Verbatim: oauth-mux/docs/onboarding.md:107-114
 
-export const AGENT_DISCOVERY = `oauth-mux doctor --json
-oauth-mux report --redacted --json
-oauth-mux providers list --json
-oauth-mux discover --json
-oauth-mux status --json
-oauth-mux health --json`;
+export const AGENT_DISCOVERY = `oauth-mux doctor runtime --profile codex-max --capability codex-max --json
+oauth-mux accounts list --provider codex --json
+oauth-mux route explain --profile codex-max --capability codex-max --json
+oauth-mux repair-plan --profile codex-max --capability codex-max --json
+oauth-mux codex status-latest --json`;
 
 /**
  * Verbatim from oauth-mux/dist/live-qa/20260427T204722Z/discover.json:1
@@ -211,15 +217,12 @@ oauth-mux health --json`;
  */
 export const AGENT_SAFE_COMMANDS: readonly string[] = [
 	'oauth-mux config validate',
-	'oauth-mux status --json',
-	'oauth-mux health --json',
+	'oauth-mux doctor runtime --profile <profile> --capability <capability> --json',
+	'oauth-mux accounts list --provider <provider> --json',
 	'oauth-mux route explain --profile <profile> --capability <capability> --json',
-	'oauth-mux stay-afloat next --profile <profile> --capability <capability> --json',
-	'oauth-mux stay-afloat launch --profile <profile> --capability <capability> -- <command>',
-	'oauth-mux codex broker-session-plan --profile codex-max --capability codex-max --json',
-	'oauth-mux probe --profile <profile> --capability <capability> --json',
-	'oauth-mux env --profile <profile> --capability <capability> --shell <shell>',
-	'oauth-mux exec --profile <profile> --capability <capability> -- <command>',
+	'oauth-mux repair-plan --profile <profile> --capability <capability> --json',
+	'oauth-mux codex status-latest --json',
+	'oauth-mux report --redacted --json',
 ];
 
 /**
@@ -229,7 +232,7 @@ export const AGENT_MUST_NOT: readonly string[] = [
 	'read files referenced by `secret.path`;',
 	'print token-shaped values;',
 	'copy OAuth stores between accounts;',
-	'run live probes unless the user explicitly authorized spend.',
+	'run live probes or revalidation unless the user explicitly authorized spend.',
 ];
 
 /**
@@ -256,9 +259,9 @@ export const INSTALL_CHANNELS: InstallChannelRow[] = [
 	{
 		channel: 'GitHub Release tarballs',
 		status: 'live',
-		statusLabel: 'live',
+		statusLabel: 'live (v0.1.6)',
 		description: 'Six platform tarballs per release; suitable for air-gapped or policy-managed systems.',
-		citation: 'oauth-mux/docs/adoption.md:14-15',
+		citation: 'oauth-mux/docs/release-install-lanes.md',
 	},
 	{
 		channel: 'Homebrew',
@@ -269,18 +272,17 @@ export const INSTALL_CHANNELS: InstallChannelRow[] = [
 	},
 	{
 		channel: 'deb / rpm',
-		status: 'staged',
-		statusLabel: 'release-staged',
-		description: 'deb/rpm metadata exercised in dry-run; no public apt/yum repository yet.',
-		citation: 'oauth-mux/docs/spec/product-adoption-sprint-2026-04-28.md:111-114',
+		status: 'live',
+		statusLabel: 'live (v0.1.6 packages)',
+		description: 'Release packages are attached to GitHub Releases; no public apt/yum repository is claimed.',
+		citation: 'oauth-mux/docs/release-install-lanes.md',
 	},
 	{
 		channel: 'curl installer',
-		status: 'staged',
-		statusLabel: 'release-staged',
-		description:
-			'Installer smoke is run from CI; override the source repo with `REPO=Jesssullivan/oauth-mux`. Public hosting pending.',
-		citation: 'oauth-mux/docs/adoption.md:13 + product-adoption-sprint-2026-04-28.md:111-114',
+		status: 'live',
+		statusLabel: 'live (v0.1.6)',
+		description: 'Installer resolves the public release lane. Override the source repo only for operator testing.',
+		citation: 'oauth-mux/docs/release-install-lanes.md',
 	},
 ];
 

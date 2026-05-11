@@ -18,9 +18,10 @@
 	// prerender. From a non-home route the link navigates back to `/` and scrolls
 	// to the section. (TIN-802.)
 	const navLinks: { href: string; label: string }[] = [
-		{ href: '/#stay-afloat', label: 'Stay afloat' },
+		{ href: '/#stay-afloat', label: 'Operations' },
+		{ href: '/#lifecycle', label: 'Lifecycle' },
 		{ href: '/#install', label: 'Install' },
-		{ href: '/#first-run', label: 'First-run' },
+		{ href: '/#first-run', label: 'Usage' },
 		{ href: '/#security', label: 'Security' },
 		{ href: '/#contribute', label: 'Contribute' },
 		{ href: '/#contact', label: 'Contact' },
@@ -39,9 +40,9 @@
 	// JSON-LD describes both the WebSite and the SoftwareApplication (the oauth-mux CLI)
 	// so structured-data tooling can resolve "what is this site about" without parsing copy.
 	const SITE_URL = 'https://omux.xoxd.ai';
-	const SITE_TITLE = 'oauth-mux — Typed OAuth fallback for AI harness accounts';
+	const SITE_TITLE = 'oauth-mux — Agent auth and session resilience';
 	const SITE_DESCRIPTION =
-		'oauth-mux keeps AI coding harness sessions afloat across multiple accounts with typed liveness, redacted discovery, foreground stay-afloat checks, and explicit provider-proof boundaries.';
+		'oauth-mux brokers AI harness accounts with managed Codex resume, redacted route-state diagnostics, and explicit provider-proof boundaries.';
 	const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 	const jsonLd = {

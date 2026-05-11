@@ -1,4 +1,4 @@
-# oauth-mux: typed OAuth fallback for AI harness accounts
+# oauth-mux: agent auth and session resilience for AI harnesses
 
 Most developers I know now carry multiple AI identities — a personal
 ChatGPT/Codex, a work seat on someone's enterprise plan, a Claude
@@ -15,29 +15,25 @@ guess is almost always wrong on the first try.
 **oauth-mux** is a small CLI that tries to fix this. It is FOSS, MIT,
 and the project site is at [omux.xoxd.ai](https://omux.xoxd.ai).
 
-## Typed fallback, in one paragraph
+## The broker idea, in one paragraph
 
-oauth-mux models credential health as a typed three-layer union:
-authentication (is the credential good?), operability (can it actually
-run a request?), and availability (is the route currently usable?). HTTP
-statuses map through a single `MuxDecision.fromHttpStatus` function to
-one of four decisions: `use_this`, `try_next_account`,
-`try_next_provider`, or `user_action_required`. There is no
-per-provider heuristic guessing; the routing is a typed function of the
-liveness state. The full algebra — `CredentialLiveness`,
-`Availability`, `DegradedReason`, `DeadReason`, and the decision table
-— is on the site, copied verbatim from the source.
+oauth-mux wraps supported harnesses with route-state diagnostics,
+managed auth/config overlays, and labeled fallback decisions. It still
+models credential health as authentication, operability, and availability,
+but the product point is simpler: keep the managed harness usable when
+auth, quota, tier, or local runtime state changes, and leave a redacted
+artifact trail an operator or agent can inspect.
 
 ## What's actually proven
 
 Being honest about scope matters here, because the AI tools space is
 saturated with "supports everything" claims that fall apart under load.
 
-- **Live-proven: Codex.** Current `codex-max` cohort evidence is
-  capability-scoped: `max-1` selected, `max-4` spare fallback, and
-  `max-2`/`max-3` quota-exhausted. Spark/mini availability is not
-  generalized to Max. The site keeps provider-originated in-session quota
-  fallback as an explicit unproven lane.
+- **Live-proven: Codex.** Current evidence includes installed-runtime managed
+  resume quota handoff: `codex:max-2` served successful traffic, then returned
+  `usage_limit_reached`; oauth-mux retried the same buffered request on
+  `codex:max-3`, and the fallback account returned `200`. Same-thread provider
+  continuity and mid-turn streaming recovery remain separate proof lanes.
 - **Schema-modeled: GPT5, Anthropic, MCP servers, GitHub, Linear,
   Vercel, Figma, FlakeHub.** Typed admission status and probe shapes
   are in the source; live route proofs are pending.
