@@ -7,9 +7,10 @@ domain `omux.xoxd.ai`. The repo lives at `tinyland-inc/omux.xoxd.ai` and is
 GitHub `INTERNAL` pre-launch.
 
 The site is a Bazel module-catalog consumer of `tinyland-inc/bazel-registry`
-from M0. Bazel is registered for graph integrity proofs; `pnpm run build`
-remains the canonical site build path until/unless Bazel owns a hermetic
-build target.
+from M0. `pnpm run build` remains the ordinary site build path for local
+developer and GitHub Pages workflows. Bazel now also owns the bounded
+GloriousFlywheel RBE candidate surface: `//:build` and
+`//:playwright_chromium_smoke`.
 
 ## Source Of Truth Hierarchy
 
@@ -93,7 +94,8 @@ Justfile          operator entrypoint
 - `docs/spec/omux-website-bootstrap-2026-04-29.md` — bootstrap design
   record, single source of truth for stack/milestone/SLA decisions.
 - `MODULE.bazel`, `.bazelrc`, `BUILD.bazel`, `.bazelversion` — Bazel
-  registry chain (`tinyland-inc/bazel-registry` → BCR).
+  registry chain (`tinyland-inc/bazel-registry` → BCR), plus the
+  GloriousFlywheel browser-RBE candidate targets.
 - `flake.nix`, `.envrc` — Nix dev shell (Node 22, pnpm 10.13.1, just, gh,
   bazelisk, gitleaks).
 - `Justfile` — operator entrypoint for every dev workflow.
