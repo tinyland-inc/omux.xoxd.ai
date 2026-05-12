@@ -2,6 +2,7 @@
 
 load("@aspect_rules_js//js:defs.bzl", "js_binary", "js_run_binary", "js_test")
 load("@npm//:defs.bzl", "npm_link_all_packages")
+load("@npm//:vitest/package_json.bzl", vitest = "bin")
 
 npm_link_all_packages(name = "node_modules")
 
@@ -18,6 +19,7 @@ filegroup(
         "pnpm-workspace.yaml",
         "svelte.config.js",
         "tsconfig.json",
+        "vitest.config.ts",
         "vite.config.ts",
     ],
 )
@@ -76,5 +78,25 @@ js_test(
         "playwright",
     ],
     timeout = "moderate",
+    visibility = ["//visibility:public"],
+)
+
+vitest.vitest_test(
+    name = "unit_tests",
+    data = [
+        ":node_modules",
+        ":srcs",
+        "vitest.config.ts",
+    ],
+    args = [
+        "run",
+        "--reporter=verbose",
+        "--config",
+        "$(rootpath vitest.config.ts)",
+    ],
+    tags = [
+        "gloriousflywheel-rbe-candidate",
+        "vitest",
+    ],
     visibility = ["//visibility:public"],
 )
