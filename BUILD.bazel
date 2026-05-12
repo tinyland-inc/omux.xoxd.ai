@@ -1,14 +1,26 @@
-"""
-Root BUILD.bazel for omux.xoxd.ai.
+"""Root BUILD.bazel for omux.xoxd.ai."""
 
-Minimal: just create the @npm//... node_modules tree. The SvelteKit
-static site is built by `pnpm run build` (vite build) — Bazel does not
-produce build/.
-"""
-
+load("@aspect_rules_js//js:defs.bzl", "js_binary", "js_run_binary", "js_test")
 load("@npm//:defs.bzl", "npm_link_all_packages")
 
 npm_link_all_packages(name = "node_modules")
+
+filegroup(
+    name = "srcs",
+    srcs = glob([
+        "docs/**",
+        "src/**",
+        "static/**",
+    ]) + [
+        ".npmrc",
+        "package.json",
+        "pnpm-lock.yaml",
+        "pnpm-workspace.yaml",
+        "svelte.config.js",
+        "tsconfig.json",
+        "vite.config.ts",
+    ],
+)
 
 exports_files(
     [
@@ -16,5 +28,53 @@ exports_files(
         "pnpm-lock.yaml",
         "pnpm-workspace.yaml",
     ],
+    visibility = ["//visibility:public"],
+)
+
+js_binary(
+    name = "sveltekit_sync",
+    data = [":node_modules"],
+    entry_point = "run-sveltekit-sync.mjs",
+)
+
+js_run_binary(
+    name = "sveltekit_types",
+    srcs = [":srcs"],
+    out_dirs = [".svelte-kit"],
+    tool = ":sveltekit_sync",
+)
+
+js_binary(
+    name = "vite_build",
+    data = [":node_modules"],
+    entry_point = "run-vite-build.mjs",
+)
+
+js_run_binary(
+    name = "build",
+    srcs = [
+        ":srcs",
+        ":sveltekit_types",
+    ],
+    out_dirs = ["build"],
+    patch_node_fs = False,
+    tool = ":vite_build",
+    visibility = ["//visibility:public"],
+)
+
+js_test(
+    name = "playwright_chromium_smoke",
+    data = [
+        ":build",
+        ":node_modules",
+        "run-playwright-chromium-smoke.mjs",
+    ],
+    entry_point = "run-playwright-chromium-smoke.mjs",
+    tags = [
+        "chromium",
+        "gloriousflywheel-rbe-candidate",
+        "playwright",
+    ],
+    timeout = "moderate",
     visibility = ["//visibility:public"],
 )
