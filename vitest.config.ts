@@ -5,6 +5,12 @@ import { defineConfig } from 'vitest/config';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
+	oxc: {
+		// Bazel and fresh worktrees may run Vitest before `.svelte-kit` exists.
+		// Disable OXC tsconfig auto-discovery so tests do not depend on generated
+		// SvelteKit state outside the declared Bazel inputs.
+		tsconfig: false,
+	},
 	resolve: {
 		alias: {
 			$lib: path.resolve(__dirname, 'src/lib'),
