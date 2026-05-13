@@ -37,7 +37,7 @@ const CURATED: Record<string, Curated> = {
 		flow: 'oauth2',
 		docsUrl: 'https://developers.openai.com/codex/auth',
 		notes:
-			'Codex is the live-proven provider. Current codex-max cohort: max-1 selected, max-4 spare fallback, max-2/max-3 quota-exhausted; Spark/mini availability is not generalized to Max.',
+			'Codex is the live-proven provider. 2026-05-08 installed-runtime artifacts prove managed resume/load quota handoff from codex:default to codex:max-2; engineered long-running in-session exhaustion remains pending.',
 	},
 	'Claude Code subscription': {
 		slug: 'claude',

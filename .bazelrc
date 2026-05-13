@@ -15,11 +15,18 @@ build --disk_cache=~/.cache/bazel-omux
 build --keep_going
 build --show_timestamps
 
-# Private GloriousFlywheel cache profile.
-# Opt in only from runners that can reach the in-cluster cache service.
-common:flywheel --remote_cache=grpc://bazel-cache.nix-cache.svc.cluster.local:9092
-common:flywheel --remote_upload_local_results=true
-common:flywheel --remote_local_fallback
+# GloriousFlywheel cache/RBE profiles intentionally do not hard-code private
+# endpoints. The GF wrapper or proof harness supplies BAZEL_REMOTE_CACHE and,
+# for explicit proof work only, BAZEL_REMOTE_EXECUTOR.
+common:ci-cached --remote_retries=3
+common:ci-cached --jobs=auto
+common:ci-cached --color=no
+common:ci-cached --curses=no
+common:ci-cached --show_progress_rate_limit=30
+common:ci-cached --noshow_loading_progress
+build:ci-cached --spawn_strategy=remote,worker,sandboxed,local
+build:ci-cached --remote_download_minimal
+common:flywheel --config=ci-cached
 
 # rules_ts: skip lib check is required for SvelteKit-style declaration files.
 build --@aspect_rules_ts//ts:skipLibCheck=always
