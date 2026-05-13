@@ -1,20 +1,32 @@
 import { createServer } from 'node:http';
-import { accessSync, constants, createReadStream, existsSync, mkdirSync, mkdtempSync, statSync } from 'node:fs';
+import {
+	accessSync,
+	constants,
+	createReadStream,
+	existsSync,
+	mkdirSync,
+	mkdtempSync,
+	readFileSync,
+	statSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
-import { extname, join, normalize, resolve, sep } from 'node:path';
+import { dirname, extname, join, normalize, resolve, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { chromium } from '@playwright/test';
 
-const buildDir = resolve('build');
+const scriptDir = dirname(fileURLToPath(import.meta.url));
+const buildDir = findBuildDir();
 const chromiumRuntimeDir = mkdtempSync(join(tmpdir(), 'omux-playwright-chromium-'));
 ensureWritableEnvDir('HOME', join(chromiumRuntimeDir, 'home'));
 ensureWritableEnvDir('XDG_CONFIG_HOME', join(chromiumRuntimeDir, 'xdg-config'));
 ensureWritableEnvDir('XDG_CACHE_HOME', join(chromiumRuntimeDir, 'xdg-cache'));
 const chromiumPath = findChromiumExecutable();
 
-if (!existsSync(join(buildDir, 'index.html'))) {
-	console.error('omux Playwright smoke requires build/index.html');
-	process.exit(1);
-}
+const indexPath = join(buildDir, 'index.html');
+const indexHtml = readFileSync(indexPath, 'utf8');
+assertContains(indexHtml, 'oauth-mux', 'static HTML');
+assertContains(indexHtml, 'OAuth/account multiplexing', 'static HTML');
+assertContains(indexHtml, 'Inspect the control plane', 'static HTML');
 
 if (!chromiumPath) {
 	console.error(
@@ -50,17 +62,31 @@ try {
 		args: ['--disable-dev-shm-usage', '--disable-gpu', '--no-sandbox'],
 	});
 	const page = await browser.newPage();
+	const failedRequests = [];
+	page.on('requestfailed', (request) => {
+		failedRequests.push(`${request.url()} :: ${request.failure()?.errorText ?? 'unknown error'}`);
+	});
 	await page.goto(baseURL, { waitUntil: 'networkidle' });
+	await page.locator('main').waitFor({ state: 'attached', timeout: 10_000 });
 
 	const title = await page.title();
 	if (!title.includes('oauth-mux')) {
 		throw new Error(`unexpected page title: ${title}`);
 	}
 
-	const body = await page.locator('body').innerText();
+	const body = await page.locator('body').evaluate((node) => node.textContent ?? '');
 	for (const term of ['oauth-mux', 'OAuth/account multiplexing', 'Inspect the control plane']) {
 		if (!body.includes(term)) {
-			throw new Error(`missing omux smoke text: ${term}`);
+			throw new Error(
+				[
+					`missing omux smoke text: ${term}`,
+					`url: ${page.url()}`,
+					`build_dir: ${buildDir}`,
+					`title: ${title}`,
+					`body_preview: ${compactPreview(body)}`,
+					`failed_requests: ${failedRequests.slice(0, 5).join(' | ') || 'none'}`,
+				].join('\n'),
+			);
 		}
 	}
 } finally {
@@ -92,6 +118,41 @@ function contentType(path) {
 		default:
 			return 'application/octet-stream';
 	}
+}
+
+function findBuildDir() {
+	const runfilesDir = process.env.RUNFILES_DIR;
+	const testSrcDir = process.env.TEST_SRCDIR;
+	const workspaceName = process.env.TEST_WORKSPACE;
+	const candidates = [
+		process.env.OMUX_BUILD_DIR,
+		resolve('build'),
+		join(scriptDir, 'build'),
+		runfilesDir && workspaceName ? join(runfilesDir, workspaceName, 'build') : undefined,
+		runfilesDir ? join(runfilesDir, '_main', 'build') : undefined,
+		testSrcDir && workspaceName ? join(testSrcDir, workspaceName, 'build') : undefined,
+		testSrcDir ? join(testSrcDir, '_main', 'build') : undefined,
+	].filter(Boolean);
+
+	for (const candidate of candidates) {
+		if (existsSync(join(candidate, 'index.html'))) {
+			return candidate;
+		}
+	}
+
+	console.error('omux Playwright smoke requires build/index.html');
+	console.error(`checked: ${candidates.join(', ')}`);
+	process.exit(1);
+}
+
+function assertContains(text, term, context) {
+	if (!text.includes(term)) {
+		throw new Error(`missing omux smoke text in ${context}: ${term}`);
+	}
+}
+
+function compactPreview(text) {
+	return text.replace(/\s+/g, ' ').trim().slice(0, 800);
 }
 
 function findChromiumExecutable() {
