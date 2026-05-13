@@ -81,6 +81,23 @@ js_test(
     visibility = ["//visibility:public"],
 )
 
+js_test(
+    name = "puppeteer_chromium_smoke",
+    data = [
+        ":build",
+        ":node_modules",
+        "run-puppeteer-chromium-smoke.mjs",
+    ],
+    entry_point = "run-puppeteer-chromium-smoke.mjs",
+    tags = [
+        "chromium",
+        "gloriousflywheel-rbe-candidate",
+        "puppeteer",
+    ],
+    timeout = "moderate",
+    visibility = ["//visibility:public"],
+)
+
 vitest.vitest_test(
     name = "unit_tests",
     data = [

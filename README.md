@@ -25,9 +25,12 @@ Effect 3.21 + Vite 8 native + Bazel module-catalog consumer of
 [`tinyland-inc/bazel-registry`](https://github.com/tinyland-inc/bazel-registry)
 from M0.
 
-`pnpm run build` is the canonical site build. Bazel is registered for
-graph-integrity proofs and exercised via `bazel mod graph` in CI; it is
-not (yet) the build executor.
+`pnpm run build` remains the canonical GitHub Pages build. Bazel now owns
+the bounded GloriousFlywheel RBE candidate surface for remote proof work:
+`//:build`, `//:unit_tests`, `//:playwright_chromium_smoke`, and
+`//:puppeteer_chromium_smoke`. These targets are product evidence for
+cache-backed and REAPI-backed acceleration; they are not yet the default
+deploy path and do not claim broad repo-wide web RBE.
 
 Pinned versions are deliberate. Skeleton `4.15.2` exact, pnpm `10.13.1`
 exact, TypeScript `5.9.3` exact. Bumps are dedicated tickets.
@@ -49,6 +52,25 @@ just bazel-graph  # mod-catalog smoke (registry resolution proof)
 
 `just info` prints the resolved tool versions. `just --list` enumerates the
 full operator surface.
+
+## GloriousFlywheel RBE candidates
+
+The browser smoke targets use the GloriousFlywheel browser-runtime contract:
+Chromium is supplied by the worker image through an explicit executable path
+such as `GF_RBE_CHROMIUM_EXECUTABLE=/bin/chromium`. The repo uses
+`puppeteer-core` for the Puppeteer target so the proof does not depend on
+browser downloads from npm lifecycle hooks.
+
+Current boundaries:
+
+- `//:playwright_chromium_smoke` proves a static SvelteKit/Vite build plus
+  Playwright Chromium smoke.
+- `//:puppeteer_chromium_smoke` proves the same static output through
+  Puppeteer Chromium once a GF REAPI proof run captures worker evidence.
+- `//:unit_tests` proves the Vitest unit-test target class.
+
+These targets do not prove full hosted Playwright suites, all Puppeteer
+patterns, all Vite/Svelte projects, or default repo-wide RBE.
 
 ## Deploy
 
