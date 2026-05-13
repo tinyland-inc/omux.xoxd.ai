@@ -9,8 +9,8 @@ GitHub `INTERNAL` pre-launch.
 The site is a Bazel module-catalog consumer of `tinyland-inc/bazel-registry`
 from M0. `pnpm run build` remains the ordinary site build path for local
 developer and GitHub Pages workflows. Bazel now also owns the bounded
-GloriousFlywheel RBE candidate surface: `//:build` and
-`//:playwright_chromium_smoke`.
+GloriousFlywheel RBE candidate surface: `//:build`, `//:unit_tests`,
+`//:playwright_chromium_smoke`, and `//:puppeteer_chromium_smoke`.
 
 ## Source Of Truth Hierarchy
 
