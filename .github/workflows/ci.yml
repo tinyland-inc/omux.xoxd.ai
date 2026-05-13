@@ -70,3 +70,6 @@ jobs:
 
       - name: Build npm link tree
         run: nix develop --command bazelisk build //:node_modules
+
+      - name: Build static site through Bazel
+        run: nix develop --command bazelisk build //:build

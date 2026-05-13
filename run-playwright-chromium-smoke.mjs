@@ -1,20 +1,32 @@
 import { createServer } from 'node:http';
-import { accessSync, constants, createReadStream, existsSync, mkdirSync, mkdtempSync, statSync } from 'node:fs';
+import {
+	accessSync,
+	constants,
+	createReadStream,
+	existsSync,
+	mkdirSync,
+	mkdtempSync,
+	readFileSync,
+	statSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
-import { extname, join, normalize, resolve, sep } from 'node:path';
+import { dirname, extname, join, normalize, resolve, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { chromium } from '@playwright/test';
 
-const buildDir = resolve('build');
+const scriptDir = dirname(fileURLToPath(import.meta.url));
+const buildDir = findBuildDir();
 const chromiumRuntimeDir = mkdtempSync(join(tmpdir(), 'omux-playwright-chromium-'));
 ensureWritableEnvDir('HOME', join(chromiumRuntimeDir, 'home'));
 ensureWritableEnvDir('XDG_CONFIG_HOME', join(chromiumRuntimeDir, 'xdg-config'));
 ensureWritableEnvDir('XDG_CACHE_HOME', join(chromiumRuntimeDir, 'xdg-cache'));
 const chromiumPath = findChromiumExecutable();
 
-if (!existsSync(join(buildDir, 'index.html'))) {
-	console.error('omux Playwright smoke requires build/index.html');
-	process.exit(1);
-}
+const indexPath = join(buildDir, 'index.html');
+const indexHtml = readFileSync(indexPath, 'utf8');
+assertContains(indexHtml, 'oauth-mux', 'static HTML');
+assertContains(indexHtml, 'Install', 'static HTML');
+assertContains(indexHtml, 'View on GitHub', 'static HTML');
 
 if (!chromiumPath) {
 	console.error(
@@ -50,26 +62,31 @@ try {
 		args: ['--disable-dev-shm-usage', '--disable-gpu', '--no-sandbox'],
 	});
 	const page = await browser.newPage();
+	const failedRequests = [];
+	page.on('requestfailed', (request) => {
+		failedRequests.push(`${request.url()} :: ${request.failure()?.errorText ?? 'unknown error'}`);
+	});
+
 	await page.goto(baseURL, { waitUntil: 'networkidle' });
+	const main = page.locator('main');
+	await main.waitFor({ state: 'attached', timeout: 10_000 });
 
 	const title = await page.title();
 	if (!title.includes('oauth-mux')) {
 		throw new Error(`unexpected page title: ${title}`);
 	}
 
-	const main = page.locator('main');
-	await main.waitFor({ state: 'attached' });
-	const mainText = await main.textContent();
+	const mainText = await main.evaluate((node) => node.textContent ?? '');
 	for (const term of ['oauth-mux', 'Install', 'View on GitHub']) {
-		if (!mainText?.includes(term)) {
-			throw new Error(`omux smoke did not render expected main content: ${term}`);
+		if (!mainText.includes(term)) {
+			throw new Error(smokeError(page, title, mainText, failedRequests, `main content: ${term}`));
 		}
 	}
 
 	await page.goto(`${baseURL}/#install`, { waitUntil: 'networkidle' });
-	const installText = await page.locator('#install').textContent();
-	if (!installText?.includes('Install')) {
-		throw new Error('omux smoke did not render the install section');
+	const installText = await page.locator('#install').evaluate((node) => node.textContent ?? '');
+	if (!installText.includes('Install')) {
+		throw new Error(smokeError(page, title, installText, failedRequests, 'install section'));
 	}
 } finally {
 	await browser?.close();
@@ -100,6 +117,52 @@ function contentType(path) {
 		default:
 			return 'application/octet-stream';
 	}
+}
+
+function findBuildDir() {
+	const runfilesDir = process.env.RUNFILES_DIR;
+	const testSrcDir = process.env.TEST_SRCDIR;
+	const workspaceName = process.env.TEST_WORKSPACE;
+	const candidates = [
+		process.env.OMUX_BUILD_DIR,
+		resolve('build'),
+		join(scriptDir, 'build'),
+		runfilesDir && workspaceName ? join(runfilesDir, workspaceName, 'build') : undefined,
+		runfilesDir ? join(runfilesDir, '_main', 'build') : undefined,
+		testSrcDir && workspaceName ? join(testSrcDir, workspaceName, 'build') : undefined,
+		testSrcDir ? join(testSrcDir, '_main', 'build') : undefined,
+	].filter(Boolean);
+
+	for (const candidate of candidates) {
+		if (existsSync(join(candidate, 'index.html'))) {
+			return candidate;
+		}
+	}
+
+	console.error('omux Playwright smoke requires build/index.html');
+	console.error(`checked: ${candidates.join(', ')}`);
+	process.exit(1);
+}
+
+function assertContains(text, term, context) {
+	if (!text.includes(term)) {
+		throw new Error(`missing omux smoke text in ${context}: ${term}`);
+	}
+}
+
+function smokeError(page, title, text, failedRequests, missing) {
+	return [
+		`missing omux smoke text: ${missing}`,
+		`url: ${page.url()}`,
+		`build_dir: ${buildDir}`,
+		`title: ${title}`,
+		`text_preview: ${compactPreview(text)}`,
+		`failed_requests: ${failedRequests.slice(0, 5).join(' | ') || 'none'}`,
+	].join('\n');
+}
+
+function compactPreview(text) {
+	return text.replace(/\s+/g, ' ').trim().slice(0, 800);
 }
 
 function findChromiumExecutable() {

@@ -1,4 +1,5 @@
 .git
+.claude
 .direnv
 node_modules
 .svelte-kit
