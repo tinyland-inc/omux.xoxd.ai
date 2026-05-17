@@ -78,7 +78,7 @@
 					</div>
 					<ul class="list-disc space-y-2 pl-5 text-sm leading-relaxed text-surface-700-300">
 						<li>The strongest preserved proof is the 2026-05-09 engineered managed quota handoff artifact.</li>
-						<li>Public package lanes remain 0.1.6; 0.1.7 is candidate dogfood from source.</li>
+						<li>Public package lanes now resolve to 0.1.7; source dogfood remains a separate provenance lane.</li>
 						<li>
 							Same-thread provider continuity, mid-turn streaming recovery, and unmanaged daemon hot-swap are not
 							claimed.

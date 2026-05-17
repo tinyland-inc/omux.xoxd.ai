@@ -26,8 +26,8 @@
 		<p class="mt-4 text-sm leading-relaxed text-surface-600-400">
 			Managed Codex resume has live installed-runtime evidence: a provider-originated
 			<code class="font-mono">usage_limit_reached</code> turn on one account was retried on another account before Codex
-			saw the 429. Source and dogfood are <code class="font-mono">0.1.7</code> candidate; public install lanes remain
-			<code class="font-mono">0.1.6</code>.
+			saw the 429. Public install lanes now resolve to <code class="font-mono">0.1.7</code> across GitHub Release, npm, Homebrew,
+			curl, and deb/rpm package QA.
 		</p>
 
 		<!-- Primary CTA scrolls to the proof flow; secondary actions stay local. -->
