@@ -11,7 +11,7 @@ Use it to inspect accounts, route around exhausted credentials, and keep managed
 
 Live-proven today: managed Codex launch/resume, native session authority bridge, root-partitioned config passthrough, and installed-runtime quota handoff from codex:max-2 to codex:max-3.
 Strongest proof: oauth-mux/docs/evidence/codex-engineered-quota-handoff-20260509/.
-Version truth: source/local dogfood is 0.1.7 candidate; public npm/GitHub/Homebrew/curl lanes remain 0.1.6.
+Version truth: public GitHub Release, npm, Homebrew, curl, and deb/rpm lanes resolve to 0.1.7; source dogfood is only for unreleased checkout behavior.
 Capability-modeled / in proof lanes: Claude, GitHub, Linear, Vercel, Figma, FlakeHub, MCP.
 Not claimed: same-thread provider continuity, mid-turn streaming recovery, unmanaged bare-Codex daemon hot-swap, universal provider support, or non-Codex stay-afloat proof.
 

@@ -95,8 +95,9 @@ Frame the launch state honestly:
   root-partitioned config passthrough, and installed-runtime quota handoff.
 - **Strongest proof**:
   `oauth-mux/docs/evidence/codex-engineered-quota-handoff-20260509/`.
-- **Version truth**: public npm/GitHub/Homebrew/curl lanes remain `0.1.6`;
-  source and local dogfood are `0.1.7` candidate.
+- **Version truth**: public GitHub Release, npm, Homebrew, curl, and
+  deb/rpm lanes resolve to `0.1.7`; source dogfood is only for unreleased
+  checkout behavior.
 - **Schema-modeled**: Anthropic, MCP, GitHub, Linear, Vercel, Figma, FlakeHub.
   Modeled in the provider matrix; not yet live-proven for stay-afloat.
 - **Planned**: Bedrock, Azure.

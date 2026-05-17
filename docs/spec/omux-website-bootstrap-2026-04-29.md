@@ -313,20 +313,21 @@ page at `/`, with anchor sections:
    snippet (`npm install -g oauth-mux`, `oauth-mux init --codex-max`,
    `oauth-mux doctor`, `oauth-mux route explain --profile codex-max
    --capability codex-max`, `oauth-mux codex resume`), and a compact managed
-   Codex proof summary. Public package truth is `0.1.6`; source/local dogfood
-   truth is `0.1.7` candidate.
+   Codex proof summary. Public package truth is `0.1.7`; source dogfood remains a separate
+   provenance lane for unreleased checkout behavior.
 2. **Problem** (`/#problem`): 3 sentences from the planning doc lines 98-104.
 3. **Fallback algebra** (`/#fallback`): typed `CredentialLiveness` and
    `Availability` enums copied verbatim from `oauth-mux/src/types.zig:152-215`.
    Includes `MuxDecision` table from `:245-261` and routing semantics from the
    provider checklist `:223-231`.
-4. **Install** (`/#install`): npm command (public `0.1.6`). GitHub Release
-   tarballs (public `0.1.6`, six platforms). Homebrew public tap
-   (`jesssullivan/omux`, public `0.1.6`; do not describe as Homebrew core).
+4. **Install** (`/#install`): npm command (public `0.1.7`). GitHub Release
+   tarballs (public `0.1.7`, six platforms). Homebrew public tap
+   (`jesssullivan/omux`, public `0.1.7`; do not describe as Homebrew core).
    deb/rpm release packages attached to GitHub Releases, with no public apt/yum
    repository claimed. Curl installer resolves the public release lane. Local
-   dogfood for `0.1.7` candidate must use the remove-then-copy lane from
-   `oauth-mux/docs/release-install-lanes.md`.
+   source dogfood must use the remove-then-copy lane from
+   `oauth-mux/docs/release-install-lanes.md` when testing unreleased checkout
+   behavior.
 5. **First-run** (`/#first-run`): three flows — Codex paid cohort path,
    generic provider author path, agent discovery path with
    `agent_safe_commands` list.

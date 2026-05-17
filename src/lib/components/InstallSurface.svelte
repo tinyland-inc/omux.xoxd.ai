@@ -6,7 +6,7 @@
 	//
 	// Sources (verbatim where stated):
 	// - install channel list and dogfood lane: oauth-mux/docs/release-install-lanes.md
-	// - public v0.1.6 vs source v0.1.7 truth: oauth-mux/README.md
+	// - public v0.1.7 package-lane truth: oauth-mux/README.md
 	// - REPO override note: oauth-mux/docs/adoption.md:100-102 (canonical source repo)
 	import { Tabs } from '@skeletonlabs/skeleton-svelte';
 	import CodeBlock from './CodeBlock.svelte';
@@ -57,10 +57,9 @@
 	<div class="mx-auto max-w-4xl">
 		<h2 class="h2 mb-4">Install</h2>
 		<p class="mb-8 text-lg text-surface-700-300">
-			Public npm, GitHub Release, Homebrew, curl, and package lanes currently publish
-			<code class="font-mono">0.1.6</code>. Source and local dogfood are
-			<code class="font-mono">0.1.7</code>
-			candidate, which is a separate provenance lane.
+			Public npm, GitHub Release, Homebrew, curl, and package lanes now resolve to
+			<code class="font-mono">0.1.7</code>. Source dogfood remains a separate provenance lane when testing unreleased
+			worktree behavior.
 		</p>
 
 		<Tabs
@@ -93,7 +92,7 @@
 		</Tabs>
 
 		<div class="mt-12">
-			<h4 class="h4 mb-2">Local 0.1.7 candidate dogfood</h4>
+			<h4 class="h4 mb-2">Local source dogfood</h4>
 			<p class="mb-2 text-sm text-surface-600-400">
 				Use remove-then-copy for macOS local dogfood so taskgated does not keep stale signature state on the old Mach-O
 				vnode.
