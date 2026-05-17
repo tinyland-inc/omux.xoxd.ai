@@ -82,6 +82,24 @@ js_test(
 )
 
 js_test(
+    name = "playwright_local_route_smoke",
+    data = [
+        ":build",
+        ":node_modules",
+        "run-playwright-local-route-smoke.mjs",
+    ],
+    entry_point = "run-playwright-local-route-smoke.mjs",
+    tags = [
+        "chromium",
+        "gloriousflywheel-rbe-candidate",
+        "local-server-route-smoke",
+        "playwright",
+    ],
+    timeout = "moderate",
+    visibility = ["//visibility:public"],
+)
+
+js_test(
     name = "puppeteer_chromium_smoke",
     data = [
         ":build",
