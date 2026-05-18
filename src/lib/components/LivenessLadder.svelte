@@ -1,14 +1,14 @@
 <script lang="ts">
 	// TIN-801 phase 2, updated after the 2026-05-09 engineered managed quota-handoff proof.
-	// This is a compact view of the current Codex Max managed-frame state, not
-	// a universal provider claim.
+	// This is a compact view of the Codex Max managed-frame proof and route
+	// inspection boundary, not a universal provider claim.
 	//
 	// Sources:
 	// - oauth-mux/docs/evidence/codex-engineered-quota-handoff-20260509/
 	// - oauth-mux/docs/qa-handoff-matrix.md
 	// - oauth-mux/docs/spec/paid-cohort-soak-claim-policy-2026-05-03.md
 
-	type Verdict = 'available' | 'auth' | 'quota' | 'blocked';
+	type Verdict = 'available' | 'auth' | 'quota' | 'blocked' | 'info';
 
 	const rows: {
 		account: string;
@@ -51,13 +51,13 @@
 		},
 		{
 			account: 'codex-max',
-			capability: 'current cohort',
-			http: 'not_afloat',
-			verdict: 'blocked',
-			decision: 'repair_or_wait',
-			note: 'post-proof no-spend route truth',
+			capability: 'live route state',
+			http: 'inspect',
+			verdict: 'info',
+			decision: 'preflight_required',
+			note: 'route availability moves with auth and quota state',
 			explain:
-				'After the proof burn, codex-max has no selectable route: several routes are quota-exhausted and the remaining runtime-ready route needs auth repair.',
+				'Current route counts are operator-local and volatile. Use oauth-mux codex preflight and route explain before making route-state claims.',
 		},
 	];
 
@@ -71,6 +71,8 @@
 				return 'preset-filled-warning-500';
 			case 'blocked':
 				return 'preset-filled-error-500';
+			case 'info':
+				return 'preset-tonal-surface';
 		}
 	}
 
@@ -84,6 +86,8 @@
 				return 'text-warning-700-300';
 			case 'blocked':
 				return 'text-error-700-300';
+			case 'info':
+				return 'text-surface-700-300';
 		}
 	}
 
@@ -99,7 +103,7 @@
 	<figcaption
 		class="border-b border-surface-300-700 bg-surface-100-900 px-4 py-2 text-xs uppercase tracking-wide text-surface-600-400"
 	>
-		Codex Max managed proof · one provider, current route truth
+		Codex Max managed proof · one provider, route truth moves
 	</figcaption>
 	<ol class="divide-y divide-surface-200-800">
 		{#each rows as r, i (r.account + r.capability + i)}

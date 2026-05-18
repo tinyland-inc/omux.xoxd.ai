@@ -34,6 +34,10 @@
 			label: 'Explicit handoffs',
 			text: 'Login, reauth, live probes, and revalidation remain labeled user-mediated or spend-confirmed commands.',
 		},
+		{
+			label: 'Shim bounded',
+			text: 'The package codex shim manages future shell launches only when PATH resolves it; direct native binaries and already-running Codex sessions are not globally protected.',
+		},
 	];
 </script>
 
@@ -49,7 +53,7 @@
 				</p>
 			</header>
 
-			<div class="grid gap-4 lg:grid-cols-3">
+			<div class="grid gap-4 lg:grid-cols-4">
 				{#each truths as truth (truth.label)}
 					<div class="border-surface-200-800 bg-surface-50-950 rounded-lg border p-5">
 						<h3 class="mb-2 text-base font-semibold">{truth.label}</h3>
@@ -79,6 +83,7 @@
 					<ul class="list-disc space-y-2 pl-5 text-sm leading-relaxed text-surface-700-300">
 						<li>The strongest preserved proof is the 2026-05-09 engineered managed quota handoff artifact.</li>
 						<li>Public package lanes now resolve to 0.1.7; source dogfood remains a separate provenance lane.</li>
+						<li>Bare <code class="font-mono">codex</code> is managed only when the installed shim wins PATH lookup.</li>
 						<li>
 							Same-thread provider continuity, mid-turn streaming recovery, and unmanaged daemon hot-swap are not
 							claimed.
