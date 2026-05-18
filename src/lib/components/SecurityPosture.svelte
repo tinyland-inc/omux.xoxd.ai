@@ -102,8 +102,9 @@
 			<h3 class="h4 mb-2">Daemon boundary</h3>
 			<p class="text-surface-700-300">
 				The daemon exists, but it is not a production dependency yet. The default production path remains explicit
-				selection, explicit probe, env injection, and exec handoff. The following are explicitly <em>not allowed yet</em
-				>:
+				selection, explicit probe, env injection, and exec handoff. The packaged <code class="font-mono">codex</code>
+				shim only manages future launches when it wins PATH lookup; it is not a global interceptor for native or already-running
+				sessions. The following are explicitly <em>not allowed yet</em>:
 			</p>
 			<ul class="mt-3 list-disc space-y-1 pl-6 text-sm">
 				{#each daemonNotAllowed as item (item)}
