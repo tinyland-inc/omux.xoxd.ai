@@ -52,7 +52,7 @@
 		"eslint-plugin-svelte": "^3.18.0",
 		"globals": "^17.6.0",
 		"prettier": "^3.8.1",
-		"prettier-plugin-svelte": "^3.5.2",
+		"prettier-plugin-svelte": "^4.1.0",
 		"puppeteer-core": "^24.43.1",
 		"serve": "^14.2.5",
 		"shiki": "^4.1.0",
